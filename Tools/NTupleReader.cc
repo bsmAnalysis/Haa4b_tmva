@@ -23,8 +23,20 @@ NTupleReader::NTupleReader(TTree * tree)
 NTupleReader::~NTupleReader()
 {
   //Clean up any remaining dynamic memory
-  for (auto& branch : branchMap_)    if (branch.second.ptr) branch.second.destroy();
-  for (auto& branch : branchVecMap_) if (branch.second.ptr) branch.second.destroy();
+  for (auto& branch : branchMap_)
+  {
+    if (branch.second.ptr)
+    {
+      branch.second.destroy();
+    }
+  }
+  for (auto& branch : branchVecMap_)
+  { 
+    if (branch.second.ptr) 
+    {
+      branch.second.destroy();
+    }
+  }
 }
 
 void NTupleReader::init()

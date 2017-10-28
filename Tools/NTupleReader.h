@@ -17,6 +17,7 @@
 #include <typeinfo>
 #include <functional>
 #include <cxxabi.h>
+//#include <iostream>
 
 #ifdef __CINT__
 #pragma link off all globals;
@@ -26,17 +27,16 @@
 #pragma link C++ class vector<TLorentzVector>+;
 #endif
 
-/* This class is designed to be a simple interface to reading stop NTuples
-   
+/* 
+   This class is designed to be a simple interface to reading NTuples
    To use this class simply open the desired Tree as a TTree or TChain and pass it 
    to the constructor.  Then the tuple contents may be accessed as follows
 
    NTupleReader tr(tree);
    while(tr.getNextEvent())
    {
-       const int& run = tr.getVar<int>("run");
+     const int& run = tr.getVar<int>("run");
    }
-
    and so on.  
  */
 
@@ -80,7 +80,6 @@ class NTupleReader
       //Delete vector
       T *vecptr = *static_cast<T**>(ptr);
       if (vecptr != nullptr) delete vecptr;
-
       //depete pointer to vector
       delete static_cast<T*>(ptr);
     }
@@ -94,7 +93,6 @@ class NTupleReader
     deleter_base* deleter;
 
     Handle() : ptr(nullptr), deleter(nullptr) {}
-
     Handle(void* ptr, deleter_base* deleter = nullptr) :  ptr(ptr), deleter(deleter) {}
 
     void destroy()
@@ -162,9 +160,7 @@ class NTupleReader
 
   //Specialization for basic functions
   void registerFunction(void (*f)(NTupleReader&));
-
   void getType(const std::string& name, std::string& type) const;
-
   void setReThrow(const bool);
   bool getReThrow() const;
 
@@ -293,7 +289,6 @@ class NTupleReader
   template<typename T> void registerBranch(const std::string& name) const
   {
     branchMap_[name] = createHandle(new T());
-
     typeMap_[name] = demangle<T>();
 
     tree_->SetBranchStatus(name.c_str(), 1);
@@ -303,7 +298,6 @@ class NTupleReader
   template<typename T> void registerVecBranch(const std::string& name) const
   {
     branchVecMap_[name] = createVecHandle(new std::vector<T>*());
-
     typeMap_[name] = demangle<std::vector<T>>();
 
     tree_->SetBranchStatus(name.c_str(), 1);
@@ -345,13 +339,10 @@ class NTupleReader
       if (branch != nullptr)
       {
         registerBranch(branch);
-    
         //get iterator
         tuple_iter = v_tuple.find(var);
-    
         //force read just this branch
         branch->GetEvent(nevt_ - 1);
-    
         //return value
         return *static_cast<T*>(tuple_iter->second.ptr);
       }

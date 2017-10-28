@@ -11,7 +11,8 @@
 
 int main()
 {
-  char nBase[] = "../../huaTest/MC13TeV_Wh_amass20_0.root";
+  //char nBase[] = "../../huaTest/MC13TeV_Wh_amass20_0.root";
+  char nBase[] = "../../huaTest/MC13TeV_Wh_amass50_0.root";
   //char nBase[] = "root://eoscms.cern.ch//eos/cms/store/user/georgia/h-aa-Madgraph5/final/Wh_production_20/HIG-RunIISummer16MiniAODv2-01613_%i.root";
   //char nBase[] = "root://eoscms.cern.ch//eos/cms/store/user/georgia/h-aa-Madgraph5/final/Wh_production_50/HIG-RunIISummer16MiniAODv2-01613_%i.root";
   TChain *ch = new TChain("mainNtuplizer/data");
@@ -42,9 +43,9 @@ int main()
       }
       tot++;
       std::cout << "NEvent " << tot << std::endl;
-      std::cout << "MET " << tr.getVar<float>("met_pt");
+      //std::cout << "MET " << tr.getVar<float>("met_pt");
       //std::cout << "MET " << tr.getVar<float>("met_pt") << " aliasedMET " << tr.getVar<float>("aliasedMET");
-      std::cout << " Njet " << tr.getVar<int>("jet") << std::endl;
+      //std::cout << " Njet " << tr.getVar<int>("jet") << std::endl;
     }
   }
   catch (const SATException& e)
