@@ -3,7 +3,7 @@
 
 #include "NTupleReader.h"
 #include "customize.h"
-#include "EventListFilter.h"
+//#include "EventListFilter.h"
 
 #include "Math/VectorUtil.h"
 
@@ -15,38 +15,24 @@ class TF1;
 
 class BaselineVessel
 {
-private:
-    std::string spec;
-    bool isfastsim;
-    std::string firstSpec;
-    bool printOnce;
+ private:
+  std::string spec;
+  bool isfastsim;
+  std::string firstSpec;
+  bool printOnce;
 
-    NTupleReader *tr;
-    TFile *WMassCorFile;
-    TF1   *puppisd_corrGEN;
-    TF1   *puppisd_corrRECO_cen;
-    TF1   *puppisd_corrRECO_for;
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TopTagger ~~~~~
-    std::shared_ptr<TopTagger> ttPtr;
-
-    //  container
-    TLorentzVector metLVec; 
-    std::vector<TLorentzVector> *jetsLVec_forTagger;
-    std::vector<double> *recoJetsBtag_forTagger;
-    std::vector<double> *qgLikelihood_forTagger;
-    std::vector<TLorentzVector> *vTops;
-    std::map<int, std::vector<TLorentzVector> > *mTopJets;
-
-    std::vector<TLorentzVector> GetAK4NoSubjet(Constituent &ak8, 
-        std::vector<TLorentzVector> &ak4jets) const;
-public:
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Member ~~~~~
-    int  bToFake;
-    bool debug;
-    bool incZEROtop;
-    bool UseLepCleanJet;
+  NTupleReader *tr;
+  TFile *WMassCorFile;
+  TF1   *puppisd_corrGEN;
+  TF1   *puppisd_corrRECO_cen;
+  TF1   *puppisd_corrRECO_for;
+  TLorentzVector metLVec;
+ public:
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Member ~~~~~
+  int  bToFake;
+  bool debug;
+  bool incZEROtop;
+  bool UseLepCleanJet;
 
     std::string jetVecLabel;
     std::string CSVVecLabel;
@@ -67,7 +53,6 @@ public:
     bool passBaselineNoTag;
     bool passBaselineNoLepVeto;
 
-
     BaselineVessel(NTupleReader &tr_, const std::string specialization = "", const std::string filterString = "");
     ~BaselineVessel();
 
@@ -81,21 +66,12 @@ public:
 
     void operator()(NTupleReader& tr);
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TopTagger ~~~~~
-    bool SetupTopTagger(std::string CfgFile_ = "TopTagger.cfg");
-    bool PassTopTagger();
     bool GetMHT() const;
     bool GetLeptons() const;
     bool GetRecoZ( const int zMassMin, const int zMassMax) const;
     bool GetRecoZ(const std::string leptype, const std::string lepchg, std::vector<TLorentzVector>* recoZVec,
         std::map<unsigned int, std::pair<unsigned int, unsigned int> > *TypeZLepIdx, 
         const int zMassMin, const int zMassMax) const;
-    void prepareTopTagger();
-    std::shared_ptr<TopTagger> GetTopTaggerPtr() const {return ttPtr;};
-    int GetnTops() const;
-    bool GetTopCombs() const;
-    double CalcMT2() const;
-    double coreMT2calc(const TLorentzVector & fatJet1LVec, const TLorentzVector & fatJet2LVec) const;
 };
 
 inline void passBaselineFunc(NTupleReader &tr, std::string filterstring)

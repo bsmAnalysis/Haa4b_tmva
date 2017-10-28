@@ -1,4 +1,4 @@
-#include "SusyAnaTools/Tools/SATException.h"
+#include "SATException.h"
 #include <iostream>
 
 SATException::SATException(const int line, const std::string function, const std::string file, const std::string message) : line_(line), funcion_(function), file_(file), message_(message)

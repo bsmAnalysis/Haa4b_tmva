@@ -7,11 +7,6 @@
 #include "TLorentzVector.h"
 #include "Math/VectorUtil.h"
 
-// Top Tagger
-#include "TopTagger/TopTagger/include/TopTagger.h"
-#include "TopTagger/TopTagger/include/TopTaggerResults.h"
-#include "TopTagger/TopTagger/include/TopTaggerUtilities.h"
-
 #include <iostream>
 #include <cstdio>
 #include <string>
@@ -27,8 +22,8 @@
    An example baseline cut flow is defined in a separate code, i.e., baselineDef.C.
 */
 
-namespace AnaConsts{
-    
+namespace AnaConsts
+{    
     struct AccRec
     {
         double minAbsEta, maxAbsEta, minPt, maxPt;
@@ -132,7 +127,8 @@ namespace AnaConsts{
 
 }
 
-namespace AnaFunctions{
+namespace AnaFunctions
+{
   bool jetPassCuts(const TLorentzVector& jet, const AnaConsts::AccRec& jetCutsArr);
   int countJets(const std::vector<TLorentzVector> &inputJets, const AnaConsts::AccRec& jetCutsArr);
   int countCSVS(const std::vector<TLorentzVector> &inputJets, const std::vector<double> &inputCSVS, const double cutCSVS, const AnaConsts::AccRec& jetCutsArr);
@@ -149,7 +145,6 @@ namespace AnaFunctions{
   double getMuonActivity(const TLorentzVector& muon, const std::vector<TLorentzVector>& jetLVec, const std::vector<double>& recoJetschargedHadronEnergyFraction, const std::vector<double>& recoJetschargedEmEnergyFraction, const AnaConsts::ActRec& muonsAct);
   bool passIsoTrk(const TLorentzVector& isoTrk, const double isoTrkIso, const double isoTrkMtw, const AnaConsts::IsoAccRec& isoTrksArr);
   int countIsoTrks(const std::vector<TLorentzVector> &isoTrksLVec, const std::vector<double> &isoTrksIso, const std::vector<double> &isoTrksMtw, const std::vector<int> &isoTrkspdgId);
-  void prepareJetsForTagger(const std::vector<TLorentzVector> &inijetsLVec, const std::vector<double> &inirecoJetsBtag, std::vector<TLorentzVector> &jetsLVec_forTagger, std::vector<double> &recoJetsBtag_forTagger, const std::vector<double>& qgLikelihood = *static_cast<std::vector<double>*>(nullptr), std::vector<double>& qgLikelihood_forTagger = *static_cast<std::vector<double>*>(nullptr));
   void preparecntNJets(const std::vector<TLorentzVector> &inijetsLVec, const std::vector<double> &inirecoJetsBtag, const double cutCSVS, std::vector<int> &cntNJetsVec, std::vector<int> &cntNbJetsVec);
   void preparecalcDPhi(const std::vector<TLorentzVector> &inijetsLVec, const double metphi, std::vector<double> &outDPhiVec);
   void prepareForNtupleReader();
@@ -160,7 +155,6 @@ namespace AnaFunctions{
   TLorentzVector calcMHT(const std::vector<TLorentzVector> &inputJets, const AnaConsts::AccRec& jetCutsArr);
   int countIsoLepTrks(const std::vector<TLorentzVector> &isoTrksLVec, const std::vector<double> &isoTrksIso, const std::vector<double> &isoTrksMtw, const std::vector<int> &isoTrkspdgId);
   int countIsoPionTrks(const std::vector<TLorentzVector> &isoTrksLVec, const std::vector<double> &isoTrksIso, const std::vector<double> &isoTrksMtw, const std::vector<int> &isoTrkspdgId);
-
 }
 
 #endif

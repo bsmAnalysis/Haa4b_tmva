@@ -1,19 +1,13 @@
 #include "baselineDef.h"
-
 #include "TFile.h"
 #include "TF1.h"
-
-#include "lester_mt2_bisect.h"
 
 //**************************************************************************//
 //                              BaselineVessel                              //
 //**************************************************************************//
 
 BaselineVessel::BaselineVessel(NTupleReader &tr_, const std::string specialization, const std::string filterString) : 
-  tr(&tr_), spec(specialization), 
-  //type3Ptr(NULL),
-  ttPtr(NULL),
-  WMassCorFile(NULL)
+  tr(&tr_), spec(specialization)
 {
   bToFake               = 1;
   debug                 = false;
@@ -56,7 +50,8 @@ BaselineVessel::BaselineVessel(NTupleReader &tr_, const std::string specializati
     spec.erase(std::find_if(spec.rbegin(), spec.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), spec.end());
   }
 
-  if( !spec.empty() ){
+  if( !spec.empty() )
+  {
     TString stripT = spec;
     TObjArray * objArr = stripT.Tokenize(" ");
     TObjString* firstObj = dynamic_cast<TObjString*>(objArr->At(0));
@@ -68,8 +63,6 @@ BaselineVessel::BaselineVessel(NTupleReader &tr_, const std::string specializati
   printOnce = false;
 
   PredefineSpec();
-
-  SetupTopTagger(toptaggerCfgFile);
 }
 
 // ===  FUNCTION  ============================================================
@@ -84,85 +77,8 @@ bool BaselineVessel::UseLepCleanJets()
   CSVVecLabel           = "recoJetsBtag_0_LepCleaned";
   qgLikehoodLabel       = "prodJetsNoLep_qgLikelihood";
   return true;
-}       // -----  end of function BaselineVessel::UseLepCleanJets  -----
-
-// ===  FUNCTION  ============================================================
-//         Name:  BaselineVessel::OpenWMassCorrFile
-//  Description:  
-// ===========================================================================
-bool BaselineVessel::OpenWMassCorrFile()
-{
-  std::string puppiCorr = "puppiCorr.root";
-  WMassCorFile = TFile::Open(puppiCorr.c_str(),"READ");
-  if (!WMassCorFile)
-    std::cout << "W mass correction file not found w mass!!!!!!! " << puppiCorr <<" Will not correct W mass" << std::endl;
-  else{
-    puppisd_corrGEN      = (TF1*)WMassCorFile->Get("puppiJECcorr_gen");
-    puppisd_corrRECO_cen = (TF1*)WMassCorFile->Get("puppiJECcorr_reco_0eta1v3");
-    puppisd_corrRECO_for = (TF1*)WMassCorFile->Get("puppiJECcorr_reco_1v3eta2v5");
-  }
-  return true;
-}       // -----  end of function BaselineVessel::OpenWMassCorrFile  -----
-
-// ===  FUNCTION  ============================================================
-//         Name:  BaselineVessel::SetupTopTagger
-//  Description:  
-// ===========================================================================
-bool BaselineVessel::SetupTopTagger(std::string CfgFile_)
-{
-  toptaggerCfgFile = CfgFile_;
-
-  ttPtr.reset(new TopTagger);
-  ttPtr->setCfgFile(toptaggerCfgFile);
-  OpenWMassCorrFile();
-  
-  return true;
-}       // -----  end of function BaselineVessel::SetupTopTagger  -----
-
-void BaselineVessel::prepareTopTagger()
-{
-// Prepare jets and b-tag working points for top tagger
-  jetsLVec_forTagger     = new std::vector<TLorentzVector>();
-  recoJetsBtag_forTagger = new std::vector<double>();
-  qgLikelihood_forTagger = new std::vector<double>();
-  std::vector<double> qgLikelihood;
-  try
-  {
-    qgLikelihood = tr->getVec<double>(qgLikehoodLabel);
-  }
-  catch (const SATException& e)
-  {
-    e.print();
-    qgLikelihood.clear();
-  }
-    
-  AnaFunctions::prepareJetsForTagger(tr->getVec<TLorentzVector>(jetVecLabel), tr->getVec<double>(CSVVecLabel), 
-      *jetsLVec_forTagger, *recoJetsBtag_forTagger, qgLikelihood, *qgLikelihood_forTagger);
-
-  tr->registerDerivedVec("jetsLVec_forTagger" + firstSpec, jetsLVec_forTagger);
-  tr->registerDerivedVec("recoJetsBtag_forTagger" + firstSpec, recoJetsBtag_forTagger);
-  tr->registerDerivedVec("qgLikelihood_forTagger" + firstSpec, qgLikelihood_forTagger);
-
-  
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ New TopTagger ~~~~~
-    // top tagger
-    //construct vector of constituents 
-    ttUtility::ConstAK4Inputs myConstAK4Inputs = ttUtility::ConstAK4Inputs(*jetsLVec_forTagger, *recoJetsBtag_forTagger, *qgLikelihood_forTagger);
-    ttUtility::ConstAK8Inputs myConstAK8Inputs = ttUtility::ConstAK8Inputs(
-        tr->getVec<TLorentzVector>(UseLepCleanJet ? "prodJetsNoLep_puppiJetsLVec" : "puppiJetsLVec"), 
-        tr->getVec<double>(UseLepCleanJet ? "prodJetsNoLep_puppitau1" : "puppitau1"),
-        tr->getVec<double>(UseLepCleanJet ? "prodJetsNoLep_puppitau2" : "puppitau2"),
-        tr->getVec<double>(UseLepCleanJet ? "prodJetsNoLep_puppitau3" : "puppitau3"),
-        tr->getVec<double>(UseLepCleanJet ? "prodJetsNoLep_puppisoftDropMass" : "puppisoftDropMass"),
-        tr->getVec<TLorentzVector>(UseLepCleanJet ? "prodJetsNoLep_puppiSubJetsLVec" : "puppiSubJetsLVec"));
-    if (WMassCorFile != NULL)
-    {
-      myConstAK8Inputs.setWMassCorrHistos (puppisd_corrGEN     , puppisd_corrRECO_cen, puppisd_corrRECO_for);
-    }
-    std::vector<Constituent> constituents = ttUtility::packageConstituents(myConstAK4Inputs, myConstAK8Inputs);
-    //run tagger
-    ttPtr->runTagger(constituents);
 }
+// -----  end of function BaselineVessel::UseLepCleanJets  -----
 
 // ===  FUNCTION  ============================================================
 //         Name:  BaselineVessel::~BaselineVessel
@@ -170,7 +86,8 @@ void BaselineVessel::prepareTopTagger()
 // ===========================================================================
 BaselineVessel::~BaselineVessel() 
 {
-}       // -----  end of function BaselineVessel::~BaselineVessel  -----
+}
+// -----  end of function BaselineVessel::~BaselineVessel  -----
 
 // ===  FUNCTION  ============================================================
 //         Name:  BaselineVessel::PredefineSpec
@@ -247,7 +164,9 @@ bool BaselineVessel::PredefineSpec()
   {
     doMET = false;
     dodPhis = false;
-  }else if( spec.find("jecUp") != std::string::npos || spec.find("jecDn") != std::string::npos || spec.find("metMagUp") != std::string::npos || spec.find("metMagDn") != std::string::npos || spec.find("metPhiUp") != std::string::npos || spec.find("metPhiDn") != std::string::npos ){
+  }
+  else if( spec.find("jecUp") != std::string::npos || spec.find("jecDn") != std::string::npos || spec.find("metMagUp") != std::string::npos || spec.find("metMagDn") != std::string::npos || spec.find("metPhiUp") != std::string::npos || spec.find("metPhiDn") != std::string::npos )
+  {
     if( spec.find("jecUp") != std::string::npos ){
       jetVecLabel = "jetLVec_jecUp";
       CSVVecLabel = "recoJetsBtag_jecUp";
@@ -267,40 +186,22 @@ bool BaselineVessel::PredefineSpec()
       METLabel = "genmet";
       METPhiLabel = "genmetphi";
     } 
-  }else if( spec.compare("usegenmet") == 0 ){
+  }
+  else if( spec.compare("usegenmet") == 0 )
+  {
     METLabel = "genmet";
     METPhiLabel = "genmetphi";
   }
 
-  if( !printOnce ){
+  if( !printOnce )
+  {
     printOnce = true;
     std::cout<<"spec : "<<spec.c_str()<<"  jetVecLabel : "<<jetVecLabel.c_str() <<"  CSVVecLabel : "<<CSVVecLabel.c_str() <<"  METLabel : "<<METLabel.c_str()<< std::endl;
   }  
   
-
   return true;
-}       // -----  end of function BaselineVessel::PredefineSpec  -----
-
-// ===  FUNCTION  ============================================================
-//         Name:  BaselineVessel::PassTopTagger
-//  Description:  
-// ===========================================================================
-bool BaselineVessel::PassTopTagger()
-{
-  int nTopCandSortedCnt = -1;
-  bool passTagger = false;
-  vTops = new std::vector<TLorentzVector>();
-  mTopJets = new std::map<int, std::vector<TLorentzVector> >();
-
-  nTopCandSortedCnt = GetnTops();
-  passTagger = (incZEROtop || nTopCandSortedCnt >= AnaConsts::low_nTopCandSortedSel); 
-
-  tr->registerDerivedVar("nTopCandSortedCnt" + firstSpec, nTopCandSortedCnt);
-  tr->registerDerivedVec("vTops"+firstSpec, vTops);
-  tr->registerDerivedVec("mTopJets"+firstSpec, mTopJets);
-
-  return passTagger;
-}       // -----  end of function BaselineVessel::PassTopTagger  -----
+}
+// -----  end of function BaselineVessel::PredefineSpec  -----
 
 void BaselineVessel::PassBaseline()
 {
@@ -309,7 +210,6 @@ void BaselineVessel::PassBaseline()
   passBaselineNoTagMT2  = true;
   passBaselineNoTag     = true;
   passBaselineNoLepVeto = true;
-
 
   // Form TLorentzVector of MET
   metLVec.SetPtEtaPhiM(tr->getVar<double>(METLabel), 0, tr->getVar<double>(METPhiLabel), 0);
@@ -371,27 +271,9 @@ void BaselineVessel::PassBaseline()
   if( HT < AnaConsts::defaultHTcut ){ passHT = false; passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; passBaselineNoLepVeto = false; }
   if( debug ) std::cout<<"HT : "<<HT<<"  defaultHTcut : "<<AnaConsts::defaultHTcut<<"  passHT : "<<passHT<<"  passBaseline : "<<passBaseline<<std::endl;
 
-  // Calculate top tagger related variables. 
-  // Note that to save speed, only do the calculation after previous base line requirements.
-
-  prepareTopTagger();
-  bool passTagger = PassTopTagger();
-  if( !passTagger ){ passBaseline = false; passBaselineNoLepVeto = false; }
-
-  // Pass the baseline MT2 requirement?
-  bool passMT2 = true;
-  double MT2 = CalcMT2();
-  if( MT2 < AnaConsts::defaultMT2cut ){ passBaseline = false; passBaselineNoTag = false; passMT2 = false; passBaselineNoLepVeto = false; }
-  if( debug ) std::cout<<"MT2 : "<<MT2 <<"  defaultMT2cut : "<<AnaConsts::defaultMT2cut<<"  passBaseline : "<<passBaseline<<std::endl;
-
   bool passNoiseEventFilter = true;
   if( !passNoiseEventFilterFunc() ) { passNoiseEventFilter = false; passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; passBaselineNoLepVeto = false; }
   if( debug ) std::cout<<"passNoiseEventFilterFunc : "<<passNoiseEventFilterFunc()<<"  passBaseline : "<<passBaseline<<std::endl;
-
-  // pass QCD high MET filter
-  bool passQCDHighMETFilter = true;
-  if( !passQCDHighMETFilterFunc() ) { passQCDHighMETFilter = false; }
-  if( debug ) std::cout<<"passQCDHighMETFilter : "<< passQCDHighMETFilter <<"  passBaseline : "<<passBaseline<<std::endl;
 
   // pass the special filter for fastsim
   bool passFastsimEventFilter = true;
@@ -402,16 +284,12 @@ void BaselineVessel::PassBaseline()
   tr->registerDerivedVar("nMuons_CUT" + firstSpec, nMuons);
   tr->registerDerivedVar("nElectrons_CUT" + firstSpec, nElectrons);
   tr->registerDerivedVar("nIsoTrks_CUT" + firstSpec, nIsoTrks);
-
   tr->registerDerivedVar("cntNJetsPt50Eta24" + firstSpec, cntNJetsPt50Eta24);
   tr->registerDerivedVar("cntNJetsPt30Eta24" + firstSpec, cntNJetsPt30Eta24);
-
   tr->registerDerivedVec("dPhiVec" + firstSpec, dPhiVec);
-
   tr->registerDerivedVar("cntCSVS" + firstSpec, cntCSVS);
-
-
   tr->registerDerivedVar("cntNJetsPt30" + firstSpec, cntNJetsPt30);
+  tr->registerDerivedVar("HT" + firstSpec, HT);
 
   tr->registerDerivedVar("passLeptVeto" + firstSpec, passLeptVeto);
   tr->registerDerivedVar("passMuonVeto" + firstSpec, passMuonVeto);
@@ -423,150 +301,16 @@ void BaselineVessel::PassBaseline()
   tr->registerDerivedVar("passdPhis" + firstSpec, passdPhis);
   tr->registerDerivedVar("passBJets" + firstSpec, passBJets);
   tr->registerDerivedVar("passMET" + firstSpec, passMET);
-  tr->registerDerivedVar("passMT2" + firstSpec, passMT2);
   tr->registerDerivedVar("passHT" + firstSpec, passHT);
-  tr->registerDerivedVar("passTagger" + firstSpec, passTagger);
   tr->registerDerivedVar("passNoiseEventFilter" + firstSpec, passNoiseEventFilter);
-  tr->registerDerivedVar("passQCDHighMETFilter" + firstSpec, passQCDHighMETFilter);
   tr->registerDerivedVar("passFastsimEventFilter" + firstSpec, passFastsimEventFilter);
   tr->registerDerivedVar("passBaseline" + firstSpec, passBaseline);
   tr->registerDerivedVar("passBaselineNoTagMT2" + firstSpec, passBaselineNoTagMT2);
   tr->registerDerivedVar("passBaselineNoTag" + firstSpec, passBaselineNoTag);
   tr->registerDerivedVar("passBaselineNoLepVeto" + firstSpec, passBaselineNoLepVeto);
 
-  tr->registerDerivedVar("best_had_brJet_MT2" + firstSpec,    MT2);
-
-  tr->registerDerivedVar("HT" + firstSpec, HT);
-
   if( debug ) std::cout<<"passBaseline : "<<passBaseline<<"  passBaseline : "<<passBaseline<<std::endl;
 } 
-
-int BaselineVessel::GetnTops() const
-{
-  int nTops = 0;
-
-  //get output of tagger
-  const TopTaggerResults& ttr = ttPtr->getResults();
-  //Use result for top var
-  std::vector<TopObject*> Ntop = ttr.getTops();  
-  nTops = Ntop.size();
-  for(int it=0; it<nTops; it++)
-  {
-      vTops->push_back(Ntop.at(it)->P());
-      std::vector<TLorentzVector> temp;
-      for(auto j : Ntop.at(it)->getConstituents())
-      {
-          temp.push_back(j->P());
-      }
-      mTopJets->insert(std::make_pair(it, temp));
-  }
-
-  return nTops;
-}       // -----  end of function VarPerEvent::GetnTops  -----
-
-// ===  FUNCTION  ============================================================
-//         Name:  BaselineVessel::GetTopCombs
-//  Description:  
-// ===========================================================================
-bool BaselineVessel::GetTopCombs() const
-{
-  std::vector<TLorentzVector> *vCombs = new std::vector<TLorentzVector>();
-  std::map<int, std::vector<TLorentzVector> > *vCombJets = new std::map<int, std::vector<TLorentzVector> >();
-
-  //get output of tagger
-  //Only MVA combs so far
-  const TopTaggerResults& ttr = ttPtr->getResults();
-  int i = 0;
-  for(auto tr : ttr.getTopCandidates() )
-  {
-      if (tr.getNConstituents() != 3) continue;
-      vCombs->push_back(tr.P());
-      std::vector<TLorentzVector> temp;
-      for(auto cons : tr.getConstituents())
-      {
-          temp.push_back(cons->P());
-      }
-      vCombJets->insert(std::make_pair(i, temp));
-      i++;
-  }
-
-  // AK8 + Ak4 for W + jet
-  ttUtility::ConstAK8Inputs myConstAK8Inputs = ttUtility::ConstAK8Inputs(
-      tr->getVec<TLorentzVector>(UseLepCleanJet ? "prodJetsNoLep_puppiJetsLVec" : "puppiJetsLVec"), 
-      tr->getVec<double>(UseLepCleanJet ? "prodJetsNoLep_puppitau1" : "puppitau1"),
-      tr->getVec<double>(UseLepCleanJet ? "prodJetsNoLep_puppitau2" : "puppitau2"),
-      tr->getVec<double>(UseLepCleanJet ? "prodJetsNoLep_puppitau3" : "puppitau3"),
-      tr->getVec<double>(UseLepCleanJet ? "prodJetsNoLep_puppisoftDropMass" : "puppisoftDropMass"),
-      tr->getVec<TLorentzVector>(UseLepCleanJet ? "prodJetsNoLep_puppiSubJetsLVec" : "puppiSubJetsLVec"));
-  std::vector<Constituent> AK8constituents;
-  myConstAK8Inputs.packageConstituents(AK8constituents);
-
-  for(auto ak8_ : AK8constituents)
-  {
-      auto ak8 = ak8_.P();
-      if (ak8.Pt() < 200 ) continue;
-      if (ak8.M() < 65 ) continue;
-      for(auto ak4 : GetAK4NoSubjet(ak8_, *jetsLVec_forTagger))
-      { 
-          if (ak4.Pt() < 30 ) continue; // Tight working point
-          TLorentzVector sumTop = ak4 + ak8;
-          if (sumTop.M() < 100 || sumTop.M() > 250) continue;
-          if (sumTop.DeltaR(ak8) > 1.0 || sumTop.DeltaR(ak4) > 1.0 ) continue; // Tight working point
-          vCombs->push_back(sumTop);
-          std::vector<TLorentzVector> temp;
-          temp.push_back(ak8);
-          temp.push_back(ak4);
-          vCombJets->insert(std::make_pair(i, temp));
-          i++;
-      }
- 
-    // Ak8 only for top
-    const std::vector<TLorentzVector>  & AK8 = tr->getVec<TLorentzVector>("puppiJetsLVec");
-    for(auto ak8 : AK8)
-    {
-      if (ak8.Pt() < 400 ) continue;
-      if (ak8.M() < 100 ) continue;
-      vCombs->push_back(ak8);
-      std::vector<TLorentzVector> temp;
-      temp.push_back(ak8);
-      vCombJets->insert(std::make_pair(i, temp));
-      i++;
-    }
-  }
-
-  tr->registerDerivedVec("vCombs"+spec, vCombs);
-  tr->registerDerivedVec("mCombJets"+spec, vCombJets);
-
-  return true;
-}       // -----  end of function BaselineVessel::GetTopCombs  -----
-
-// ===  FUNCTION  ============================================================
-//         Name:  BaselineVessel::GetAK4NoSubjet
-//  Description:  /* cursor */
-// ===========================================================================
-std::vector<TLorentzVector>  BaselineVessel::GetAK4NoSubjet(Constituent &ak8, std::vector<TLorentzVector> &ak4jets) const
-{
-  std::vector<TLorentzVector>  temp;
-  for(auto ak4 : ak4jets)
-  {
-    bool ismatched = false;
-    for(auto sub : ak8.getSubjets())
-    {
-      if (ak4.DeltaR(sub)<0.4)
-      {
-        ismatched = true;
-        break;
-      }
-    }
-
-    if (!ismatched)
-    {
-      temp.push_back(ak4);
-    }
-  }
-
-  return temp;
-}       // -----  end of function BaselineVessel::GetAK4NoSubjet  -----
 
 bool BaselineVessel::passNoiseEventFilterFunc()
 {
@@ -619,24 +363,6 @@ bool BaselineVessel::passNoiseEventFilterFunc()
   return true;
 }
 
-bool BaselineVessel::passQCDHighMETFilterFunc()
-{
-  std::vector<TLorentzVector> jetsLVec = tr->getVec<TLorentzVector>("jetsLVec");
-  std::vector<double> recoJetsmuonEnergyFraction = tr->getVec<double>("recoJetsmuonEnergyFraction");
-  double metphi = tr->getVar<double>("metphi");
-
-  int nJetsLoop = recoJetsmuonEnergyFraction.size();
-  std::vector<double> dPhisVec = AnaFunctions::calcDPhi( jetsLVec, metphi, nJetsLoop, AnaConsts::dphiArr);
-
-  for(int i=0; i<nJetsLoop ; i++)
-  {
-    double thisrecoJetsmuonenergy = recoJetsmuonEnergyFraction.at(i)*(jetsLVec.at(i)).Pt();
-    if( (recoJetsmuonEnergyFraction.at(i)>0.5) && (thisrecoJetsmuonenergy>200) && (std::abs(dPhisVec.at(i)-3.1416)<0.4) ) return false;
-  }
-
-  return true;
-}
-
 bool BaselineVessel::passFastsimEventFilterFunc()
 {
   bool passFilter = true;
@@ -668,94 +394,6 @@ bool BaselineVessel::passFastsimEventFilterFunc()
   return passFilter;
 }
 
-// ===  FUNCTION  ============================================================
-//         Name:  BaselineVessel::CalcMT2
-//  Description:  
-// ===========================================================================
-double BaselineVessel::CalcMT2() const
-{
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Initial the input ~~~~~
-  TLorentzVector fatJet1LVec(0, 0, 0,0);
-  TLorentzVector fatJet2LVec(0, 0, 0,0);
-  //get output of tagger
-  const TopTaggerResults& ttr = ttPtr->getResults();
-  //Use result for top var
-  const std::vector<TopObject*> &Ntop = ttr.getTops();  
-
-  if (Ntop.size() == 0)
-  {
-    return 0.0;
-  }
-
-  if (Ntop.size() == 1)
-  {
-    fatJet1LVec = Ntop.at(0)->P();
-    fatJet2LVec = ttr.getRsys().P();
-     
-    return coreMT2calc(fatJet1LVec, fatJet2LVec);
-  }
-
-  if (Ntop.size() >= 2)
-  {
-    std::vector<double> cachedMT2vec;
-    for(unsigned int it=0; it<Ntop.size(); it++)
-    {
-       for(unsigned int jt=it+1; jt<Ntop.size(); jt++)
-       {
-          cachedMT2vec.push_back(coreMT2calc(Ntop.at(it)->P(), Ntop.at(jt)->P()));
-       } 
-    }
-    std::sort(cachedMT2vec.begin(), cachedMT2vec.end());
-
-    return cachedMT2vec.front();
-//    return cachedMT2vec.back();
-  }
-
-  return 0.0;
-}
-
-double BaselineVessel::coreMT2calc(const TLorentzVector & fatJet1LVec, const TLorentzVector & fatJet2LVec) const
-{
-  
-  // The input parameters associated with the particle
-  // (or collection of particles) associated with the
-  // first "side" of the event: 
-  const double massOfSystemA =  fatJet1LVec.M(); // GeV
-  const double pxOfSystemA   =  fatJet1LVec.Px(); // GeV
-  const double pyOfSystemA   =  fatJet1LVec.Py(); // GeV
-  
-  // The input parameters associated with the particle
-  // (or collection of particles) associated with the
-  // second "side" of the event:
-  const double massOfSystemB =  fatJet2LVec.M(); // GeV
-  const double pxOfSystemB   =  fatJet2LVec.Px(); // GeV
-  const double pyOfSystemB   =  fatJet2LVec.Py(); // GeV
-  
-  // The missing transverse momentum:
-  const double pxMiss        = metLVec.Px(); // GeV
-  const double pyMiss        = metLVec.Py(); // GeV
-  
-  // The mass of the "inivisible" particle presumed to have
-  // been produced at the end of the decay chain in each
-  // "half" of the event:    
-  const double invis_mass    = metLVec.M(); // GeV
-
-  double desiredPrecisionOnMt2 = 0; // Must be >=0.  If 0 alg aims for machine precision.  if >0, MT2 computed to supplied absolute precision.
-
-  asymm_mt2_lester_bisect::disableCopyrightMessage();
-
-  double mt2 =  asymm_mt2_lester_bisect::get_mT2(
-      massOfSystemA, pxOfSystemA, pyOfSystemA,
-      massOfSystemB, pxOfSystemB, pyOfSystemB,
-      pxMiss, pyMiss,
-      invis_mass, invis_mass,
-      desiredPrecisionOnMt2);
-
-  return mt2;
-
-}       // -----  end of function BaselineVessel::CalcMT2  -----
-
 void BaselineVessel::operator()(NTupleReader& tr_)
 {
   tr = &tr_;
@@ -763,7 +401,6 @@ void BaselineVessel::operator()(NTupleReader& tr_)
   //GetMHT();
   //GetLeptons();
   //GetRecoZ(81, 101);
-  //GetTopCombs();
 }
 
 // ===  FUNCTION  ============================================================
@@ -788,8 +425,8 @@ bool BaselineVessel::GetMHT() const
   tr->registerDerivedVar("MHTSig"+firstSpec, MHT.Pt()/ sqrt(SumHT));
   tr->registerDerivedVar("METSig"+firstSpec, tr->getVar<double>(METLabel)/ sqrt(SumHT));
   return true;
-}       // -----  end of function BaselineVessel::GetMHT  -----
-
+}
+// -----  end of function BaselineVessel::GetMHT  -----
 
 // ===  FUNCTION  ============================================================
 //         Name:  BaselineVessel::GetLeptons
@@ -842,7 +479,8 @@ bool BaselineVessel::GetLeptons() const
   tr->registerDerivedVec("cutEleCharge"+firstSpec, vEleChg);
 
   return true;
-}       // -----  end of function BaselineVessel::GetLeptons  -----
+}
+// -----  end of function BaselineVessel::GetLeptons  -----
 
 
 // ===  FUNCTION  ============================================================
@@ -861,7 +499,8 @@ bool BaselineVessel::GetRecoZ( const int zMassMin, const int zMassMax) const
   tr->registerDerivedVec("recoZVec"+spec, recoZVec);
   tr->registerDerivedVec("ZLepIdx"+spec, ZLepIdx);
   return true;
-}       // -----  end of function BaselineVessel::GetRecoZ  -----
+}
+// -----  end of function BaselineVessel::GetRecoZ  -----
 
 
 // ===  FUNCTION  ============================================================
@@ -900,7 +539,8 @@ bool BaselineVessel::GetRecoZ(const std::string leptype, const std::string lepch
     }
   }
   return true;
-}       // -----  end of function BaselineVessel::GetRecoZ  -----
+}
+// -----  end of function BaselineVessel::GetRecoZ  -----
 
 
 //**************************************************************************//
@@ -1047,19 +687,6 @@ int stopFunctions::CleanJets::cleanLeptonFromJet(const TLorentzVector& lep, cons
 
   return match;
 }
-
-/*
- *int stopFunctions::CleanJets::ak8DRJet(const std::vector<TLorentzVector>& ak8JetsLVec, const int& lepMatchedJetIdx, const std::vector<TLorentzVector>& jetsLVec,  const double& jak8dRMax)
- *{
- *  int match1 = lepMatchedJetIdx;
- *  if(match1 < 0)
- *  {
- *    //If muon matching to PF candidate has failed, use dR matching as fallback
- *    match1 = AnaFunctions::jetdRMatch(ak8JetsLVec, jetsLVec, jak8dRMax);
- *  }
- *  return match1;
- *}
- */
 
 void stopFunctions::CleanJets::internalCleanJets(NTupleReader& tr)
 {
