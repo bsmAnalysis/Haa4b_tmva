@@ -5,36 +5,36 @@
 
 namespace AnaSamples
 {
-    void FileSummary::readFileList() const
-    {
-        if(filelist_.size()) filelist_.clear();
+  void FileSummary::readFileList() const
+  {
+    if (filelist_.size()) filelist_.clear();
         
-        FILE *f = fopen(filePath.c_str(), "r");
-        char buff[512];
-        if(f)
-        {
-            while(!feof(f) && fgets(buff, 512, f))
-            {
-                for(char* k = strchr(buff, '\n'); k != 0; k = strchr(buff, '\n')) *k = '\0';
-                filelist_.push_back(buff);
-            }
-            fclose(f);
-        }
-        else std::cout << "Filelist file \"" << filePath << "\" not found!!!!!!!" << std::endl;
-    }
-
-    void FileSummary::addCollection(std::string colName)
+    FILE *f = fopen(filePath.c_str(), "r");
+    char buff[512];
+    if (f)
     {
-        collections_.insert(colName);
+      while (!feof(f) && fgets(buff, 512, f))
+      {
+        for (char* k = strchr(buff, '\n'); k != 0; k = strchr(buff, '\n')) *k = '\0';
+        filelist_.push_back(buff);
+      }
+      fclose(f);
     }
+    else std::cout << "Filelist file \"" << filePath << "\" not found!!!!!!!" << std::endl;
+  }
 
-    std::map<std::string, FileSummary>& SampleSet::getMap()
-    {
-        return sampleSet_;
-    }
+  void FileSummary::addCollection(std::string colName)
+  {
+    collections_.insert(colName);
+  }
+
+  std::map<std::string, FileSummary>& SampleSet::getMap()
+  {
+    return sampleSet_;
+  }
     
-    SampleSet::SampleSet(std::string fDir, double lumi) : fDir_(fDir), lumi_(lumi)
-    {
+  SampleSet::SampleSet(std::string fDir, double lumi) : fDir_(fDir), lumi_(lumi)
+  {
         // ---------------
         // - backgrounds -
         // ---------------
@@ -314,10 +314,10 @@ namespace AnaSamples
         addSample("Signal_fullsim_T2tt_mStop275_mLSP100", fDir_ + addSigMCloc + "SMS-T2tt_fullsim_mStop-275_mLSP-100_wt_genJets_wt_genMET.txt", "stopTreeMaker/AUX", 13.3231, lumi, 801385, 1.0,  kRed);
         addSample("Signal_fullsim_T2tt_mStop300_mLSP125", fDir_ + addSigMCloc + "SMS-T2tt_fullsim_mStop-300_mLSP-125_wt_genJets_wt_genMET.txt", "stopTreeMaker/AUX", 8.51615, lumi, 531262, 1.0,  kRed);
 */
-    }
+  }
 
-    SampleCollection::SampleCollection(SampleSet& samples)
-    {
+  SampleCollection::SampleCollection(SampleSet& samples)
+  {
         //Define sets of samples for later use
         addSampleSet(samples, "TTbar", {"TTbarInc"});
         addSampleSet(samples, "TTbarSingleLep", {"TTbarSingleLepT", "TTbarSingleLepTbar"});
@@ -432,88 +432,88 @@ namespace AnaSamples
         addSampleSet(samples, "Signal_fullsim_T2tt_mStop300_mLSP125", {"Signal_fullsim_T2tt_mStop300_mLSP125"});
 */
         addSampleSet(samples, "ALL_MC", {"deepTrimmed", "600toInf", "TTbarInc"});
-    }
+  }
 
-// if name contains the keyword "ALL", then:
-// ] vss serves as a SKIPPING list and support keyword matching!
-// ] if has "MC" --> refer to all fullsim MC
-// ] if has "fastsim" --> refer to all fastsim
-// ] if has "Data" --> refer to all data
-    void SampleCollection::addSampleSet(SampleSet& samples, std::string name, std::vector<std::string> vss)
+  // if name contains the keyword "ALL", then:
+  // ] vss serves as a SKIPPING list and support keyword matching!
+  // ] if has "MC" --> refer to all fullsim MC
+  // ] if has "fastsim" --> refer to all fastsim
+  // ] if has "Data" --> refer to all data
+  void SampleCollection::addSampleSet(SampleSet& samples, std::string name, std::vector<std::string> vss)
+  {
+    if (vss.size() > 1)
     {
-        if(vss.size() > 1)
+      for (std::string& sn : vss)
+      {
+        if (sn.compare(name) == 0)
         {
-            for(std::string& sn : vss)
-            {
-                if(sn.compare(name) == 0)
-                {
-                    std::cout << "You have named a sampleCollection the same as one of its member sampleSets, but it has more than one sampleSet!!!! This is bad!!!  Stop!!! Stop now!!!  This collection will be skipped until it is properly named." << std::endl;
-                    return;
-                }
-            }
+          std::cout << "You have named a sampleCollection the same as one of its member sampleSets, but it has more than one sampleSet!!!! This is bad!!!  Stop!!! Stop now!!!  This collection will be skipped until it is properly named." << std::endl;
+          return;
         }
+      }
+    }
 
-        auto& map = samples.getMap();
+    auto& map = samples.getMap();
 
-// if keyword "ALL" appears, by-passing the regular adding procedure...
-        if( name.find("ALL") != std::string::npos )
+    // if keyword "ALL" appears, by-passing the regular adding procedure...
+    if ( name.find("ALL") != std::string::npos )
+    {
+      bool incl_fullsim = false;
+      bool incl_fastsim = false;
+      bool incl_Data = false;
+      if ( name.find("MC") != std::string::npos ) incl_fullsim = true;
+      if ( name.find("fastsim") != std::string::npos ) incl_fastsim = true;
+      if ( name.find("Data") != std::string::npos ) incl_Data = true;
+      if ( !incl_fullsim && !incl_fastsim && !incl_Data )
+      {
+        std::cout<<"WARNING ... will not add any samples with your requests ..."<<std::endl;
+        return;
+      }
+      for (auto im : map)
+      {
+        std::string persn = im.first;
+        bool excluded = false;
+        for (std::string & exc_sn : vss )
         {
-           bool incl_fullsim = false;
-           bool incl_fastsim = false;
-           bool incl_Data = false;
-           if( name.find("MC") != std::string::npos ) incl_fullsim = true;
-           if( name.find("fastsim") != std::string::npos ) incl_fastsim = true;
-           if( name.find("Data") != std::string::npos ) incl_Data = true;
-           if( !incl_fullsim && !incl_fastsim && !incl_Data )
-           {
-              std::cout<<"WARNING ... will not add any samples with your requests ..."<<std::endl;
-              return;
-           }
-           for(auto im : map)
-           {
-              std::string persn = im.first;
-              bool excluded = false;
-              for(std::string & exc_sn : vss )
-              {
-                 if( persn.find(exc_sn) != std::string::npos ){ excluded = true; break; }
-              }
-              if( excluded ) continue;
-              if( !incl_fastsim && persn.find("fastsim") != std::string::npos ) continue;
-              if( !incl_Data && persn.find("Data") != std::string::npos ) continue;
-              im.second.addCollection(name);
-              sampleSet_[name].push_back(im.second);
-              nameVec_[name].push_back(im.first);
-              totalLumiMap_[name] += im.second.lumi;
-           }
-           return;
+          if ( persn.find(exc_sn) != std::string::npos ){ excluded = true; break; }
         }
-
-        for(std::string& sn : vss)
-        {
-            map[sn].addCollection(name);
-            sampleSet_[name].push_back(samples[sn]);
-            nameVec_[name].push_back(sn);
-            totalLumiMap_[name] += samples[sn].lumi;
-        }
+        if ( excluded ) continue;
+        if ( !incl_fastsim && persn.find("fastsim") != std::string::npos ) continue;
+        if ( !incl_Data && persn.find("Data") != std::string::npos ) continue;
+        im.second.addCollection(name);
+        sampleSet_[name].push_back(im.second);
+        nameVec_[name].push_back(im.first);
+        totalLumiMap_[name] += im.second.lumi;
+      }
+      return;
     }
 
-    std::vector<std::string>& SampleCollection::getSampleLabels(std::string name)
+    for (std::string& sn : vss)
     {
-        return nameVec_[name];
+      map[sn].addCollection(name);
+      sampleSet_[name].push_back(samples[sn]);
+      nameVec_[name].push_back(sn);
+      totalLumiMap_[name] += samples[sn].lumi;
     }
+  }
 
-    bool operator< (const FileSummary& lhs, const FileSummary& rhs)
-    {
-        return lhs.filePath < rhs.filePath || lhs.treePath < rhs.treePath;
-    }
+  std::vector<std::string>& SampleCollection::getSampleLabels(std::string name)
+  {
+    return nameVec_[name];
+  }
 
-    bool operator== (const FileSummary& lhs, const FileSummary& rhs)
-    {
-        return lhs.filePath == rhs.filePath && lhs.treePath == rhs.treePath && lhs.xsec == rhs.xsec && lhs.lumi == rhs.lumi && lhs.kfactor == rhs.kfactor && lhs.nEvts == rhs.nEvts;
-    }
+  bool operator< (const FileSummary& lhs, const FileSummary& rhs)
+  {
+    return lhs.filePath < rhs.filePath || lhs.treePath < rhs.treePath;
+  }
 
-    bool operator!= (const FileSummary& lhs, const FileSummary& rhs)
-    {
-        return !(lhs == rhs);
-    }
+  bool operator== (const FileSummary& lhs, const FileSummary& rhs)
+  {
+    return lhs.filePath == rhs.filePath && lhs.treePath == rhs.treePath && lhs.xsec == rhs.xsec && lhs.lumi == rhs.lumi && lhs.kfactor == rhs.kfactor && lhs.nEvts == rhs.nEvts;
+  }
+
+  bool operator!= (const FileSummary& lhs, const FileSummary& rhs)
+  {
+    return !(lhs == rhs);
+  }
 }
