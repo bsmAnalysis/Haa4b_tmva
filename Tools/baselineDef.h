@@ -27,8 +27,14 @@ class BaselineVessel
   TF1   *puppisd_corrRECO_cen;
   TF1   *puppisd_corrRECO_for;
   TLorentzVector metLVec;
+
+  void ArrayToVec( int size, std::string name );
+  std::vector<TLorentzVector> ConstructVecLVec( std::vector<float> px, std::vector<float> py, std::vector<float> pz, std::vector<float> en );
  public:
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Member ~~~~~
+  // Obtain all TLVec vectors
+  void PreProcessing();
+  
   int  bToFake;
   bool debug;
   bool incZEROtop;

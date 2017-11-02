@@ -30,6 +30,10 @@ int main()
     tr = new NTupleReader(ch);
     //BaselineVessel blv(tr);
     //tr.registerFunction(blv);
+    const std::string spec = "test";
+    BaselineVessel *myBaselineVessel = 0;
+    myBaselineVessel = new BaselineVessel( *tr, spec);
+    tr->registerFunction(*myBaselineVessel);
 
     while (tr->getNextEvent())
     {
@@ -40,9 +44,33 @@ int main()
         tr->printTupleMembers(fout);
         fclose(fout);
       }
+      if ( tr->getEvtNum() < 20 )
+      {
+        //int size = tr->getVar<int>("mn");
+        //std::cout << "NMu " << tr->getVar<int>("mn") << std::endl;
+        //const float * arr_head = & ( tr->getVar<float>("mn_px") );
+        //std::cout << size << std::endl;
+        //std::cout << arr_head << std::endl;
+        //std::cout << *arr_head << std::endl;
+        //if( size >= 2){ std::cout << *(arr_head+1) << std::endl; }
+        //std::vector<float> vec ( arr_head, arr_head + size );
+        //for (int i = 0; i < vec.size(); i++)
+        //{
+        //  std::cout << "num: " << vec.at(i) << std::endl;
+        //}
+      }
+     
+      int size = tr->getVar<int>("mn");
+      std::cout << "NEvent " << tr->getEvtNum();
+      std::vector<TLorentzVector> mnLVec = tr->getVec<TLorentzVector>("mnLVec");
+      for (int i = 0; i < mnLVec.size(); i++)
+      {
+        std::cout << " Eta: " << mnLVec.at(i).Eta() << ", ";
+      }
+      std::cout << std::endl;
       //std::cout << "NEvent " << tr->getEvtNum() << std::endl;
       //std::cout << "MET " << tr->getVar<float>("met_pt");
-      std::cout << "MET " << tr->getVar<float>("met_pt") << std::endl;
+      //std::cout << "MET " << tr->getVar<float>("met_pt") << std::endl;
       //std::cout << " Njet " << tr->getVar<int>("jet") << std::endl;
     }
   }

@@ -9,6 +9,7 @@
 BaselineVessel::BaselineVessel(NTupleReader &tr_, const std::string specialization, const std::string filterString) : 
   tr(&tr_), spec(specialization)
 {
+
   bToFake               = 1;
   debug                 = false;
   incZEROtop            = false;
@@ -64,21 +65,6 @@ BaselineVessel::BaselineVessel(NTupleReader &tr_, const std::string specializati
 
   PredefineSpec();
 }
-
-// ===  FUNCTION  ============================================================
-//         Name:  BaselineVessel::UseLepCleanJets
-//  Description:  By default no Lep clean in Jets. Call this function to
-//  switch input labels
-// ===========================================================================
-bool BaselineVessel::UseLepCleanJets() 
-{
-  UseLepCleanJet        = true;
-  jetVecLabel           = "jetsLVecLepCleaned";
-  CSVVecLabel           = "recoJetsBtag_0_LepCleaned";
-  qgLikehoodLabel       = "prodJetsNoLep_qgLikelihood";
-  return true;
-}
-// -----  end of function BaselineVessel::UseLepCleanJets  -----
 
 // ===  FUNCTION  ============================================================
 //         Name:  BaselineVessel::~BaselineVessel
@@ -215,6 +201,39 @@ bool BaselineVessel::PredefineSpec()
 }
 // -----  end of function BaselineVessel::PredefineSpec  -----
 
+void BaselineVessel::PreProcessing()
+{
+  //jet
+  int jet = tr->getVar<int>("jet");
+  ArrayToVec( jet, "jet_px" ); ArrayToVec( jet, "jet_py" ); ArrayToVec( jet, "jet_pz" ); ArrayToVec( jet, "jet_en" );
+  std::vector<TLorentzVector> * jetLVec = new std::vector<TLorentzVector>();
+  (* jetLVec) = ConstructVecLVec( tr->getVec<float>("jet_px_vec"), tr->getVec<float>("jet_py_vec"), tr->getVec<float>("jet_pz_vec"), tr->getVec<float>("jet_en_vec") );
+  tr->registerDerivedVec("jetLVec", jetLVec);
+
+  //fjet
+  int fjet = tr->getVar<int>("fjet");
+  ArrayToVec( fjet, "fjet_px" ); ArrayToVec( fjet, "fjet_py" ); ArrayToVec( fjet, "fjet_pz" ); ArrayToVec( fjet, "fjet_en" );
+  std::vector<TLorentzVector> * fjetLVec = new std::vector<TLorentzVector>();
+  (* fjetLVec) = ConstructVecLVec( tr->getVec<float>("fjet_px_vec"), tr->getVec<float>("fjet_py_vec"), tr->getVec<float>("fjet_pz_vec"), tr->getVec<float>("fjet_en_vec") );
+  tr->registerDerivedVec("fjetLVec", fjetLVec);
+
+  //Electron
+  int en = tr->getVar<int>("en");
+  ArrayToVec( en, "en_px" ); ArrayToVec( en, "en_py" ); ArrayToVec( en, "en_pz" ); ArrayToVec( en, "en_en" );
+  std::vector<TLorentzVector> * enLVec = new std::vector<TLorentzVector>();
+  (* enLVec) = ConstructVecLVec( tr->getVec<float>("en_px_vec"), tr->getVec<float>("en_py_vec"), tr->getVec<float>("en_pz_vec"), tr->getVec<float>("en_en_vec") );
+  tr->registerDerivedVec("enLVec", enLVec);
+
+  //Muon
+  int mn = tr->getVar<int>("mn");
+  ArrayToVec( mn, "mn_px" ); ArrayToVec( mn, "mn_py" ); ArrayToVec( mn, "mn_pz" ); ArrayToVec( mn, "mn_en" );
+  std::vector<TLorentzVector> * mnLVec = new std::vector<TLorentzVector>();
+  (* mnLVec) = ConstructVecLVec( tr->getVec<float>("mn_px_vec"), tr->getVec<float>("mn_py_vec"), tr->getVec<float>("mn_pz_vec"), tr->getVec<float>("mn_en_vec") );
+  tr->registerDerivedVec("mnLVec", mnLVec);
+
+  return ;
+}
+
 void BaselineVessel::PassBaseline()
 {
   // Initial value
@@ -291,8 +310,12 @@ void BaselineVessel::PassBaseline()
   bool passFastsimEventFilter = true;
   if( !passFastsimEventFilterFunc() ) { passFastsimEventFilter = false; passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; passBaselineNoLepVeto = false; }
   if( debug ) std::cout<<"passFastsimEventFilterFunc : "<<passFastsimEventFilterFunc()<<"  passBaseline : "<<passBaseline<<std::endl;
-
+  
   // Register all the calculated variables
+
+  tr->registerDerivedVar("nMuons_CUT", nMuons);
+
+  /*
   tr->registerDerivedVar("nMuons_CUT" + firstSpec, nMuons);
   tr->registerDerivedVar("nElectrons_CUT" + firstSpec, nElectrons);
   tr->registerDerivedVar("nIsoTrks_CUT" + firstSpec, nIsoTrks);
@@ -322,6 +345,7 @@ void BaselineVessel::PassBaseline()
   tr->registerDerivedVar("passBaselineNoLepVeto" + firstSpec, passBaselineNoLepVeto);
 
   if( debug ) std::cout<<"passBaseline : "<<passBaseline<<"  passBaseline : "<<passBaseline<<std::endl;
+  */
 } 
 
 bool BaselineVessel::passNoiseEventFilterFunc()
@@ -409,7 +433,8 @@ bool BaselineVessel::passFastsimEventFilterFunc()
 void BaselineVessel::operator()(NTupleReader& tr_)
 {
   tr = &tr_;
-  PassBaseline();
+  PreProcessing();
+  //PassBaseline();
   //GetMHT();
   //GetLeptons();
   //GetRecoZ(81, 101);
@@ -551,5 +576,31 @@ bool BaselineVessel::GetRecoZ(const std::string leptype, const std::string lepch
     }
   }
   return true;
+}
+
+void BaselineVessel::ArrayToVec( int size, std::string name )
+{
+  const float * arr_head = & ( tr->getVar<float>(name) );
+  std::vector<float> * vec = new std::vector<float>();
+
+  for (int i = 0; i < size; i++)
+  {
+    vec->push_back( *(arr_head + i) );
+  }
+  tr->registerDerivedVec( name + "_vec", vec);
+
+  return ;
+}
+
+std::vector<TLorentzVector> BaselineVessel::ConstructVecLVec( std::vector<float> px, std::vector<float> py, std::vector<float> pz, std::vector<float> en )
+{
+  std::vector<TLorentzVector> VecLVec;
+  for (int i = 0; i < px.size(); i++)
+  {
+    TLorentzVector thisLVec;
+    thisLVec.SetPxPyPzE( px.at(i), py.at(i), pz.at(i), en.at(i) );
+    VecLVec.push_back( thisLVec );
+  }
+  return VecLVec;
 }
 // -----  end of function BaselineVessel::GetRecoZ  -----
