@@ -167,22 +167,34 @@ bool BaselineVessel::PredefineSpec()
   }
   else if( spec.find("jecUp") != std::string::npos || spec.find("jecDn") != std::string::npos || spec.find("metMagUp") != std::string::npos || spec.find("metMagDn") != std::string::npos || spec.find("metPhiUp") != std::string::npos || spec.find("metPhiDn") != std::string::npos )
   {
-    if( spec.find("jecUp") != std::string::npos ){
+    if( spec.find("jecUp") != std::string::npos )
+    {
       jetVecLabel = "jetLVec_jecUp";
       CSVVecLabel = "recoJetsBtag_jecUp";
-    }else if(spec.find("jecDn") != std::string::npos ){
+    }
+    else if(spec.find("jecDn") != std::string::npos )
+    {
       jetVecLabel = "jetLVec_jecDn";
       CSVVecLabel = "recoJetsBtag_jecDn";
-    }else if(spec.find("metMagUp") != std::string::npos ){
+    }
+    else if(spec.find("metMagUp") != std::string::npos )
+    {
       METLabel = "met_metMagUp";
-    }else if(spec.find("metMagDn") != std::string::npos ){
+    }
+    else if(spec.find("metMagDn") != std::string::npos )
+    {
       METLabel = "met_metMagDn";
-    }else if(spec.find("metPhiUp") != std::string::npos ){
+    }
+    else if(spec.find("metPhiUp") != std::string::npos )
+    {
       METPhiLabel = "metphi_metPhiUp";
-    }else if(spec.find("metPhiDn") != std::string::npos ){
+    }
+    else if(spec.find("metPhiDn") != std::string::npos )
+    {
       METPhiLabel = "metphi_metPhiDn";
     }
-    if( spec.find("usegenmet") != std::string::npos ){
+    if( spec.find("usegenmet") != std::string::npos )
+    {
       METLabel = "genmet";
       METPhiLabel = "genmetphi";
     } 
@@ -237,12 +249,12 @@ void BaselineVessel::PassBaseline()
   bool passMuonVeto = (nMuons == AnaConsts::nMuonsSel), passEleVeto = (nElectrons == AnaConsts::nElectronsSel), passIsoTrkVeto = (nIsoTrks == AnaConsts::nIsoTrksSel);
   bool passIsoLepTrkVeto = (nIsoLepTrks == AnaConsts::nIsoTrksSel), passIsoPionTrkVeto = (nIsoPionTrks == AnaConsts::nIsoTrksSel);
   bool passLeptVeto = passMuonVeto && passEleVeto && passIsoTrkVeto;
-  if( doMuonVeto && !passMuonVeto ){ passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; }
-  if( doEleVeto && !passEleVeto ){ passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; }
+  if ( doMuonVeto && !passMuonVeto ){ passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; }
+  if ( doEleVeto && !passEleVeto ){ passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; }
   // Isolated track veto is disabled for now
-  if( doIsoTrksVeto && !passIsoTrkVeto ){ passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; }
+  if ( doIsoTrksVeto && !passIsoTrkVeto ){ passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; }
 
-  if( debug ) std::cout<<"nMuons : "<<nMuons<<"  nElectrons : "<<nElectrons<<"  nIsoTrks : "<<nIsoTrks<<"  passBaseline : "<<passBaseline<<std::endl;
+  if ( debug ) std::cout<<"nMuons : "<<nMuons<<"  nElectrons : "<<nElectrons<<"  nIsoTrks : "<<nIsoTrks<<"  passBaseline : "<<passBaseline<<std::endl;
 
   // Pass number of jets?
   bool passnJets = true;
@@ -460,14 +472,14 @@ bool BaselineVessel::GetLeptons() const
   const std::vector<unsigned int> &isEBVec           = tr->getVec<unsigned int>("elesisEB");
   const std::vector<int> &electronsFlagID            = tr->getVec<int>(elesFlagIDLabel.c_str());
   const std::vector<double>         &electronsCharge = tr->getVec<double>("elesCharge");
-  for(unsigned int ie=0; ie<electronsLVec.size(); ie++){
-    if(AnaFunctions::passElectron(electronsLVec[ie], electronsRelIso[ie], electronsMtw[ie], isEBVec[ie], electronsFlagID[ie], AnaConsts::elesMiniIsoArr)) 
+  for (unsigned int ie = 0; ie<electronsLVec.size(); ie++)
+  {
+    if (AnaFunctions::passElectron(electronsLVec[ie], electronsRelIso[ie], electronsMtw[ie], isEBVec[ie], electronsFlagID[ie], AnaConsts::elesMiniIsoArr)) 
     {
-      if (!vEles->empty()) // Making sure the vEles are sorted in Pt
-        assert(electronsLVec.at(ie).Pt() <= vEles->back().Pt());
+      // Making sure the vEles are sorted in Pt
+      if (!vEles->empty()) { assert(electronsLVec.at(ie).Pt() <= vEles->back().Pt()); }
       vEles->push_back(electronsLVec.at(ie));
       vEleChg->push_back(electronsCharge.at(ie));
-
     }
   }
 
