@@ -28,8 +28,6 @@ int main()
   {
     NTupleReader *tr=0;
     tr = new NTupleReader(ch);
-    //NTupleReader tr(ch);
-    //tr.addAlias("met_pt", "aliasedMET");
     //BaselineVessel blv(tr);
     //tr.registerFunction(blv);
 
@@ -42,9 +40,9 @@ int main()
         tr->printTupleMembers(fout);
         fclose(fout);
       }
-      std::cout << "NEvent " << tr->getEvtNum() << std::endl;
+      //std::cout << "NEvent " << tr->getEvtNum() << std::endl;
       //std::cout << "MET " << tr->getVar<float>("met_pt");
-      //std::cout << "MET " << tr->getVar<float>("met_pt") << " aliasedMET " << tr->getVar<float>("aliasedMET");
+      std::cout << "MET " << tr->getVar<float>("met_pt") << std::endl;
       //std::cout << " Njet " << tr->getVar<int>("jet") << std::endl;
     }
   }
