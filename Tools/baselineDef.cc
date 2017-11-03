@@ -235,6 +235,10 @@ void BaselineVessel::PreProcessing()
   (* svLVec) = ConstructVecLVec( tr->getVec<float>("sv_px_vec"), tr->getVec<float>("sv_py_vec"), tr->getVec<float>("sv_pz_vec"), tr->getVec<float>("sv_en_vec") );
   tr->registerDerivedVec("svLVec", svLVec);
   //to select a sv for soft b jet pt < 20
+  ArrayToVec( sv, "sv_ntrk"       , & ( tr->getVar<int>("sv_ntrk") ) );
+  ArrayToVec( sv, "sv_dxy"        , & ( tr->getVar<float>("sv_dxy") ) );
+  ArrayToVec( sv, "sv_dxyz_signif", & ( tr->getVar<float>("sv_dxyz_signif") ) );
+  ArrayToVec( sv, "sv_cos_dxyz_p" , & ( tr->getVar<float>("sv_cos_dxyz_p") ) );
 
   //fjet
   //int fjet = tr->getVar<int>("fjet");
@@ -295,18 +299,22 @@ void BaselineVessel::PassBaseline()
   //hard b jet
   std::vector<TLorentzVector> selhardbLvecVec;
   int nhardbjets = AnaFunctions::countHardBJets(jetLvecVec, passJetPreSel, tr->getVec<float>("jet_btag0_vec"), selhardbLvecVec);
-  tr->registerDerivedVar("nHardBjets", nhardbjets);
+  tr->registerDerivedVar("nHardBJets", nhardbjets);
   //int nhardbjets_test = AnaFunctions::countHardBJets(jetLvecVec, passJetPreSel, tr->getVec<bool>("jet_PFLoose_vec"), selhardbLvecVec);
-  //tr->registerDerivedVar("nHardBjets_Test", nhardbjets_test);
+  //tr->registerDerivedVar("nHardBJets_Test", nhardbjets_test);
   bool passHardBJets = nhardbjets >= AnaConsts::minNHardBJets;
   tr->registerDerivedVar("passHardBJets", passHardBJets);
 
+  //soft b jet, jet pre selection, acc and lepton clean
+  std::vector<TLorentzVector> svLvecVec = tr->getVec<TLorentzVector>("svLVec");
+  std::vector<bool> passSVPreSel = AnaFunctions::preSelSV(svLvecVec, AnaConsts::svsArr, selhardbLvecVec);
   //soft b jet
+  std::vector<bool> SoftBTag = AnaFunctions::passSoftBTag(tr->getVec<int>("sv_ntrk_vec"), tr->getVec<float>("sv_dxy_vec"), tr->getVec<float>("sv_dxyz_signif_vec"), tr->getVec<float>("sv_cos_dxyz_p_vec"));
   std::vector<TLorentzVector> selsoftbLvecVec;
-  int nsoftbjets = 0;
-  //AnaFunctions::countSoftBJets(tr->getVec<TLorentzVector>("enLVec"), tr->getVec<bool>("en_passId_vec"), tr->getVec<bool>("en_passIso_vec"), AnaConsts::elsArr, selelLvecVec);
+  int nsoftbjets = AnaFunctions::countSoftBJets(svLvecVec, passSVPreSel, SoftBTag, selsoftbLvecVec);
   tr->registerDerivedVar("nSoftBJets", nsoftbjets);
-  bool passAllBJets = ( (nhardbjets + nsoftbjets) >= AnaConsts::minNAllBJets ) && ( (nhardbjets + nsoftbjets) <= AnaConsts::maxNAllBJets );
+  bool passAllBJets = (nhardbjets + nsoftbjets) >= AnaConsts::minNAllBJets; //no upper limit!
+  //bool passAllBJets = ( (nhardbjets + nsoftbjets) >= AnaConsts::minNAllBJets ) && ( (nhardbjets + nsoftbjets) <= AnaConsts::maxNAllBJets );
   tr->registerDerivedVar("passAllBJets", passAllBJets);
   //end b jets selection
 

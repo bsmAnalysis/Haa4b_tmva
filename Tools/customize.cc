@@ -177,4 +177,75 @@ namespace AnaFunctions
     }
     return cntHardBJets;
   }
+  
+  //sv pre-selection (for soft b jet, pt<20)
+  bool passSVJetClean(const TLorentzVector &svLvec, const std::vector<TLorentzVector> &selhardbLvecVec)
+  {
+    bool thispassSVJetClean = true;
+    int selhardbsize = selhardbLvecVec.size();
+    
+    if (selhardbsize != 0)
+    { 
+      for ( int i = 0; i < selhardbsize; i++)
+      { 
+        if ( DeltaR(svLvec, selhardbLvecVec[i]) < AnaConsts::minDeltaRSVJet) { return false; }
+      }
+    }
+    
+    return thispassSVJetClean;
+  }
+
+  std::vector<bool> preSelSV(const std::vector<TLorentzVector> &svLvecVec, const AnaConsts::SVAccRec& svsArr, const std::vector<TLorentzVector> &selhardbLvecVec)
+  {
+    std::vector<bool> passSVPreSel;
+    const float minAbsEta = svsArr.minAbsEta, maxAbsEta = svsArr.maxAbsEta, minPt = svsArr.minPt, maxPt = svsArr.maxPt;
+    for ( int i = 0; i < svLvecVec.size(); i++ )
+    {
+      bool thispassSVPreSel = true;
+      float persvpt = svLvecVec[i].Pt(), persveta = svLvecVec[i].Eta();
+      bool thispassSVAcc =
+         ( minAbsEta == -1 || fabs(persveta) >= minAbsEta )
+      && ( maxAbsEta == -1 || fabs(persveta) < maxAbsEta )
+      && (     minPt == -1 || persvpt >= minPt )
+      && (     maxPt == -1 || persvpt < maxPt );
+      bool thispassSVJetClean = passSVJetClean(svLvecVec[i], selhardbLvecVec);
+      thispassSVPreSel = thispassSVAcc && thispassSVJetClean;
+      //if ( thispassSVAcc && !thispassSVJetClean ){ std::cout <<  persvpt << "," << persveta << std::endl; }
+      //if (thispassSVPreSel){ std::cout <<  persvpt << "," << persveta << std::endl; }
+      passSVPreSel.push_back(thispassSVPreSel);
+    }
+    return passSVPreSel;
+  }
+
+  //soft b-jet selection
+  std::vector<bool> passSoftBTag(const std::vector<int> sv_ntrk_vec, std::vector<float> sv_dxy_vec, std::vector<float> sv_dxyz_signif_vec, std::vector<float> sv_cos_dxyz_p_vec)
+  {
+    std::vector<bool> passSoftBTag;
+    int size = sv_ntrk_vec.size();
+    //if ( (size != sv_dxy_vec.size()) || (size != sv_dxyz_signif_vec.size()) || (size != sv_cos_dxyz_p_vec.size()) ) {  std::cout << "Bug!" << std::endl; }
+    for ( int i = 0; i < size; i++ )
+    {
+      bool thisSoftBTag = 
+         ( sv_ntrk_vec[i] >= AnaConsts::minSVnTrk )
+      && ( sv_dxy_vec[i] < AnaConsts::maxSVPVdxy )
+      && ( sv_dxyz_signif_vec[i] > AnaConsts::minSVPVdxyzSignif )
+      && ( sv_cos_dxyz_p_vec[i] > AnaConsts::minSVPVCosdiffAngle );
+      passSoftBTag.push_back(thisSoftBTag);
+    }
+    return passSoftBTag;
+  }
+
+  int countSoftBJets(const std::vector<TLorentzVector> &svLvecVec, const std::vector<bool> & passSVPreSel, const std::vector<bool> &SoftBTag, std::vector<TLorentzVector> &selsoftbLvecVec)
+  { 
+    int cntSoftBJets = 0;
+    for ( int i = 0; i < svLvecVec.size(); i++ )
+    { 
+      if ( passSVPreSel[i] && SoftBTag[i] )
+      { 
+        cntSoftBJets ++;
+        selsoftbLvecVec.push_back(svLvecVec[i]);
+      }
+    }
+    return cntSoftBJets;
+  }
 }

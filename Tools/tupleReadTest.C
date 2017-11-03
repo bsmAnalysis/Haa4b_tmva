@@ -63,13 +63,14 @@ int main()
         //  std::cout << "num: " << vec.at(i) << std::endl;
         //}
       }
-      //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nHardBjets") << "," << tr->getVar<int>("nHardBjets_Test") << std::endl;
+      //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nHardBJets") << "," << tr->getVar<int>("nHardBJets_Test") << std::endl;
+      //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nSoftBJets")  << std::endl;
       
       if ( tr->getVar<bool>("passHardBJets") )
       {
-        std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nHardBjets")  << std::endl;
+        std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nSoftBJets")  << std::endl;
+        std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nHardBJets")  << std::endl;
       }
-     
       /*
       if ( tr->getVar<bool>("passMtW") )
       {
@@ -102,10 +103,12 @@ int main()
       std::vector<TLorentzVector> svLVec = tr->getVec<TLorentzVector>("svLVec"); 
       for (int i = 0; i < svLVec.size(); i++)
       {
-        float thispt = svLVec.at(i).Pt();
-        if ( thispt > 20 ) std::cout << " sv Pt greater than 20 GeV: " << svLVec.at(i).Pt() << ", ";
+        //float thispt = svLVec.at(i).Pt();
+        //if ( thispt > 20 ) std::cout << " sv Pt greater than 20 GeV: " << svLVec.at(i).Pt() << ", ";
+        float thiseta = svLVec.at(i).Eta();
+        if ( std::abs(thiseta) > 2.4 ) std::cout << " sv Eta greater than 2.4: " << svLVec.at(i).Eta() << ", " << svLVec.at(i).Pt() << std::endl;
       } 
-      std::cout << std::endl;
+      //std::cout << std::endl;
       */
       //std::cout << "NEvent " << tr->getEvtNum() << std::endl;
       //std::cout << "MET " << tr->getVar<float>("met_pt");

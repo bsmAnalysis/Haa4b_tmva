@@ -41,6 +41,11 @@ namespace AnaConsts
     float minAbsEta, maxAbsEta, minPt, maxPt;
   };
 
+  struct SVAccRec
+  {
+    float minAbsEta, maxAbsEta, minPt, maxPt;
+  };
+
   //cut met first
   const float defaultMETcut = 25.0;
   
@@ -60,11 +65,20 @@ namespace AnaConsts
   const JetAccRec jetsArr = {   -1,        2.5,      20,    -1  };
   const float minDeltaRJetMu = 0.4, minDeltaRJetEl= 0.2;
 
-  //then select hard and soft b jets
+  //then select hard b jets from jet collection
   ////https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation76X
   const float HardBJetsCSVLooseWP = 0.5426, HardBJetsCSVMediumWP = 0.800, HardBJetsCSVTightWP = 0.935;
   const int minNHardBJets = 2, maxNHardBJets = -1;
   const int minNAllBJets = 3, maxNAllBJets = 4;
+
+  //then for svs preselection
+  //                       minAbsEta, maxAbsEta, minPt, maxPt
+  const SVAccRec svsArr = {   -1,        -1,      0,    20  };
+  const float minDeltaRSVJet = 0.4;
+
+  //select soft b jets from sv
+  const int minSVnTrk = 3;
+  const float maxSVPVdxy = 3.0, minSVPVdxyzSignif = 4.0, minSVPVCosdiffAngle = 0.98;
 
   static std::set<std::string> activatedBranchNames_DataOnly = 
   { 
@@ -107,6 +121,7 @@ namespace AnaFunctions
   //common 
   float DeltaPhi(const TLorentzVector& LvecA, const TLorentzVector& LvecB);
   float DeltaR(const TLorentzVector& LvecA, const TLorentzVector& LvecB);
+  
   //muon
   bool passMu(const TLorentzVector& muLvec, bool passId, bool passIso, const AnaConsts::MuIsoAccRec& musArr);
   int countMus(const std::vector<TLorentzVector> &muLvecVec, const std::vector<bool> &passmuId, const std::vector<bool> &passmuIso, const AnaConsts::MuIsoAccRec& musArr, std::vector<TLorentzVector> &selmuLvecVec);
@@ -124,8 +139,14 @@ namespace AnaFunctions
   //hard b-jet selection
   int countHardBJets(const std::vector<TLorentzVector> &jetLvecVec, const std::vector<bool> & passJetPreSel, const std::vector<bool> &passBTag, std::vector<TLorentzVector> &selhardbLvecVec);
   int countHardBJets(const std::vector<TLorentzVector> &jetLvecVec, const std::vector<bool> & passJetPreSel, const std::vector<float> &BTagCSV, std::vector<TLorentzVector> &selhardbLvecVec);
+
+  //sv pre-selection (for soft b jet, pt<20)
+  bool passSVJetClean(const TLorentzVector &svLvec, const std::vector<TLorentzVector> &selhardbLvecVec);
+  std::vector<bool> preSelSV(const std::vector<TLorentzVector> &svLvecVec, const AnaConsts::SVAccRec& svsArr, const std::vector<TLorentzVector> &selhardbLvecVec);
   //soft b-jet selection
-  int countSoftBJets();
+  std::vector<bool> passSoftBTag(const std::vector<int> sv_ntrk_vec, std::vector<float> sv_dxy_vec, std::vector<float> sv_dxyz_signif_vec, std::vector<float> sv_cos_dxyz_p_vec);
+  int countSoftBJets(const std::vector<TLorentzVector> &svLvecVec, const std::vector<bool> & passSVPreSel, const std::vector<bool> &SoftBTag, std::vector<TLorentzVector> &selsoftbLvecVec);
+
 }
 
 #endif
