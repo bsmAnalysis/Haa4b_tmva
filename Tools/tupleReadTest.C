@@ -63,10 +63,13 @@ int main()
         //  std::cout << "num: " << vec.at(i) << std::endl;
         //}
       }
+      //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nHardBjets") << "," << tr->getVar<int>("nHardBjets_Test") << std::endl;
+      
       if ( tr->getVar<bool>("passHardBJets") )
       {
         std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nHardBjets")  << std::endl;
       }
+     
       /*
       if ( tr->getVar<bool>("passMtW") )
       {

@@ -61,6 +61,8 @@ namespace AnaConsts
   const float minDeltaRJetMu = 0.4, minDeltaRJetEl= 0.2;
 
   //then select hard and soft b jets
+  ////https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation76X
+  const float HardBJetsCSVLooseWP = 0.5426, HardBJetsCSVMediumWP = 0.800, HardBJetsCSVTightWP = 0.935;
   const int minNHardBJets = 2, maxNHardBJets = -1;
   const int minNAllBJets = 3, maxNAllBJets = 4;
 
@@ -121,6 +123,7 @@ namespace AnaFunctions
   std::vector<bool> preSelJet(const std::vector<TLorentzVector> &jetLvecVec, const AnaConsts::JetAccRec& jetsArr, const std::vector<TLorentzVector> &selmuLvecVec, const std::vector<TLorentzVector> &selelLvecVec);
   //hard b-jet selection
   int countHardBJets(const std::vector<TLorentzVector> &jetLvecVec, const std::vector<bool> & passJetPreSel, const std::vector<bool> &passBTag, std::vector<TLorentzVector> &selhardbLvecVec);
+  int countHardBJets(const std::vector<TLorentzVector> &jetLvecVec, const std::vector<bool> & passJetPreSel, const std::vector<float> &BTagCSV, std::vector<TLorentzVector> &selhardbLvecVec);
   //soft b-jet selection
   int countSoftBJets();
 }

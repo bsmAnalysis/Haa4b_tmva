@@ -2,6 +2,10 @@
                                                        float mtw
                                                         bool passLeptonSel
                                                          int nels_CUT
+                  std::vector<float, std::allocator<float> > sv_en_vec
+                  std::vector<float, std::allocator<float> > sv_pz_vec
+                  std::vector<float, std::allocator<float> > sv_py_vec
+                  std::vector<float, std::allocator<float> > jet_btag0_vec
                     std::vector<bool, std::allocator<bool> > jet_PFLoose_vec
                   std::vector<float, std::allocator<float> > jet_pz_vec
                   std::vector<float, std::allocator<float> > jet_py_vec
@@ -16,9 +20,6 @@ std::vector<TLorentzVector, std::allocator<TLorentzVector> > enLVec
                                                          int nmus_CUT
                   std::vector<float, std::allocator<float> > mn_pz_vec
                   std::vector<float, std::allocator<float> > mn_px_vec
-                  std::vector<float, std::allocator<float> > sv_en_vec
-                  std::vector<float, std::allocator<float> > sv_pz_vec
-                  std::vector<float, std::allocator<float> > sv_py_vec
                     std::vector<bool, std::allocator<bool> > mn_passId_vec
                                                        float met_pt
                                                        float fjet_subjets_pz

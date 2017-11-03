@@ -226,6 +226,7 @@ void BaselineVessel::PreProcessing()
   tr->registerDerivedVec("jetLVec", jetLVec);
   //to select a b jet with pt > 20
   ArrayToVec( jet, "jet_PFLoose", & ( tr->getVar<bool>("jet_PFLoose") ) );
+  ArrayToVec( jet, "jet_btag0", & ( tr->getVar<float>("jet_btag0") ) );
 
   //sv
   int sv = tr->getVar<int>("sv");
@@ -293,8 +294,10 @@ void BaselineVessel::PassBaseline()
   std::vector<bool> passJetPreSel = AnaFunctions::preSelJet(jetLvecVec, AnaConsts::jetsArr, selmuLvecVec, selelLvecVec);
   //hard b jet
   std::vector<TLorentzVector> selhardbLvecVec;
-  int nhardbjets = AnaFunctions::countHardBJets(jetLvecVec, passJetPreSel, tr->getVec<bool>("jet_PFLoose_vec"), selhardbLvecVec);
+  int nhardbjets = AnaFunctions::countHardBJets(jetLvecVec, passJetPreSel, tr->getVec<float>("jet_btag0_vec"), selhardbLvecVec);
   tr->registerDerivedVar("nHardBjets", nhardbjets);
+  //int nhardbjets_test = AnaFunctions::countHardBJets(jetLvecVec, passJetPreSel, tr->getVec<bool>("jet_PFLoose_vec"), selhardbLvecVec);
+  //tr->registerDerivedVar("nHardBjets_Test", nhardbjets_test);
   bool passHardBJets = nhardbjets >= AnaConsts::minNHardBJets;
   tr->registerDerivedVar("passHardBJets", passHardBJets);
 

@@ -163,4 +163,18 @@ namespace AnaFunctions
     }
     return cntHardBJets;
   }
+  
+  int countHardBJets(const std::vector<TLorentzVector> &jetLvecVec, const std::vector<bool> & passJetPreSel, const std::vector<float> &BTagCSV, std::vector<TLorentzVector> &selhardbLvecVec)
+  {
+    int cntHardBJets = 0;
+    for ( int i = 0; i < jetLvecVec.size(); i++ )
+    {
+      if ( passJetPreSel[i] && (BTagCSV[i] > AnaConsts::HardBJetsCSVLooseWP) )
+      {
+        cntHardBJets ++;
+        selhardbLvecVec.push_back(jetLvecVec[i]);
+      }
+    }
+    return cntHardBJets;
+  }
 }
