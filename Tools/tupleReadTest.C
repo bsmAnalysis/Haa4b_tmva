@@ -60,13 +60,21 @@ int main()
         //}
       }
      
-      int size = tr->getVar<int>("mn");
-      std::cout << "NEvent " << tr->getEvtNum();
-      std::vector<TLorentzVector> mnLVec = tr->getVec<TLorentzVector>("mnLVec");
-      for (int i = 0; i < mnLVec.size(); i++)
+      std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("sv") << ", " << tr->getVar<int>("jet") << std::endl;
+      std::vector<TLorentzVector> jetLVec = tr->getVec<TLorentzVector>("jetLVec");
+      for (int i = 0; i < jetLVec.size(); i++)
       {
-        std::cout << " Eta: " << mnLVec.at(i).Eta() << ", ";
+        float thispt = jetLVec.at(i).Pt();
+        if ( thispt < 20 ) std::cout << " Jet Pt smaller than 20 GeV: " << jetLVec.at(i).Pt() << ", ";
       }
+      std::cout << std::endl;
+
+      std::vector<TLorentzVector> svLVec = tr->getVec<TLorentzVector>("svLVec"); 
+      for (int i = 0; i < svLVec.size(); i++)
+      {
+        float thispt = svLVec.at(i).Pt();
+        if ( thispt > 20 ) std::cout << " sv Pt greater than 20 GeV: " << svLVec.at(i).Pt() << ", ";
+      } 
       std::cout << std::endl;
       //std::cout << "NEvent " << tr->getEvtNum() << std::endl;
       //std::cout << "MET " << tr->getVar<float>("met_pt");

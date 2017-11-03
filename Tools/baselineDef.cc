@@ -203,19 +203,29 @@ bool BaselineVessel::PredefineSpec()
 
 void BaselineVessel::PreProcessing()
 {
+  //sv
+  int sv = tr->getVar<int>("sv");
+  ArrayToVec( sv, "sv_px" ); ArrayToVec( sv, "sv_py" ); ArrayToVec( sv, "sv_pz" ); ArrayToVec( sv, "sv_en" );
+  std::vector<TLorentzVector> * svLVec = new std::vector<TLorentzVector>();
+  (* svLVec) = ConstructVecLVec( tr->getVec<float>("sv_px_vec"), tr->getVec<float>("sv_py_vec"), tr->getVec<float>("sv_pz_vec"), tr->getVec<float>("sv_en_vec") );
+  tr->registerDerivedVec("svLVec", svLVec);
+  //to select a sv for soft b jet pt < 20
+
   //jet
   int jet = tr->getVar<int>("jet");
   ArrayToVec( jet, "jet_px" ); ArrayToVec( jet, "jet_py" ); ArrayToVec( jet, "jet_pz" ); ArrayToVec( jet, "jet_en" );
   std::vector<TLorentzVector> * jetLVec = new std::vector<TLorentzVector>();
   (* jetLVec) = ConstructVecLVec( tr->getVec<float>("jet_px_vec"), tr->getVec<float>("jet_py_vec"), tr->getVec<float>("jet_pz_vec"), tr->getVec<float>("jet_en_vec") );
   tr->registerDerivedVec("jetLVec", jetLVec);
+  //to select a b jet with pt > 20
+  ArrayToVec( jet, "jet_PFLoose" );
 
   //fjet
-  int fjet = tr->getVar<int>("fjet");
-  ArrayToVec( fjet, "fjet_px" ); ArrayToVec( fjet, "fjet_py" ); ArrayToVec( fjet, "fjet_pz" ); ArrayToVec( fjet, "fjet_en" );
-  std::vector<TLorentzVector> * fjetLVec = new std::vector<TLorentzVector>();
-  (* fjetLVec) = ConstructVecLVec( tr->getVec<float>("fjet_px_vec"), tr->getVec<float>("fjet_py_vec"), tr->getVec<float>("fjet_pz_vec"), tr->getVec<float>("fjet_en_vec") );
-  tr->registerDerivedVec("fjetLVec", fjetLVec);
+  //int fjet = tr->getVar<int>("fjet");
+  //ArrayToVec( fjet, "fjet_px" ); ArrayToVec( fjet, "fjet_py" ); ArrayToVec( fjet, "fjet_pz" ); ArrayToVec( fjet, "fjet_en" );
+  //std::vector<TLorentzVector> * fjetLVec = new std::vector<TLorentzVector>();
+  //(* fjetLVec) = ConstructVecLVec( tr->getVec<float>("fjet_px_vec"), tr->getVec<float>("fjet_py_vec"), tr->getVec<float>("fjet_pz_vec"), tr->getVec<float>("fjet_en_vec") );
+  //tr->registerDerivedVec("fjetLVec", fjetLVec);
 
   //Electron
   int en = tr->getVar<int>("en");
