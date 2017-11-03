@@ -297,7 +297,7 @@ void BaselineVessel::PassBaseline()
 
   bool passHardBJets = nhardbjets >= AnaConsts::minNHardBJets;
   tr->registerDerivedVar("passHardBJets", passHardBJets);
-  bool passAllBJets = ( nhardbjets >= AnaConsts::minNHardBJets ) && ( (nhardbjets + nsoftbjets) >= AnaConsts::minNAllBJets );
+  bool passAllBJets = ( (nhardbjets + nsoftbjets) >= AnaConsts::minNAllBJets ) && ( (nhardbjets + nsoftbjets) <= AnaConsts::maxNAllBJets );
   tr->registerDerivedVar("passAllBJets", passAllBJets);
 
   /*

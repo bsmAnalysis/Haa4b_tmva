@@ -55,7 +55,7 @@ namespace AnaConsts
 
   //then select hard and soft b jets
   const int minNHardBJets = 2, maxNHardBJets = -1;
-  const int minNAllBJets = 3, maxNAllBJets = -1; 
+  const int minNAllBJets = 3, maxNAllBJets = 4;
 
 
   const int nJetsSel = 4, nJetsSelPt30Eta24 = 4, nJetsSelPt50Eta24 = 2, nJetsSelPt70Eta24 = 2;
