@@ -79,9 +79,9 @@ namespace AnaSamples
     SampleBase() : nullT_() {};
     const T& operator[](const std::string& key) const
     {
-            auto iter = sampleSet_.find(key);
-            if(iter != sampleSet_.end()) return iter->second;
-            else                         return nullT_;
+      auto iter = sampleSet_.find(key);
+      if (iter != sampleSet_.end()) return iter->second;
+      else                          return nullT_;
     }
     const T& null() const {return nullT_;}
     
@@ -135,5 +135,4 @@ namespace AnaSamples
     void addSampleSet(SampleSet& samples, std::string name, std::vector<std::string> vss);
   };
 }
-
 #endif
