@@ -89,7 +89,7 @@ namespace AnaFunctions
   }
 
   //hard b-jet selection
-  int countHardBJets(const std::vector<TLorentzVector> &jetLvecVec, const std::vector<bool> & passJetPreSel, const std::vector<bool> &passBTag, std::vector<TLorentzVector> &selbjetLvecVec)
+  int countHardBJets(const std::vector<TLorentzVector> &jetLvecVec, const std::vector<bool> & passJetPreSel, const std::vector<bool> &passBTag, std::vector<TLorentzVector> &selhardbLvecVec)
   {
     int cntHardBJets = 0;
     for ( int i = 0; i < jetLvecVec.size(); i++ )
@@ -97,7 +97,7 @@ namespace AnaFunctions
       if ( passJetPreSel[i] && passBTag[i] )
       {
         cntHardBJets ++;
-        selbjetLvecVec.push_back(jetLvecVec[i]);
+        selhardbLvecVec.push_back(jetLvecVec[i]);
       }
     }
     return cntHardBJets;

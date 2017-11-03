@@ -208,15 +208,6 @@ void BaselineVessel::PreProcessing()
   tr->registerDerivedVec("svLVec", svLVec);
   //to select a sv for soft b jet pt < 20
 
-  //jet
-  int jet = tr->getVar<int>("jet");
-  ArrayToVec( jet, "jet_px" ); ArrayToVec( jet, "jet_py" ); ArrayToVec( jet, "jet_pz" ); ArrayToVec( jet, "jet_en" );
-  std::vector<TLorentzVector> * jetLVec = new std::vector<TLorentzVector>();
-  (* jetLVec) = ConstructVecLVec( tr->getVec<float>("jet_px_vec"), tr->getVec<float>("jet_py_vec"), tr->getVec<float>("jet_pz_vec"), tr->getVec<float>("jet_en_vec") );
-  tr->registerDerivedVec("jetLVec", jetLVec);
-  //to select a b jet with pt > 20
-  //ArrayToVec( jet, "jet_PFLoose" );
-
   //fjet
   //int fjet = tr->getVar<int>("fjet");
   //ArrayToVec( fjet, "fjet_px" ); ArrayToVec( fjet, "fjet_py" ); ArrayToVec( fjet, "fjet_pz" ); ArrayToVec( fjet, "fjet_en" );
@@ -241,6 +232,16 @@ void BaselineVessel::PreProcessing()
   tr->registerDerivedVec("enLVec", enLVec);
   //Electron id and iso
   ArrayToVec( en, "en_passId" ); ArrayToVec( en, "en_passIso" );
+
+  //jet
+  int jet = tr->getVar<int>("jet");
+  ArrayToVec( jet, "jet_px" ); ArrayToVec( jet, "jet_py" ); ArrayToVec( jet, "jet_pz" ); ArrayToVec( jet, "jet_en" );
+  std::vector<TLorentzVector> * jetLVec = new std::vector<TLorentzVector>();
+  (* jetLVec) = ConstructVecLVec( tr->getVec<float>("jet_px_vec"), tr->getVec<float>("jet_py_vec"), tr->getVec<float>("jet_pz_vec"), tr->getVec<float>("jet_en_vec") );
+  tr->registerDerivedVec("jetLVec", jetLVec);
+  //to select a b jet with pt > 20
+  ArrayToVec( jet, "jet_PFLoose" );
+
 
   return ;
 }
@@ -287,21 +288,25 @@ void BaselineVessel::PassBaseline()
   //end MtW
 
   //b jets selection
-  //jet pre selection, acc and lepton clean
-
+  //hard b jet, jet pre selection, acc and lepton clean
+  std::vector<TLorentzVector> jetLvecVec = tr->getVec<TLorentzVector>("jetLVec");
+  std::vector<bool> passJetPreSel = AnaFunctions::preSelJet(jetLvecVec, AnaConsts::jetsArr, selmuLvecVec, selelLvecVec);
+  //hard b jet
   std::vector<TLorentzVector> selhardbLvecVec;
-  int nhardbjets = 0;
-  //AnaFunctions::countHardBJets(tr->getVec<TLorentzVector>("mnLVec"), tr->getVec<bool>("mn_passId_vec"), tr->getVec<bool>("mn_passIso_vec"), AnaConsts::musArr, selmuLvecVec);
+  int nhardbjets = AnaFunctions::countHardBJets(jetLvecVec, passJetPreSel, tr->getVec<bool>("jet_PFLoose_vec"), selhardbLvecVec);
   tr->registerDerivedVar("nHardBjets", nhardbjets);
+  bool passHardBJets = nhardbjets >= AnaConsts::minNHardBJets;
+  tr->registerDerivedVar("passHardBJets", passHardBJets);
+
+  //soft b jet
   std::vector<TLorentzVector> selsoftbLvecVec;
   int nsoftbjets = 0;
   //AnaFunctions::countSoftBJets(tr->getVec<TLorentzVector>("enLVec"), tr->getVec<bool>("en_passId_vec"), tr->getVec<bool>("en_passIso_vec"), AnaConsts::elsArr, selelLvecVec);
   tr->registerDerivedVar("nSoftBJets", nsoftbjets);
-
-  bool passHardBJets = nhardbjets >= AnaConsts::minNHardBJets;
-  tr->registerDerivedVar("passHardBJets", passHardBJets);
   bool passAllBJets = ( (nhardbjets + nsoftbjets) >= AnaConsts::minNAllBJets ) && ( (nhardbjets + nsoftbjets) <= AnaConsts::maxNAllBJets );
   tr->registerDerivedVar("passAllBJets", passAllBJets);
+  //end b jets selection
+
 
   /*
   // Calculate number of jets and b-tagged jets
