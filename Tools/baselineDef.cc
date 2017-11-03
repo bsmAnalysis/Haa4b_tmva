@@ -29,7 +29,7 @@ BaselineVessel::BaselineVessel(NTupleReader &tr_, const std::string specializati
   doMET                 = true;
   dodPhis               = true;
   passBaseline          = true;
-  metLVec.SetPtEtaPhiM(0, 0, 0, 0);
+  metLvec.SetPtEtaPhiM(0, 0, 0, 0);
 
   if(filterString.compare("fastsim") ==0) isfastsim = true; else isfastsim = false; 
 
@@ -251,8 +251,8 @@ void BaselineVessel::PassBaseline()
   passBaseline = true;
 
   //MET cut
-  metLVec.SetPtEtaPhiM(tr->getVar<float>("met_pt"), 0, tr->getVar<float>("met_phi"), 0);
-  bool passMET = (metLVec.Pt() >= AnaConsts::defaultMETcut);
+  metLvec.SetPtEtaPhiM(tr->getVar<float>("met_pt"), 0, tr->getVar<float>("met_phi"), 0);
+  bool passMET = (metLvec.Pt() >= AnaConsts::defaultMETcut);
   tr->registerDerivedVar("passMET", passMET);
 
   //lepton selection
@@ -273,12 +273,15 @@ void BaselineVessel::PassBaseline()
   if ( ( passMusSel && !passElsSel ) )
   {
     //std::cout << selmuLvecVec.at(0).Pt() << std::endl;
+    mtw = AnaFunctions::calcMtW( metLvec, selmuLvecVec.at(0) );
   }
   else if ( ( !passMusSel && passElsSel ) )
   {
     //std::cout << selelLvecVec.at(0).Pt() << std::endl;
+    mtw = AnaFunctions::calcMtW( metLvec, selelLvecVec.at(0) );
   }
   else mtw = 0;
+  tr->registerDerivedVar("mtw", mtw);
   bool passMtW = ( mtw >= AnaConsts::minMtW ) && ( mtw < AnaConsts::maxMtW );
   tr->registerDerivedVar("passMtW", passMtW);
   

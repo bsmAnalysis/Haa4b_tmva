@@ -138,6 +138,23 @@ namespace AnaFunctions
   }
   //end electron
 
+  //calculate mtw
+  float calcMtW( TLorentzVector metLvec, TLorentzVector lepLvec)
+  {
+    float dphi = metLvec.Phi() - lepLvec.Phi();
+    while ( dphi > TMath::Pi() )
+    {
+      dphi = dphi - 2 * TMath::Pi();
+    }
+    while ( dphi < -TMath::Pi() )
+    {
+      dphi = dphi + 2 * TMath::Pi();
+    }
+    float mtw = std::sqrt ( 2.0 * metLvec.Pt() * lepLvec.Pt() * ( 1.0 - std::cos( dphi ) ) );
+    return mtw;
+  }
+  //end mtw
+
   // cntNJetsVec stores number of jets counters from tightest requirement to loosest requirement.
   // cutCSVS is the CSV cut value
   void preparecntNJets(const std::vector<TLorentzVector> &inijetsLVec, const std::vector<double> &inirecoJetsBtag, const double cutCSVS, std::vector<int> &cntNJetsVec, std::vector<int> &cntNbJetsVec)

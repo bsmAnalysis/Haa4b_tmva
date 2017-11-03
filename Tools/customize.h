@@ -5,6 +5,7 @@
 #include "TTree.h"
 #include "TChain.h"
 #include "TLorentzVector.h"
+#include "TMath.h"
 #include "Math/VectorUtil.h"
 
 #include <iostream>
@@ -15,6 +16,7 @@
 #include <map>
 #include <set>
 #include <string>
+#include <math.h>
 /*
    This file is used to customize the NTupleReader and the flat ntuples for our baseline and search region definitions.
    Currently these include jet pt, eta requirements for counting, functions to calculate nJets, nbJets, deltaphi, and so on.
@@ -128,6 +130,9 @@ namespace AnaFunctions
   bool passEl(const TLorentzVector& elLvec, bool passId, bool passIso, const AnaConsts::ElIsoAccRec& elsArr);
   int countEls(const std::vector<TLorentzVector> &elLvecVec, const std::vector<bool> &passelId, const std::vector<bool> &passelIso, const AnaConsts::ElIsoAccRec& elsArr, std::vector<TLorentzVector> &selelLvecVec);
   
+  //calculate mtw
+  float calcMtW( TLorentzVector metLvec, TLorentzVector lepLvec);
+
   void preparecntNJets(const std::vector<TLorentzVector> &inijetsLVec, const std::vector<double> &inirecoJetsBtag, const double cutCSVS, std::vector<int> &cntNJetsVec, std::vector<int> &cntNbJetsVec);
   void preparecalcDPhi(const std::vector<TLorentzVector> &inijetsLVec, const double metphi, std::vector<double> &outDPhiVec);
   void prepareForNtupleReader();
