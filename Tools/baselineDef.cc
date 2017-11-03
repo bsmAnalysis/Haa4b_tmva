@@ -285,6 +285,21 @@ void BaselineVessel::PassBaseline()
   bool passMtW = ( mtw >= AnaConsts::minMtW ) && ( mtw < AnaConsts::maxMtW );
   tr->registerDerivedVar("passMtW", passMtW);
   
+
+  std::vector<TLorentzVector> selhardbLvecVec;
+  int nhardbjets = 0;
+  //AnaFunctions::countHardBJets(tr->getVec<TLorentzVector>("mnLVec"), tr->getVec<bool>("mn_passId_vec"), tr->getVec<bool>("mn_passIso_vec"), AnaConsts::musArr, selmuLvecVec);
+  tr->registerDerivedVar("nHardBjets", nhardbjets);
+  std::vector<TLorentzVector> selsoftbLvecVec;
+  int nsoftbjets = 0;
+  //AnaFunctions::countSoftBJets(tr->getVec<TLorentzVector>("enLVec"), tr->getVec<bool>("en_passId_vec"), tr->getVec<bool>("en_passIso_vec"), AnaConsts::elsArr, selelLvecVec);
+  tr->registerDerivedVar("nSoftBJets", nsoftbjets);
+
+  bool passHardBJets = nhardbjets >= AnaConsts::minNHardBJets;
+  tr->registerDerivedVar("passHardBJets", passHardBJets);
+  bool passAllBJets = ( nhardbjets >= AnaConsts::minNHardBJets ) && ( (nhardbjets + nsoftbjets) >= AnaConsts::minNAllBJets );
+  tr->registerDerivedVar("passAllBJets", passAllBJets);
+
   /*
   // Calculate number of jets and b-tagged jets
   int cntCSVS = AnaFunctions::countCSVS(tr->getVec<TLorentzVector>(jetVecLabel), tr->getVec<double>(CSVVecLabel), AnaConsts::cutCSVS, AnaConsts::bTagArr);
