@@ -95,16 +95,7 @@ namespace AnaFunctions
       && flagID;
   }
 
-  bool passMuonAccOnly(const TLorentzVector& muon, const AnaConsts::IsoAccRec& muonsArr)
-  {
-    const double minAbsEta = muonsArr.minAbsEta, maxAbsEta = muonsArr.maxAbsEta, minPt = muonsArr.minPt, maxPt = muonsArr.maxPt;
-    double permuonpt = muon.Pt(), permuoneta = muon.Eta();
-    return ( minAbsEta == -1 || fabs(permuoneta) >= minAbsEta )
-      && ( maxAbsEta == -1 || fabs(permuoneta) < maxAbsEta )
-      && (     minPt == -1 || permuonpt >= minPt )
-      && (     maxPt == -1 || permuonpt < maxPt );
-  }
-
+  //muon
   int countMuons(const std::vector<TLorentzVector> &muonsLVec, const std::vector<double> &muonsRelIso, const std::vector<double> &muonsMtw, const std::vector<int> &muonsFlagID, const AnaConsts::IsoAccRec& muonsArr)
   {
 
@@ -127,7 +118,8 @@ namespace AnaFunctions
       && (    maxMtw == -1 || electronMtw < maxMtw )
       && flagID;
   }
-
+  //end muon
+  //electron
   bool passElectronAccOnly(const TLorentzVector& elec, const AnaConsts::ElecIsoAccRec& elesArr)
   {
     const double minAbsEta = elesArr.minAbsEta, maxAbsEta = elesArr.maxAbsEta, minPt = elesArr.minPt, maxPt = elesArr.maxPt;
@@ -136,16 +128,6 @@ namespace AnaFunctions
       && ( maxAbsEta == -1 || fabs(perelectroneta) < maxAbsEta )
       && (     minPt == -1 || perelectronpt >= minPt )
       && (     maxPt == -1 || perelectronpt < maxPt );
-  }
-
-  int countOldElectrons(const std::vector<TLorentzVector> &electronsLVec, const std::vector<double> &electronsRelIso, const std::vector<double> &electronsMtw, const std::vector<int> &electronsFlagID, const AnaConsts::ElecIsoAccRec& elesArr)
-  {
-
-    int cntNElectrons = 0;
-    for(unsigned int ie=0; ie<electronsLVec.size(); ie++){
-      if(passElectron(electronsLVec[ie], electronsRelIso[ie], electronsMtw[ie], true, electronsFlagID[ie], elesArr)) cntNElectrons ++;
-    }
-    return cntNElectrons;
   }
 
   int countElectrons(const std::vector<TLorentzVector> &electronsLVec, const std::vector<double> &electronsRelIso, const std::vector<double> &electronsMtw, const std::vector<unsigned int>& isEBVec, const std::vector<int> &electronsFlagID, const AnaConsts::ElecIsoAccRec& elesArr)
@@ -157,39 +139,7 @@ namespace AnaFunctions
     }
     return cntNElectrons;
   }
-
-  double getElectronActivity(const TLorentzVector& elec, const std::vector<TLorentzVector>& jetLVec, const std::vector<double>& recoJetschargedHadronEnergyFraction, const AnaConsts::ActRec& elesAct)
-  {
-    double activity = 0;
-    for( unsigned int i = 0 ; i < jetLVec.size() ; i++ )
-    {
-      if( ROOT::Math::VectorUtil::DeltaR(elec , jetLVec.at(i)) < elesAct.maxdR && jetLVec.at(i).Pt() > elesAct.minPt )
-        //for now, we study the activity integral over jetpt > 10, we will lower the pt cut later
-      {
-        activity += jetLVec.at(i).Pt() * recoJetschargedHadronEnergyFraction.at(i);
-      }
-      else
-        continue;
-    }
-    return activity;
-  }
-
-  double getMuonActivity(const TLorentzVector& muon, const std::vector<TLorentzVector>& jetLVec, const std::vector<double>& recoJetschargedHadronEnergyFraction, const std::vector<double>& recoJetschargedEmEnergyFraction, const AnaConsts::ActRec& muonsAct)
-  {
-    double activity = 0;
-    for( unsigned int i = 0 ; i < jetLVec.size() ; i++ )
-    {
-      if( ROOT::Math::VectorUtil::DeltaR(muon , jetLVec.at(i)) < muonsAct.maxdR && jetLVec.at(i).Pt() > muonsAct.minPt )
-        //for now, we study the activity integral over jetpt > 10, we will lower the pt cut later
-      {
-        activity += jetLVec.at(i).Pt() * (recoJetschargedEmEnergyFraction.at(i) + recoJetschargedHadronEnergyFraction.at(i));
-      }
-      else
-        continue;
-    }
-    return activity;
-  }
-
+  //end electron
   bool passIsoTrk(const TLorentzVector& isoTrk, const double isoTrkIso, const double isoTrkMtw, const AnaConsts::IsoAccRec& isoTrksArr)
   {
     const double minAbsEta = isoTrksArr.minAbsEta, maxAbsEta = isoTrksArr.maxAbsEta, minPt = isoTrksArr.minPt, maxPt = isoTrksArr.maxPt, maxIso = isoTrksArr.maxIso, maxMtw = isoTrksArr.maxMtw;
