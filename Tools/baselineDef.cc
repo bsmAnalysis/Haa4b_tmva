@@ -29,8 +29,6 @@ BaselineVessel::BaselineVessel(NTupleReader &tr_, const std::string specializati
   doMET                 = true;
   dodPhis               = true;
   passBaseline          = true;
-  passBaselineNoTag     = true;
-  passBaselineNoLepVeto = true;
   metLVec.SetPtEtaPhiM(0, 0, 0, 0);
 
   if(filterString.compare("fastsim") ==0) isfastsim = true; else isfastsim = false; 
@@ -251,8 +249,6 @@ void BaselineVessel::PassBaseline()
 {
   // Initial value
   passBaseline          = true;
-  passBaselineNoTag     = true;
-  passBaselineNoLepVeto = true;
 
   // Form TLorentzVector of MET
   //metLVec.SetPtEtaPhiM(tr->getVar<double>(METLabel), 0, tr->getVar<double>(METPhiLabel), 0);
@@ -262,6 +258,10 @@ void BaselineVessel::PassBaseline()
   int nels = AnaFunctions::countEls(tr->getVec<TLorentzVector>("enLVec"), tr->getVec<bool>("en_passId_vec"), tr->getVec<bool>("en_passIso_vec"), AnaConsts::elsArr);
   tr->registerDerivedVar("nels_CUT", nels);
 
+  bool passMusSel = (nmus == AnaConsts::nMusSel), passElsSel = (nels == AnaConsts::nElsSel);
+  tr->registerDerivedVar("passMusSel", passMusSel); tr->registerDerivedVar("passElsSel", passElsSel);
+  bool passLeptonSel = ( passMusSel && !passElsSel ) || ( !passMusSel && passElsSel );
+  tr->registerDerivedVar("passLeptonSel", passLeptonSel);
   /*
   // Calculate number of jets and b-tagged jets
   int cntCSVS = AnaFunctions::countCSVS(tr->getVec<TLorentzVector>(jetVecLabel), tr->getVec<double>(CSVVecLabel), AnaConsts::cutCSVS, AnaConsts::bTagArr);

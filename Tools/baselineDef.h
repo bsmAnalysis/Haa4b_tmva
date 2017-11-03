@@ -55,9 +55,6 @@ class BaselineVessel
   bool doMET;
   bool dodPhis;
   bool passBaseline;
-  bool passBaselineNoTagMT2;
-  bool passBaselineNoTag;
-  bool passBaselineNoLepVeto;
 
   BaselineVessel(NTupleReader &tr_, const std::string specialization = "", const std::string filterString = "");
   ~BaselineVessel();

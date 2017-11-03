@@ -39,7 +39,7 @@ namespace AnaConsts
     double minAbsEta, maxAbsEta, minPt, maxPt, maxIsoEB, maxIsoEE, maxMtw;
   };
 
-  const int nMusSel = 0, nElectronsSel = 0, nTausSel = 0, nIsoTrksSel = 0;
+  const int nMusSel = 1, nElsSel = 1;
 
   const int nJetsSel = 4, nJetsSelPt30Eta24 = 4, nJetsSelPt50Eta24 = 2, nJetsSelPt70Eta24 = 2;
   //[low_nJetsSelBtagged, high_nJetsSelBtagged)

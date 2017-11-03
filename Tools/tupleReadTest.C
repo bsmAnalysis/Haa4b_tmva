@@ -59,8 +59,10 @@ int main()
         //  std::cout << "num: " << vec.at(i) << std::endl;
         //}
       }
-     
-      std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nmus_CUT") << " " << tr->getVar<int>("nels_CUT") << std::endl;
+      if ( tr->getVar<bool>("passLeptonSel") )
+      {
+        std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nmus_CUT") << " " << tr->getVar<int>("nels_CUT") << std::endl;
+      }
       /*
       std::vector<TLorentzVector> jetLVec = tr->getVec<TLorentzVector>("jetLVec");
       for (int i = 0; i < jetLVec.size(); i++)
