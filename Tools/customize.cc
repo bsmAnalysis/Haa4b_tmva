@@ -79,10 +79,20 @@ namespace AnaFunctions
   std::vector<bool> preSelJet(const std::vector<TLorentzVector> &jetLvecVec, const AnaConsts::JetAccRec& jetsArr, const std::vector<TLorentzVector> &selmuLvecVec, const std::vector<TLorentzVector> &selelLvecVec)
   {
     std::vector<bool> passJetPreSel;
+    const float minAbsEta = jetsArr.minAbsEta, maxAbsEta = jetsArr.maxAbsEta, minPt = jetsArr.minPt, maxPt = jetsArr.maxPt;
     for ( int i = 0; i < jetLvecVec.size(); i++ )
     {
-      bool thispassJetPreSel =  true;
+      bool thispassJetPreSel = true;
+      float perjetpt = jetLvecVec[i].Pt(), perjeteta = jetLvecVec[i].Eta();
+      bool thispassJetAcc = 
+         ( minAbsEta == -1 || fabs(perjeteta) >= minAbsEta )
+      && ( maxAbsEta == -1 || fabs(perjeteta) < maxAbsEta )
+      && (     minPt == -1 || perjetpt >= minPt )
+      && (     maxPt == -1 || perjetpt < maxPt );
 
+      bool thispassJetLepClean = true;
+      thispassJetPreSel = thispassJetAcc && thispassJetLepClean;
+      //if (thispassJetPreSel){ std::cout <<  perjetpt << "," << perjeteta << std::endl; }
       passJetPreSel.push_back(thispassJetPreSel);
     }
     return passJetPreSel;

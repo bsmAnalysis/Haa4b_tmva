@@ -269,6 +269,7 @@ void BaselineVessel::PassBaseline()
   bool passLeptonSel = ( passMusSel && !passElsSel ) || ( !passMusSel && passElsSel );
   tr->registerDerivedVar("passLeptonSel", passLeptonSel);
   //end lepton selection
+
   //MtW cut, note, must done it after lepton selection! force to be 0 if no lepton selected
   float mtw = 0;
   if ( ( passMusSel && !passElsSel ) )
@@ -306,7 +307,6 @@ void BaselineVessel::PassBaseline()
   bool passAllBJets = ( (nhardbjets + nsoftbjets) >= AnaConsts::minNAllBJets ) && ( (nhardbjets + nsoftbjets) <= AnaConsts::maxNAllBJets );
   tr->registerDerivedVar("passAllBJets", passAllBJets);
   //end b jets selection
-
 
   /*
   // Calculate number of jets and b-tagged jets

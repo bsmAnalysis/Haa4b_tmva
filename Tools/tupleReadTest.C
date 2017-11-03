@@ -44,6 +44,10 @@ int main()
         tr->printTupleMembers(fout);
         fclose(fout);
       }
+
+      int run = tr->getVar<int>("run");
+      //unsigned long event = tr->getVar<unsigned long>("event");
+
       if ( tr->getEvtNum() < 20 )
       {
         //int size = tr->getVar<int>("mn");
@@ -60,10 +64,16 @@ int main()
         //}
       }
 
+      if ( tr->getVar<bool>("passHardBJets") )
+      {
+        std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nHardBjets")  << std::endl;
+      }
+      /*
       if ( tr->getVar<bool>("passMtW") )
       {
         std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("mtw")  << std::endl;
       }
+      */
       /*
       if ( tr->getVar<bool>("passMET") )
       {

@@ -1,6 +1,13 @@
+                                                        bool passAllBJets
                                                        float mtw
                                                         bool passLeptonSel
                                                          int nels_CUT
+                  std::vector<float, std::allocator<float> > jet_PFLoose_vec
+                  std::vector<float, std::allocator<float> > jet_pz_vec
+                  std::vector<float, std::allocator<float> > jet_py_vec
+                  std::vector<float, std::allocator<float> > jet_px_vec
+                  std::vector<float, std::allocator<float> > jet_en_vec
+                  std::vector<float, std::allocator<float> > en_passIso_vec
                   std::vector<float, std::allocator<float> > en_passId_vec
 std::vector<TLorentzVector, std::allocator<TLorentzVector> > enLVec
                   std::vector<float, std::allocator<float> > en_en_vec
@@ -9,11 +16,6 @@ std::vector<TLorentzVector, std::allocator<TLorentzVector> > enLVec
                                                          int nmus_CUT
                   std::vector<float, std::allocator<float> > mn_pz_vec
                   std::vector<float, std::allocator<float> > mn_px_vec
-                  std::vector<float, std::allocator<float> > en_passIso_vec
-                  std::vector<float, std::allocator<float> > jet_en_vec
-                  std::vector<float, std::allocator<float> > jet_pz_vec
-                  std::vector<float, std::allocator<float> > jet_py_vec
-                  std::vector<float, std::allocator<float> > jet_px_vec
                   std::vector<float, std::allocator<float> > sv_en_vec
                   std::vector<float, std::allocator<float> > sv_pz_vec
                   std::vector<float, std::allocator<float> > sv_py_vec
@@ -36,6 +38,7 @@ std::vector<TLorentzVector, std::allocator<TLorentzVector> > enLVec
                                                         bool mn_passIso
                                                          int fjet_hadronFlavour
                                                        float mn_pz
+                                                        bool passHardBJets
                                                        float qscale
                                                         bool mn_passSoftMuon
                                                        float fjet_tau3
@@ -62,6 +65,7 @@ std::vector<TLorentzVector, std::allocator<TLorentzVector> > mnLVec
                                                        float sv_chi2
                                                        float mc_pz
                                                          int mc_momidx
+                                                         int nSoftBJets
                                                          int ngenOOTpum1
                                                        float mc_py
                                                          int ngenITpu
@@ -69,6 +73,7 @@ std::vector<TLorentzVector, std::allocator<TLorentzVector> > mnLVec
                                                         bool mn_passIdLoose
                                                          int mn_type
                                                        float mcbh_px
+                                                         int nHardBjets
                                                        float fjet_subjets_py
                                                        float en_px
                                                         bool hasTrigger
