@@ -1,14 +1,12 @@
-                  std::vector<float, std::allocator<float> > mn_pz_vec
-                  std::vector<float, std::allocator<float> > mn_px_vec
+                  std::vector<float, std::allocator<float> > en_passId_vec
 std::vector<TLorentzVector, std::allocator<TLorentzVector> > enLVec
                   std::vector<float, std::allocator<float> > en_en_vec
                   std::vector<float, std::allocator<float> > en_pz_vec
                   std::vector<float, std::allocator<float> > en_py_vec
-                  std::vector<float, std::allocator<float> > fjet_en_vec
-                  std::vector<float, std::allocator<float> > fjet_pz_vec
-                  std::vector<float, std::allocator<float> > fjet_py_vec
-                  std::vector<float, std::allocator<float> > fjet_px_vec
-                  std::vector<float, std::allocator<float> > jet_PFLoose_vec
+                                                         int nmus_CUT
+                  std::vector<float, std::allocator<float> > mn_pz_vec
+                  std::vector<float, std::allocator<float> > mn_px_vec
+                  std::vector<float, std::allocator<float> > en_passIso_vec
                   std::vector<float, std::allocator<float> > jet_en_vec
                   std::vector<float, std::allocator<float> > jet_pz_vec
                   std::vector<float, std::allocator<float> > jet_py_vec
@@ -16,6 +14,7 @@ std::vector<TLorentzVector, std::allocator<TLorentzVector> > enLVec
                   std::vector<float, std::allocator<float> > sv_en_vec
                   std::vector<float, std::allocator<float> > sv_pz_vec
                   std::vector<float, std::allocator<float> > sv_py_vec
+                  std::vector<float, std::allocator<float> > mn_passId_vec
                                                        float met_pt
                                                        float fjet_subjets_pz
                                                        float fjet_subjets_px
@@ -42,6 +41,7 @@ std::vector<TLorentzVector, std::allocator<TLorentzVector> > enLVec
 std::vector<TLorentzVector, std::allocator<TLorentzVector> > mnLVec
                                                        float met_sumMET
                                                        float sv_px
+                  std::vector<float, std::allocator<float> > mn_passIso_vec
                                                        float jet_puId
                                                        float vtx_z
                                                         bool mn_passId
@@ -82,7 +82,6 @@ std::vector<TLorentzVector, std::allocator<TLorentzVector> > svLVec
 std::vector<TLorentzVector, std::allocator<TLorentzVector> > jetLVec
                                                          int mn_id
                                                          int id2
-std::vector<TLorentzVector, std::allocator<TLorentzVector> > fjetLVec
                                                        float mn_py
                                                        float jet_parton_py
                                                        float fjet_py

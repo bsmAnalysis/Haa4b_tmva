@@ -29,7 +29,6 @@ BaselineVessel::BaselineVessel(NTupleReader &tr_, const std::string specializati
   doMET                 = true;
   dodPhis               = true;
   passBaseline          = true;
-  passBaselineNoTagMT2  = true;
   passBaselineNoTag     = true;
   passBaselineNoLepVeto = true;
   metLVec.SetPtEtaPhiM(0, 0, 0, 0);
@@ -218,7 +217,7 @@ void BaselineVessel::PreProcessing()
   (* jetLVec) = ConstructVecLVec( tr->getVec<float>("jet_px_vec"), tr->getVec<float>("jet_py_vec"), tr->getVec<float>("jet_pz_vec"), tr->getVec<float>("jet_en_vec") );
   tr->registerDerivedVec("jetLVec", jetLVec);
   //to select a b jet with pt > 20
-  ArrayToVec( jet, "jet_PFLoose" );
+  //ArrayToVec( jet, "jet_PFLoose" );
 
   //fjet
   //int fjet = tr->getVar<int>("fjet");
@@ -227,19 +226,23 @@ void BaselineVessel::PreProcessing()
   //(* fjetLVec) = ConstructVecLVec( tr->getVec<float>("fjet_px_vec"), tr->getVec<float>("fjet_py_vec"), tr->getVec<float>("fjet_pz_vec"), tr->getVec<float>("fjet_en_vec") );
   //tr->registerDerivedVec("fjetLVec", fjetLVec);
 
-  //Electron
-  int en = tr->getVar<int>("en");
-  ArrayToVec( en, "en_px" ); ArrayToVec( en, "en_py" ); ArrayToVec( en, "en_pz" ); ArrayToVec( en, "en_en" );
-  std::vector<TLorentzVector> * enLVec = new std::vector<TLorentzVector>();
-  (* enLVec) = ConstructVecLVec( tr->getVec<float>("en_px_vec"), tr->getVec<float>("en_py_vec"), tr->getVec<float>("en_pz_vec"), tr->getVec<float>("en_en_vec") );
-  tr->registerDerivedVec("enLVec", enLVec);
-
   //Muon
   int mn = tr->getVar<int>("mn");
   ArrayToVec( mn, "mn_px" ); ArrayToVec( mn, "mn_py" ); ArrayToVec( mn, "mn_pz" ); ArrayToVec( mn, "mn_en" );
   std::vector<TLorentzVector> * mnLVec = new std::vector<TLorentzVector>();
   (* mnLVec) = ConstructVecLVec( tr->getVec<float>("mn_px_vec"), tr->getVec<float>("mn_py_vec"), tr->getVec<float>("mn_pz_vec"), tr->getVec<float>("mn_en_vec") );
   tr->registerDerivedVec("mnLVec", mnLVec);
+  //Muon id and iso
+  ArrayToVec( mn, "mn_passId" ); ArrayToVec( mn, "mn_passIso" );
+
+  //Electron
+  int en = tr->getVar<int>("en");
+  ArrayToVec( en, "en_px" ); ArrayToVec( en, "en_py" ); ArrayToVec( en, "en_pz" ); ArrayToVec( en, "en_en" );
+  std::vector<TLorentzVector> * enLVec = new std::vector<TLorentzVector>();
+  (* enLVec) = ConstructVecLVec( tr->getVec<float>("en_px_vec"), tr->getVec<float>("en_py_vec"), tr->getVec<float>("en_pz_vec"), tr->getVec<float>("en_en_vec") );
+  tr->registerDerivedVec("enLVec", enLVec);
+  //Electron id and iso
+  ArrayToVec( en, "en_passId" ); ArrayToVec( en, "en_passIso" );
 
   return ;
 }
@@ -248,19 +251,19 @@ void BaselineVessel::PassBaseline()
 {
   // Initial value
   passBaseline          = true;
-  passBaselineNoTagMT2  = true;
   passBaselineNoTag     = true;
   passBaselineNoLepVeto = true;
 
   // Form TLorentzVector of MET
-  metLVec.SetPtEtaPhiM(tr->getVar<double>(METLabel), 0, tr->getVar<double>(METPhiLabel), 0);
+  //metLVec.SetPtEtaPhiM(tr->getVar<double>(METLabel), 0, tr->getVar<double>(METPhiLabel), 0);
 
-  // Calculate number of leptons
-  const std::vector<int> & muonsFlagIDVec = muonsFlagIDLabel.empty()? std::vector<int>(tr->getVec<double>("muonsMiniIso").size(), 1):tr->getVec<int>(muonsFlagIDLabel.c_str()); // We have muonsFlagTight as well, but currently use medium ID
-  const std::vector<int> & elesFlagIDVec = elesFlagIDLabel.empty()? std::vector<int>(tr->getVec<double>("elesMiniIso").size(), 1):tr->getVec<int>(elesFlagIDLabel.c_str()); // Fake electrons since we don't have different ID for electrons now, but maybe later
-  int nMuons = AnaFunctions::countMuons(tr->getVec<TLorentzVector>("muonsLVec"), tr->getVec<double>("muonsMiniIso"), tr->getVec<double>("muonsMtw"), muonsFlagIDVec, AnaConsts::musArr);
-  int nElectrons = AnaFunctions::countElectrons(tr->getVec<TLorentzVector>("elesLVec"), tr->getVec<double>("elesMiniIso"), tr->getVec<double>("elesMtw"), tr->getVec<unsigned int>("elesisEB"), elesFlagIDVec, AnaConsts::elsArr);
+  //const std::vector<int> & elesFlagIDVec = elesFlagIDLabel.empty()? std::vector<int>(tr->getVec<double>("elesMiniIso").size(), 1):tr->getVec<int>(elesFlagIDLabel.c_str()); // Fake electrons since we don't have different ID for electrons now, but maybe later
+  int nmus = AnaFunctions::countMus(tr->getVec<TLorentzVector>("mnLVec"), tr->getVec<bool>("mn_passId_vec"), tr->getVec<bool>("mn_passIso_vec"), AnaConsts::musArr);
+  tr->registerDerivedVar("nmus_CUT", nmus);
 
+  //int nElectrons = AnaFunctions::countElectrons(tr->getVec<TLorentzVector>("elesLVec"), tr->getVec<double>("elesMiniIso"), tr->getVec<double>("elesMtw"), tr->getVec<unsigned int>("elesisEB"), elesFlagIDVec, AnaConsts::elsArr);
+
+  /*
   // Calculate number of jets and b-tagged jets
   int cntCSVS = AnaFunctions::countCSVS(tr->getVec<TLorentzVector>(jetVecLabel), tr->getVec<double>(CSVVecLabel), AnaConsts::cutCSVS, AnaConsts::bTagArr);
   int cntNJetsPt50Eta24 = AnaFunctions::countJets(tr->getVec<TLorentzVector>(jetVecLabel), AnaConsts::pt50Eta24Arr);
@@ -272,22 +275,22 @@ void BaselineVessel::PassBaseline()
   (*dPhiVec) = AnaFunctions::calcDPhi(tr->getVec<TLorentzVector>(jetVecLabel), metLVec.Phi(), 3, AnaConsts::dphiArr);
 
   // Pass lepton veto?
-  bool passMuonVeto = (nMuons == AnaConsts::nMuonsSel), passEleVeto = (nElectrons == AnaConsts::nElectronsSel);
+  bool passMuonVeto = (nMus == AnaConsts::nMusSel), passEleVeto = (nElectrons == AnaConsts::nElectronsSel);
   bool passLeptVeto = passMuonVeto && passEleVeto;
-  if ( doMuonVeto && !passMuonVeto ){ passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; }
-  if ( doEleVeto && !passEleVeto ){ passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; }
+  if ( doMuonVeto && !passMuonVeto ){ passBaseline = false; }
+  if ( doEleVeto && !passEleVeto ){ passBaseline = false; }
 
-  if ( debug ) std::cout<<"nMuons : "<<nMuons<<"  nElectrons : "<<nElectrons<<"  passBaseline : "<<passBaseline<<std::endl;
+  if ( debug ) std::cout<<"nMus : "<<nMus<<"  nElectrons : "<<nElectrons<<"  passBaseline : "<<passBaseline<<std::endl;
 
   // Pass number of jets?
   bool passnJets = true;
-  if( cntNJetsPt50Eta24 < AnaConsts::nJetsSelPt50Eta24 ){ passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; passnJets = false; passBaselineNoLepVeto = false; }
-  if( cntNJetsPt30Eta24 < AnaConsts::nJetsSelPt30Eta24 ){ passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; passnJets = false; passBaselineNoLepVeto = false; }
+  if( cntNJetsPt50Eta24 < AnaConsts::nJetsSelPt50Eta24 ){ passBaseline = false; passnJets = false; passBaselineNoLepVeto = false; }
+  if( cntNJetsPt30Eta24 < AnaConsts::nJetsSelPt30Eta24 ){ passBaseline = false; passnJets = false; passBaselineNoLepVeto = false; }
   if( debug ) std::cout<<"cntNJetsPt50Eta24 : "<<cntNJetsPt50Eta24<<"  cntNJetsPt30Eta24 : "<<cntNJetsPt30Eta24<<"  cntNJetsPt30 : "<<cntNJetsPt30<<"  passBaseline : "<<passBaseline<<std::endl;
 
   // Pass deltaPhi?
   bool passdPhis = (dPhiVec->at(0) >= AnaConsts::dPhi0_CUT && dPhiVec->at(1) >= AnaConsts::dPhi1_CUT && dPhiVec->at(2) >= AnaConsts::dPhi2_CUT);
-  if( dodPhis && !passdPhis ){ passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; passBaselineNoLepVeto = false; }
+  if( dodPhis && !passdPhis ){ passBaseline = false; passBaselineNoLepVeto = false; }
   if( debug ) std::cout<<"dPhi0 : "<<dPhiVec->at(0)<<"  dPhi1 : "<<dPhiVec->at(1)<<"  dPhi2 : "<<dPhiVec->at(2)<<"  passBaseline : "<<passBaseline<<std::endl;
 
   // Pass number of b-tagged jets?
@@ -314,10 +317,7 @@ void BaselineVessel::PassBaseline()
   bool passFastsimEventFilter = true;
   if( !passFastsimEventFilterFunc() ) { passFastsimEventFilter = false; passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; passBaselineNoLepVeto = false; }
   if( debug ) std::cout<<"passFastsimEventFilterFunc : "<<passFastsimEventFilterFunc()<<"  passBaseline : "<<passBaseline<<std::endl;
-  
-  // Register all the calculated variables
-
-  tr->registerDerivedVar("nMuons_CUT", nMuons);
+  */
 
   /*
   tr->registerDerivedVar("nMuons_CUT" + firstSpec, nMuons);
@@ -344,9 +344,6 @@ void BaselineVessel::PassBaseline()
   tr->registerDerivedVar("passNoiseEventFilter" + firstSpec, passNoiseEventFilter);
   tr->registerDerivedVar("passFastsimEventFilter" + firstSpec, passFastsimEventFilter);
   tr->registerDerivedVar("passBaseline" + firstSpec, passBaseline);
-  tr->registerDerivedVar("passBaselineNoTagMT2" + firstSpec, passBaselineNoTagMT2);
-  tr->registerDerivedVar("passBaselineNoTag" + firstSpec, passBaselineNoTag);
-  tr->registerDerivedVar("passBaselineNoLepVeto" + firstSpec, passBaselineNoLepVeto);
 
   if( debug ) std::cout<<"passBaseline : "<<passBaseline<<"  passBaseline : "<<passBaseline<<std::endl;
   */
@@ -438,7 +435,7 @@ void BaselineVessel::operator()(NTupleReader& tr_)
 {
   tr = &tr_;
   PreProcessing();
-  //PassBaseline();
+  PassBaseline();
   //GetMHT();
   //GetLeptons();
   //GetRecoZ(81, 101);
@@ -475,49 +472,6 @@ bool BaselineVessel::GetMHT() const
 // ===========================================================================
 bool BaselineVessel::GetLeptons() const
 {
-  std::vector<TLorentzVector> *vMuons = new std::vector<TLorentzVector> ();
-  std::vector<TLorentzVector> *vEles = new std::vector<TLorentzVector> ();
-  std::vector<int> *vMuonChg = new std::vector<int> ();
-  std::vector<int> *vEleChg = new std::vector<int> ();
-
-  const std::vector<TLorentzVector> &muonsLVec   = tr->getVec<TLorentzVector>("muonsLVec");
-  const std::vector<double>         &muonsRelIso = tr->getVec<double>("muonsMiniIso");
-  const std::vector<double>         &muonsMtw    = tr->getVec<double>("muonsMtw");
-  const std::vector<int>            &muonsFlagID = tr->getVec<int>(muonsFlagIDLabel.c_str());
-  const std::vector<double>         &muonsCharge = tr->getVec<double>("muonsCharge");
-  for(unsigned int im=0; im<muonsLVec.size(); im++){
-    if(AnaFunctions::passMuon(muonsLVec[im], muonsRelIso[im], muonsMtw[im], muonsFlagID[im], AnaConsts::musArr))
-    {
-      if (!vMuons->empty()) // Making sure the vMuons are sorted in Pt
-        assert(muonsLVec.at(im).Pt() <= vMuons->back().Pt());
-      vMuons->push_back(muonsLVec.at(im));
-      vMuonChg->push_back(muonsCharge.at(im));
-    }
-  }
-
-  const std::vector<TLorentzVector> &electronsLVec   = tr->getVec<TLorentzVector>("elesLVec");
-  const std::vector<double> &electronsRelIso         = tr->getVec<double>("elesMiniIso");
-  const std::vector<double> &electronsMtw            = tr->getVec<double>("elesMtw");
-  const std::vector<unsigned int> &isEBVec           = tr->getVec<unsigned int>("elesisEB");
-  const std::vector<int> &electronsFlagID            = tr->getVec<int>(elesFlagIDLabel.c_str());
-  const std::vector<double>         &electronsCharge = tr->getVec<double>("elesCharge");
-  for (unsigned int ie = 0; ie<electronsLVec.size(); ie++)
-  {
-    if (AnaFunctions::passElectron(electronsLVec[ie], electronsRelIso[ie], electronsMtw[ie], isEBVec[ie], electronsFlagID[ie], AnaConsts::elsArr)) 
-    {
-      // Making sure the vEles are sorted in Pt
-      if (!vEles->empty()) { assert(electronsLVec.at(ie).Pt() <= vEles->back().Pt()); }
-      vEles->push_back(electronsLVec.at(ie));
-      vEleChg->push_back(electronsCharge.at(ie));
-    }
-  }
-
-  tr->registerDerivedVar("cutMuID"+firstSpec, muonsFlagIDLabel);
-  tr->registerDerivedVar("cutEleID"+firstSpec, elesFlagIDLabel);
-  tr->registerDerivedVec("cutMuVec"+firstSpec, vMuons);
-  tr->registerDerivedVec("cutEleVec"+firstSpec, vEles);
-  tr->registerDerivedVec("cutMuCharge"+firstSpec, vMuonChg);
-  tr->registerDerivedVec("cutEleCharge"+firstSpec, vEleChg);
 
   return true;
 }

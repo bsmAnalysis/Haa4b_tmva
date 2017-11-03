@@ -60,7 +60,8 @@ int main()
         //}
       }
      
-      std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("sv") << ", " << tr->getVar<int>("jet") << std::endl;
+      std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nmus_CUT") << std::endl;
+      /*
       std::vector<TLorentzVector> jetLVec = tr->getVec<TLorentzVector>("jetLVec");
       for (int i = 0; i < jetLVec.size(); i++)
       {
@@ -76,6 +77,7 @@ int main()
         if ( thispt > 20 ) std::cout << " sv Pt greater than 20 GeV: " << svLVec.at(i).Pt() << ", ";
       } 
       std::cout << std::endl;
+      */
       //std::cout << "NEvent " << tr->getEvtNum() << std::endl;
       //std::cout << "MET " << tr->getVar<float>("met_pt");
       //std::cout << "MET " << tr->getVar<float>("met_pt") << std::endl;

@@ -31,7 +31,7 @@ namespace AnaConsts
 
   struct MuIsoAccRec
   {
-    double minAbsEta, maxAbsEta, minPt, maxPt, maxIso, maxMtw;
+    double minAbsEta, maxAbsEta, minPt, maxPt;
   };
 
   struct ElIsoAccRec
@@ -39,7 +39,7 @@ namespace AnaConsts
     double minAbsEta, maxAbsEta, minPt, maxPt, maxIsoEB, maxIsoEE, maxMtw;
   };
 
-  const int nMuonsSel = 0, nElectronsSel = 0, nTausSel = 0, nIsoTrksSel = 0;
+  const int nMusSel = 0, nElectronsSel = 0, nTausSel = 0, nIsoTrksSel = 0;
 
   const int nJetsSel = 4, nJetsSelPt30Eta24 = 4, nJetsSelPt50Eta24 = 2, nJetsSelPt70Eta24 = 2;
   //[low_nJetsSelBtagged, high_nJetsSelBtagged)
@@ -64,8 +64,8 @@ namespace AnaConsts
   const double defaultMT2cut = 200;
   const double defaultHTcut = 300;
 
-  //                           minAbsEta, maxAbsEta, minPt, maxPt,   maxIso,  maxMtw
-  const MuIsoAccRec musArr = {   -1,       2.4,      25,     -1,       0.2,     -1  };
+  //                           minAbsEta, maxAbsEta, minPt, maxPt
+  const MuIsoAccRec musArr = {   -1,       2.4,      25,     -1   };
 
   //                          minAbsEta, maxAbsEta, minPt, maxPt, maxIsoEB, maxIsoEE,  maxMtw
   const ElIsoAccRec elsArr = {   -1,       2.5,      30,     -1,  0.164369, 0.212604,    -1  };
@@ -120,8 +120,8 @@ namespace AnaFunctions
   std::vector<double> calcDPhiN(const std::vector<TLorentzVector> &inputJets, const TLorentzVector &metLVec, const int nDPhi, const AnaConsts::AccRec& jetCutsArr);
   
   //muon
-  bool passMuon(const TLorentzVector& muon, const double& muonIso, const double& muonMtw, int flagID, const AnaConsts::MuIsoAccRec& muonsArr);
-  int countMuons(const std::vector<TLorentzVector> &muonsLVec, const std::vector<double> &muonsRelIso, const std::vector<double> &muonsMtw, const std::vector<int> &muonsFlagID, const AnaConsts::MuIsoAccRec& muonsArr);
+  bool passMu(const TLorentzVector& muLvec, bool passId, bool passIso, const AnaConsts::MuIsoAccRec& musArr);
+  int countMus(const std::vector<TLorentzVector> &muLvecVec, const std::vector<bool> &passmuId, const std::vector<bool> &passmuIso, const AnaConsts::MuIsoAccRec& musArr);
   
   //electron
   bool passElectron(const TLorentzVector& elec, const double electronIso, const double electronMtw, bool isEB, int flagID, const AnaConsts::ElIsoAccRec& elesArr);

@@ -83,28 +83,26 @@ namespace AnaFunctions
   }
 
   //muon
-  bool passMuon(const TLorentzVector& muon, const double& muonIso, const double& muonMtw, int flagID, const AnaConsts::MuIsoAccRec& musArr)
+  bool passMu(const TLorentzVector& muLvec, bool passId, bool passIso, const AnaConsts::MuIsoAccRec& musArr)
   {
-    const double minAbsEta = musArr.minAbsEta, maxAbsEta = musArr.maxAbsEta, minPt = musArr.minPt, maxPt = musArr.maxPt, maxIso = musArr.maxIso, maxMtw = musArr.maxMtw; 
-    double permuonpt = muon.Pt(), permuoneta = muon.Eta();
-    return ( minAbsEta == -1 || fabs(permuoneta) >= minAbsEta )
-      && ( maxAbsEta == -1 || fabs(permuoneta) < maxAbsEta )
-      && (     minPt == -1 || permuonpt >= minPt )
-      && (     maxPt == -1 || permuonpt < maxPt )
-      && (    maxIso == -1 || muonIso < maxIso )
-      && (    maxMtw == -1 || muonMtw < maxMtw )
-      && flagID;
+    const double minAbsEta = musArr.minAbsEta, maxAbsEta = musArr.maxAbsEta, minPt = musArr.minPt, maxPt = musArr.maxPt; 
+    double permupt = muLvec.Pt(), permueta = muLvec.Eta();
+    return ( minAbsEta == -1 || fabs(permueta) >= minAbsEta )
+      && ( maxAbsEta == -1 || fabs(permueta) < maxAbsEta )
+      && (     minPt == -1 || permupt >= minPt )
+      && (     maxPt == -1 || permupt < maxPt )
+      && passId
+      && passIso;
   }
 
-  int countMuons(const std::vector<TLorentzVector> &muonsLVec, const std::vector<double> &muonsRelIso, const std::vector<double> &muonsMtw, const std::vector<int> &muonsFlagID, const AnaConsts::MuIsoAccRec& musArr)
+  int countMus(const std::vector<TLorentzVector> &muLvecVec, const std::vector<bool> &passmuId, const std::vector<bool> &passmuIso, const AnaConsts::MuIsoAccRec& musArr)
   {
-
-    int cntNMuons = 0;
-    for (unsigned int im = 0; im < muonsLVec.size(); im++)
+    int cntNMus = 0;
+    for (unsigned int im = 0; im < muLvecVec.size(); im++)
     {
-      if (passMuon(muonsLVec[im], muonsRelIso[im], muonsMtw[im], muonsFlagID[im], musArr)) cntNMuons ++;
+      if (passMu(muLvecVec[im], passmuId[im],  passmuIso[im], musArr)) cntNMus ++;
     }
-    return cntNMuons;
+    return cntNMus;
   }
   //end muon
 
