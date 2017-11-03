@@ -9,51 +9,12 @@
 BaselineVessel::BaselineVessel(NTupleReader &tr_, const std::string specialization, const std::string filterString) : 
   tr(&tr_), spec(specialization)
 {
-
-  bToFake               = 1;
   debug                 = false;
-  incZEROtop            = false;
-  UseLepCleanJet        = false;
-  jetVecLabel           = "jetsLVec";
-  CSVVecLabel           = "recoJetsBtag_0";
-  METLabel              = "met";
-  METPhiLabel           = "metphi";
-  jetVecLabelAK8        = "ak8JetsLVec";
-  qgLikehoodLabel       = "qgLikelihood";
-  muonsFlagIDLabel      = "muonsFlagMedium";
-  elesFlagIDLabel       = "elesFlagVeto";
-  toptaggerCfgFile      = "TopTagger.cfg";
-  doIsoTrksVeto         = true;
-  doMuonVeto            = true;
-  doEleVeto             = true;
-  doMET                 = true;
-  dodPhis               = true;
   passBaseline          = true;
+  passSelPreMVA         = true;
   metLvec.SetPtEtaPhiM(0, 0, 0, 0);
-
-  //Check if simplified tagger is called for
-  std::string taggerLabel = "";
-  const std::string aggBinLabel = "AggregatedBins";
-  size_t loc = spec.find(aggBinLabel);
-  if(loc != std::string::npos)
-  {
-    toptaggerCfgFile = "TopTagger_Simplified.cfg";
-    taggerLabel = "AggBins";
-    //Remove aggBinLabel from spec
-    spec.erase(loc, aggBinLabel.size());
-    //Strip any white space ledt in spec
-    spec.erase(spec.begin(), std::find_if(spec.begin(), spec.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
-    spec.erase(std::find_if(spec.rbegin(), spec.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), spec.end());
-  }
-
-  if( !spec.empty() )
-  {
-    TString stripT = spec;
-    TObjArray * objArr = stripT.Tokenize(" ");
-    TObjString* firstObj = dynamic_cast<TObjString*>(objArr->At(0));
-    firstSpec = firstObj->GetString().Data();
-  }
-  firstSpec += taggerLabel;
+  
+  //what do you want to do when initializing class?
 
   //PredefineSpec();
 }
@@ -123,6 +84,7 @@ void BaselineVessel::PassBaseline()
 {
   //Initial value
   passBaseline = true;
+  passSelPreMVA = true;
 
   //MET cut
   metLvec.SetPtEtaPhiM(tr->getVar<float>("met_pt"), 0, tr->getVar<float>("met_phi"), 0);
@@ -186,10 +148,17 @@ void BaselineVessel::PassBaseline()
   //bool passAllBJets = ( (nhardbjets + nsoftbjets) >= AnaConsts::minNAllBJets ) && ( (nhardbjets + nsoftbjets) <= AnaConsts::maxNAllBJets );
   tr->registerDerivedVar("passAllBJets", passAllBJets);
   //end b jets selection
+  //done with pre mva selection
 
+  passSelPreMVA = passMET
+               && passLeptonSel
+               && passMtW
+               && passHardBJets
+               && passAllBJets;
+  tr->registerDerivedVar("passSelPreMVA", passSelPreMVA);
   /*
   // Calculate number of jets and b-tagged jets
-  tr->registerDerivedVar("passBaseline" + firstSpec, passBaseline);
+  tr->registerDerivedVar("passBaseline" + spec, passBaseline);
 
   if( debug ) std::cout<<"passBaseline : "<<passBaseline<<"  passBaseline : "<<passBaseline<<std::endl;
   */

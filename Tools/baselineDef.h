@@ -17,7 +17,6 @@ class BaselineVessel
 {
  private:
   std::string spec;
-  std::string firstSpec;
 
   NTupleReader *tr;
   TLorentzVector metLvec;
@@ -26,33 +25,15 @@ class BaselineVessel
   std::vector<TLorentzVector> ConstructVecLVec( std::vector<float> px, std::vector<float> py, std::vector<float> pz, std::vector<float> en );
  public:
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Member ~~~~~
-  // Obtain all TLVec vectors
-  void PreProcessing();
-  
-  int  bToFake;
   bool debug;
-  bool incZEROtop;
-  bool UseLepCleanJet;
 
-  std::string jetVecLabel;
-  std::string CSVVecLabel;
-  std::string METLabel;
-  std::string METPhiLabel;
-  std::string jetVecLabelAK8;
-  std::string muonsFlagIDLabel;
-  std::string elesFlagIDLabel;
-  std::string qgLikehoodLabel;
-  std::string toptaggerCfgFile;
-  bool doIsoTrksVeto;
-  bool doMuonVeto;
-  bool doEleVeto;
-  bool doMET;
-  bool dodPhis;
   bool passBaseline;
+  bool passSelPreMVA;
 
   BaselineVessel(NTupleReader &tr_, const std::string specialization = "", const std::string filterString = "");
   ~BaselineVessel();
 
+  void PreProcessing();
   void PassBaseline();
 
   void operator()(NTupleReader& tr);
