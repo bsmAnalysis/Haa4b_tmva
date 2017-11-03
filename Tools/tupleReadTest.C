@@ -63,12 +63,10 @@ int main()
         //  std::cout << "num: " << vec.at(i) << std::endl;
         //}
       }
-      /*
       if ( tr->getVar<bool>("passHardBJets") )
       {
         std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nHardBjets")  << std::endl;
       }
-      */
       /*
       if ( tr->getVar<bool>("passMtW") )
       {
@@ -87,6 +85,7 @@ int main()
         std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nmus_CUT") << " " << tr->getVar<int>("nels_CUT") << std::endl;
       }
       */
+      /*
       std::vector<TLorentzVector> jetLVec = tr->getVec<TLorentzVector>("jetLVec");
       for (int i = 0; i < jetLVec.size(); i++)
       {
@@ -95,6 +94,7 @@ int main()
         //if ( thispt < 20 ) std::cout << " Jet Pt smaller than 20 GeV: " << jetLVec.at(i).Pt() << ", ";
       }
       std::cout << std::endl;
+      */
       /*
       std::vector<TLorentzVector> svLVec = tr->getVec<TLorentzVector>("svLVec"); 
       for (int i = 0; i < svLVec.size(); i++)
