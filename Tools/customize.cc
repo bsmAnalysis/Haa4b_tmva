@@ -95,12 +95,16 @@ namespace AnaFunctions
       && passIso;
   }
 
-  int countMus(const std::vector<TLorentzVector> &muLvecVec, const std::vector<bool> &passmuId, const std::vector<bool> &passmuIso, const AnaConsts::MuIsoAccRec& musArr)
+  int countMus(const std::vector<TLorentzVector> &muLvecVec, const std::vector<bool> &passmuId, const std::vector<bool> &passmuIso, const AnaConsts::MuIsoAccRec& musArr, std::vector<TLorentzVector> &selmuLvecVec)
   {
     int cntNMus = 0;
     for (unsigned int im = 0; im < muLvecVec.size(); im++)
     {
-      if (passMu(muLvecVec[im], passmuId[im],  passmuIso[im], musArr)) cntNMus ++;
+      if (passMu(muLvecVec[im], passmuId[im],  passmuIso[im], musArr))
+      {
+        selmuLvecVec.push_back(muLvecVec[im]);
+        cntNMus ++;
+      }
     }
     return cntNMus;
   }
@@ -119,12 +123,16 @@ namespace AnaFunctions
       && passIso;
   }
 
-  int countEls(const std::vector<TLorentzVector> &elLvecVec, const std::vector<bool> &passelId, const std::vector<bool> &passelIso, const AnaConsts::ElIsoAccRec& elsArr)
+  int countEls(const std::vector<TLorentzVector> &elLvecVec, const std::vector<bool> &passelId, const std::vector<bool> &passelIso, const AnaConsts::ElIsoAccRec& elsArr, std::vector<TLorentzVector> &selelLvecVec)
   {
     int cntNEls = 0;
     for (unsigned int ie = 0; ie < elLvecVec.size(); ie++)
     {
-      if (passEl(elLvecVec[ie], passelId[ie], passelIso[ie], elsArr)) cntNEls ++;
+      if (passEl(elLvecVec[ie], passelId[ie], passelIso[ie], elsArr))
+      {
+        selelLvecVec.push_back(elLvecVec[ie]);
+        cntNEls ++;
+      }
     }
     return cntNEls;
   }

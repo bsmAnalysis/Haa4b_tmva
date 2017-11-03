@@ -24,11 +24,6 @@
 
 namespace AnaConsts
 {    
-  struct AccRec
-  {
-    double minAbsEta, maxAbsEta, minPt, maxPt;
-  };
-
   struct MuIsoAccRec
   {
     float minAbsEta, maxAbsEta, minPt, maxPt;
@@ -38,9 +33,23 @@ namespace AnaConsts
   {
     float minAbsEta, maxAbsEta, minPt, maxPt;
   };
+
+  struct AccRec
+  {
+    double minAbsEta, maxAbsEta, minPt, maxPt;
+  };
+
+  //cut met first
   const float defaultMETcut = 25.0;
-  const float minMtW = 50.0, maxMtW = 250.0;
+  //then select lepton
   const int nMusSel = 1, nElsSel = 1;
+  //                           minAbsEta, maxAbsEta, minPt, maxPt
+  const MuIsoAccRec musArr = {   -1,       2.4,      25,     -1   };
+
+  //                           minAbsEta, maxAbsEta, minPt, maxPt
+  const ElIsoAccRec elsArr = {   -1,       2.5,      30,     -1,  };
+  //then calculate mtw
+  const float minMtW = 50.0, maxMtW = 250.0;
 
   const int nJetsSel = 4, nJetsSelPt30Eta24 = 4, nJetsSelPt50Eta24 = 2, nJetsSelPt70Eta24 = 2;
   //[low_nJetsSelBtagged, high_nJetsSelBtagged)
@@ -61,12 +70,6 @@ namespace AnaConsts
   //Note the new working points are for Spring15 samples & data: cutCSVS is the medium working point
   //According to https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation80X, the CSVv2M cut is 0.800
   const double cutCSVS = 0.8484, cutCSVL = 0.5426, cutCSVT = 0.9535, cutCSVSold = 0.800; // old is for ICHEP working point
-
-  //                           minAbsEta, maxAbsEta, minPt, maxPt
-  const MuIsoAccRec musArr = {   -1,       2.4,      25,     -1   };
-
-  //                           minAbsEta, maxAbsEta, minPt, maxPt
-  const ElIsoAccRec elsArr = {   -1,       2.5,      30,     -1,  };
 
   const double dPhi0_CUT = 0.5, dPhi1_CUT = 0.5, dPhi2_CUT = 0.3;
 
@@ -119,11 +122,11 @@ namespace AnaFunctions
   
   //muon
   bool passMu(const TLorentzVector& muLvec, bool passId, bool passIso, const AnaConsts::MuIsoAccRec& musArr);
-  int countMus(const std::vector<TLorentzVector> &muLvecVec, const std::vector<bool> &passmuId, const std::vector<bool> &passmuIso, const AnaConsts::MuIsoAccRec& musArr);
+  int countMus(const std::vector<TLorentzVector> &muLvecVec, const std::vector<bool> &passmuId, const std::vector<bool> &passmuIso, const AnaConsts::MuIsoAccRec& musArr, std::vector<TLorentzVector> &selmuLvecVec);
   
   //electron
   bool passEl(const TLorentzVector& elLvec, bool passId, bool passIso, const AnaConsts::ElIsoAccRec& elsArr);
-  int countEls(const std::vector<TLorentzVector> &elLvecVec, const std::vector<bool> &passelId, const std::vector<bool> &passelIso, const AnaConsts::ElIsoAccRec& elsArr);
+  int countEls(const std::vector<TLorentzVector> &elLvecVec, const std::vector<bool> &passelId, const std::vector<bool> &passelIso, const AnaConsts::ElIsoAccRec& elsArr, std::vector<TLorentzVector> &selelLvecVec);
   
   void preparecntNJets(const std::vector<TLorentzVector> &inijetsLVec, const std::vector<double> &inirecoJetsBtag, const double cutCSVS, std::vector<int> &cntNJetsVec, std::vector<int> &cntNbJetsVec);
   void preparecalcDPhi(const std::vector<TLorentzVector> &inijetsLVec, const double metphi, std::vector<double> &outDPhiVec);

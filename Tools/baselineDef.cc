@@ -250,10 +250,17 @@ void BaselineVessel::PassBaseline()
   //Initial value
   passBaseline = true;
 
+  //MET cut
+  metLVec.SetPtEtaPhiM(tr->getVar<float>("met_pt"), 0, tr->getVar<float>("met_phi"), 0);
+  bool passMET = (metLVec.Pt() >= AnaConsts::defaultMETcut);
+  tr->registerDerivedVar("passMET", passMET);
+
   //lepton selection
-  int nmus = AnaFunctions::countMus(tr->getVec<TLorentzVector>("mnLVec"), tr->getVec<bool>("mn_passId_vec"), tr->getVec<bool>("mn_passIso_vec"), AnaConsts::musArr);
+  std::vector<TLorentzVector> selmuLvecVec;
+  int nmus = AnaFunctions::countMus(tr->getVec<TLorentzVector>("mnLVec"), tr->getVec<bool>("mn_passId_vec"), tr->getVec<bool>("mn_passIso_vec"), AnaConsts::musArr, selmuLvecVec);
   tr->registerDerivedVar("nmus_CUT", nmus);
-  int nels = AnaFunctions::countEls(tr->getVec<TLorentzVector>("enLVec"), tr->getVec<bool>("en_passId_vec"), tr->getVec<bool>("en_passIso_vec"), AnaConsts::elsArr);
+  std::vector<TLorentzVector> selelLvecVec;
+  int nels = AnaFunctions::countEls(tr->getVec<TLorentzVector>("enLVec"), tr->getVec<bool>("en_passId_vec"), tr->getVec<bool>("en_passIso_vec"), AnaConsts::elsArr, selelLvecVec);
   tr->registerDerivedVar("nels_CUT", nels);
 
   bool passMusSel = (nmus == AnaConsts::nMusSel), passElsSel = (nels == AnaConsts::nElsSel);
@@ -263,14 +270,18 @@ void BaselineVessel::PassBaseline()
 
   //MtW cut, note, must done it after lepton selection! force to be 0 if no lepton selected
   float mtw = 0;
+  if ( ( passMusSel && !passElsSel ) )
+  {
+    //std::cout << selmuLvecVec.at(0).Pt() << std::endl;
+  }
+  else if ( ( !passMusSel && passElsSel ) )
+  {
+    //std::cout << selelLvecVec.at(0).Pt() << std::endl;
+  }
+  else mtw = 0;
   bool passMtW = ( mtw >= AnaConsts::minMtW ) && ( mtw < AnaConsts::maxMtW );
   tr->registerDerivedVar("passMtW", passMtW);
   
-  //MET cut
-  metLVec.SetPtEtaPhiM(tr->getVar<float>("met_pt"), 0, tr->getVar<float>("met_phi"), 0);
-  bool passMET = (metLVec.Pt() >= AnaConsts::defaultMETcut);
-  tr->registerDerivedVar("passMET", passMET);
-
   /*
   // Calculate number of jets and b-tagged jets
   int cntCSVS = AnaFunctions::countCSVS(tr->getVec<TLorentzVector>(jetVecLabel), tr->getVec<double>(CSVVecLabel), AnaConsts::cutCSVS, AnaConsts::bTagArr);

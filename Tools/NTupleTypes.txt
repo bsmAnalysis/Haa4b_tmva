@@ -136,6 +136,7 @@ std::vector<TLorentzVector, std::allocator<TLorentzVector> > jetLVec
                                                        float sv_ndof
                                                        float sv_cos_dxyz_p
                                                          int sv_mc_nbh_moms
+                                                        bool passMtW
                                                        float jet_py
                                                        float jet_parton_pz
                                                        float jet_btag0
