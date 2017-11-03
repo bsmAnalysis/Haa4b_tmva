@@ -200,6 +200,7 @@ bool BaselineVessel::PredefineSpec()
 
 void BaselineVessel::PreProcessing()
 {
+  /*
   //sv
   int sv = tr->getVar<int>("sv");
   ArrayToVec( sv, "sv_px" ); ArrayToVec( sv, "sv_py" ); ArrayToVec( sv, "sv_pz" ); ArrayToVec( sv, "sv_en" );
@@ -232,16 +233,15 @@ void BaselineVessel::PreProcessing()
   tr->registerDerivedVec("enLVec", enLVec);
   //Electron id and iso
   ArrayToVec( en, "en_passId" ); ArrayToVec( en, "en_passIso" );
-
+  */
   //jet
   int jet = tr->getVar<int>("jet");
-  ArrayToVec( jet, "jet_px" ); ArrayToVec( jet, "jet_py" ); ArrayToVec( jet, "jet_pz" ); ArrayToVec( jet, "jet_en" );
+  ArrayToVec( jet, "jet_px", & ( tr->getVar<float>("jet_px") ) ); ArrayToVec( jet, "jet_py", & ( tr->getVar<float>("jet_py") ) ); ArrayToVec( jet, "jet_pz", & ( tr->getVar<float>("jet_pz") ) ); ArrayToVec( jet, "jet_en", & ( tr->getVar<float>("jet_en") ) );
   std::vector<TLorentzVector> * jetLVec = new std::vector<TLorentzVector>();
   (* jetLVec) = ConstructVecLVec( tr->getVec<float>("jet_px_vec"), tr->getVec<float>("jet_py_vec"), tr->getVec<float>("jet_pz_vec"), tr->getVec<float>("jet_en_vec") );
   tr->registerDerivedVec("jetLVec", jetLVec);
   //to select a b jet with pt > 20
-  ArrayToVec( jet, "jet_PFLoose" );
-
+  ArrayToVec( jet, "jet_PFLoose", & ( tr->getVar<bool>("jet_PFLoose") ) );
 
   return ;
 }
@@ -310,82 +310,6 @@ void BaselineVessel::PassBaseline()
 
   /*
   // Calculate number of jets and b-tagged jets
-  int cntCSVS = AnaFunctions::countCSVS(tr->getVec<TLorentzVector>(jetVecLabel), tr->getVec<double>(CSVVecLabel), AnaConsts::cutCSVS, AnaConsts::bTagArr);
-  int cntNJetsPt50Eta24 = AnaFunctions::countJets(tr->getVec<TLorentzVector>(jetVecLabel), AnaConsts::pt50Eta24Arr);
-  int cntNJetsPt30Eta24 = AnaFunctions::countJets(tr->getVec<TLorentzVector>(jetVecLabel), AnaConsts::pt30Eta24Arr);
-  int cntNJetsPt30      = AnaFunctions::countJets(tr->getVec<TLorentzVector>(jetVecLabel), AnaConsts::pt30Arr);
-
-  // Calculate deltaPhi
-  std::vector<double> * dPhiVec = new std::vector<double>();
-  (*dPhiVec) = AnaFunctions::calcDPhi(tr->getVec<TLorentzVector>(jetVecLabel), metLVec.Phi(), 3, AnaConsts::dphiArr);
-
-  // Pass lepton veto?
-  bool passMuonVeto = (nMus == AnaConsts::nMusSel), passEleVeto = (nElectrons == AnaConsts::nElectronsSel);
-  bool passLeptVeto = passMuonVeto && passEleVeto;
-  if ( doMuonVeto && !passMuonVeto ){ passBaseline = false; }
-  if ( doEleVeto && !passEleVeto ){ passBaseline = false; }
-
-  if ( debug ) std::cout<<"nMus : "<<nMus<<"  nElectrons : "<<nElectrons<<"  passBaseline : "<<passBaseline<<std::endl;
-
-  // Pass number of jets?
-  bool passnJets = true;
-  if( cntNJetsPt50Eta24 < AnaConsts::nJetsSelPt50Eta24 ){ passBaseline = false; passnJets = false; passBaselineNoLepVeto = false; }
-  if( cntNJetsPt30Eta24 < AnaConsts::nJetsSelPt30Eta24 ){ passBaseline = false; passnJets = false; passBaselineNoLepVeto = false; }
-  if( debug ) std::cout<<"cntNJetsPt50Eta24 : "<<cntNJetsPt50Eta24<<"  cntNJetsPt30Eta24 : "<<cntNJetsPt30Eta24<<"  cntNJetsPt30 : "<<cntNJetsPt30<<"  passBaseline : "<<passBaseline<<std::endl;
-
-  // Pass deltaPhi?
-  bool passdPhis = (dPhiVec->at(0) >= AnaConsts::dPhi0_CUT && dPhiVec->at(1) >= AnaConsts::dPhi1_CUT && dPhiVec->at(2) >= AnaConsts::dPhi2_CUT);
-  if( dodPhis && !passdPhis ){ passBaseline = false; passBaselineNoLepVeto = false; }
-  if( debug ) std::cout<<"dPhi0 : "<<dPhiVec->at(0)<<"  dPhi1 : "<<dPhiVec->at(1)<<"  dPhi2 : "<<dPhiVec->at(2)<<"  passBaseline : "<<passBaseline<<std::endl;
-
-  // Pass number of b-tagged jets?
-  bool passBJets = true;
-  if( !( (AnaConsts::low_nJetsSelBtagged == -1 || cntCSVS >= AnaConsts::low_nJetsSelBtagged) && (AnaConsts::high_nJetsSelBtagged == -1 || cntCSVS < AnaConsts::high_nJetsSelBtagged ) ) ){ passBaseline = false; passBJets = false; passBaselineNoLepVeto = false; }
-  if( debug ) std::cout<<"cntCSVS : "<<cntCSVS<<"  passBaseline : "<<passBaseline<<std::endl;
-
-  // Pass the baseline MET requirement?
-  bool passMET = (metLVec.Pt() >= AnaConsts::defaultMETcut);
-  if( doMET && !passMET ){ passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; passBaselineNoLepVeto = false; }
-  if( debug ) std::cout<<"met : "<<tr->getVar<double>("met")<<"  defaultMETcut : "<<AnaConsts::defaultMETcut<<"  passBaseline : "<<passBaseline<<std::endl;
-
-  // Pass the HT cut for trigger?
-  double HT = AnaFunctions::calcHT(tr->getVec<TLorentzVector>(jetVecLabel), AnaConsts::pt30Eta24Arr);
-  bool passHT = true;
-  if( HT < AnaConsts::defaultHTcut ){ passHT = false; passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; passBaselineNoLepVeto = false; }
-  if( debug ) std::cout<<"HT : "<<HT<<"  defaultHTcut : "<<AnaConsts::defaultHTcut<<"  passHT : "<<passHT<<"  passBaseline : "<<passBaseline<<std::endl;
-
-  bool passNoiseEventFilter = true;
-  if( !passNoiseEventFilterFunc() ) { passNoiseEventFilter = false; passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; passBaselineNoLepVeto = false; }
-  if( debug ) std::cout<<"passNoiseEventFilterFunc : "<<passNoiseEventFilterFunc()<<"  passBaseline : "<<passBaseline<<std::endl;
-
-  // pass the special filter for fastsim
-  bool passFastsimEventFilter = true;
-  if( !passFastsimEventFilterFunc() ) { passFastsimEventFilter = false; passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; passBaselineNoLepVeto = false; }
-  if( debug ) std::cout<<"passFastsimEventFilterFunc : "<<passFastsimEventFilterFunc()<<"  passBaseline : "<<passBaseline<<std::endl;
-  */
-
-  /*
-  tr->registerDerivedVar("nMuons_CUT" + firstSpec, nMuons);
-  tr->registerDerivedVar("nElectrons_CUT" + firstSpec, nElectrons);
-  tr->registerDerivedVar("nIsoTrks_CUT" + firstSpec, nIsoTrks);
-  tr->registerDerivedVar("cntNJetsPt50Eta24" + firstSpec, cntNJetsPt50Eta24);
-  tr->registerDerivedVar("cntNJetsPt30Eta24" + firstSpec, cntNJetsPt30Eta24);
-  tr->registerDerivedVec("dPhiVec" + firstSpec, dPhiVec);
-  tr->registerDerivedVar("cntCSVS" + firstSpec, cntCSVS);
-  tr->registerDerivedVar("cntNJetsPt30" + firstSpec, cntNJetsPt30);
-  tr->registerDerivedVar("HT" + firstSpec, HT);
-
-  tr->registerDerivedVar("passLeptVeto" + firstSpec, passLeptVeto);
-  tr->registerDerivedVar("passMuonVeto" + firstSpec, passMuonVeto);
-  tr->registerDerivedVar("passEleVeto" + firstSpec, passEleVeto);
-  tr->registerDerivedVar("passIsoTrkVeto" + firstSpec, passIsoTrkVeto);
-  tr->registerDerivedVar("passIsoLepTrkVeto" + firstSpec, passIsoLepTrkVeto);
-  tr->registerDerivedVar("passIsoPionTrkVeto" + firstSpec, passIsoPionTrkVeto);
-  tr->registerDerivedVar("passnJets" + firstSpec, passnJets);
-  tr->registerDerivedVar("passdPhis" + firstSpec, passdPhis);
-  tr->registerDerivedVar("passBJets" + firstSpec, passBJets);
-  tr->registerDerivedVar("passMET" + firstSpec, passMET);
-  tr->registerDerivedVar("passHT" + firstSpec, passHT);
   tr->registerDerivedVar("passNoiseEventFilter" + firstSpec, passNoiseEventFilter);
   tr->registerDerivedVar("passFastsimEventFilter" + firstSpec, passFastsimEventFilter);
   tr->registerDerivedVar("passBaseline" + firstSpec, passBaseline);
@@ -482,7 +406,7 @@ void BaselineVessel::operator()(NTupleReader& tr_)
 {
   tr = &tr_;
   PreProcessing();
-  PassBaseline();
+  //PassBaseline();
   //GetMHT();
   //GetLeptons();
   //GetRecoZ(81, 101);
@@ -583,14 +507,15 @@ bool BaselineVessel::GetRecoZ(const std::string leptype, const std::string lepch
   return true;
 }
 
-void BaselineVessel::ArrayToVec( int size, std::string name )
+template<typename T> void BaselineVessel::ArrayToVec( int size, std::string name, const T* var )
 {
-  const float * arr_head = & ( tr->getVar<float>(name) );
-  std::vector<float> * vec = new std::vector<float>();
+  //const T * arr_head = & ( tr->getVar<T>(name) );
+  std::vector<T> * vec = new std::vector<T>();
 
   for (int i = 0; i < size; i++)
   {
-    vec->push_back( *(arr_head + i) );
+    //vec->push_back( *(arr_head + i) );
+    vec->push_back( *(var + i) );
   }
   tr->registerDerivedVec( name + "_vec", vec);
 

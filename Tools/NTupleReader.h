@@ -239,7 +239,7 @@ class NTupleReader
     //This function can be used to return vectors
     try
     {
-        return *getTupleObj<std::vector<T>*>(var, branchVecMap_);
+      return *getTupleObj<std::vector<T>*>(var, branchVecMap_);
     }
     catch (const SATException& e)
     {
