@@ -2,6 +2,30 @@
 
 namespace AnaFunctions
 {
+  //common
+  float DeltaPhi(const TLorentzVector& LvecA, const TLorentzVector& LvecB)
+  {
+    float dphi = LvecA.Phi() - LvecB.Phi();
+    while ( dphi > TMath::Pi() )
+    {
+      dphi = dphi - 2 * TMath::Pi();
+    }
+    while ( dphi < -TMath::Pi() )
+    {
+      dphi = dphi + 2 * TMath::Pi();
+    }
+    return dphi;
+  }
+
+  float DeltaR(const TLorentzVector& LvecA, const TLorentzVector& LvecB)
+  {
+    float deta = LvecA.Eta() - LvecB.Eta();
+    float dphi = DeltaPhi(LvecA, LvecB);
+    float dr = std::sqrt( deta*deta + dphi*dphi );
+    return dr;
+  }
+  //end common
+
   //muon
   bool passMu(const TLorentzVector& muLvec, bool passId, bool passIso, const AnaConsts::MuIsoAccRec& musArr)
   {
@@ -61,6 +85,7 @@ namespace AnaFunctions
   //calculate mtw
   float calcMtW( TLorentzVector metLvec, TLorentzVector lepLvec)
   {
+    /*
     float dphi = metLvec.Phi() - lepLvec.Phi();
     while ( dphi > TMath::Pi() )
     {
@@ -70,7 +95,10 @@ namespace AnaFunctions
     {
       dphi = dphi + 2 * TMath::Pi();
     }
-    float mtw = std::sqrt ( 2.0 * metLvec.Pt() * lepLvec.Pt() * ( 1.0 - std::cos( dphi ) ) );
+    */
+    //std::cout << dphi << "," << DeltaPhi(metLvec, lepLvec) << std::endl;
+
+    float mtw = std::sqrt ( 2.0 * metLvec.Pt() * lepLvec.Pt() * ( 1.0 - std::cos( DeltaPhi(metLvec, lepLvec) ) ) );
     return mtw;
   }
   //end mtw

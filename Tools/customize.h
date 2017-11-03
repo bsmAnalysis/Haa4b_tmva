@@ -38,7 +38,7 @@ namespace AnaConsts
 
   struct JetAccRec
   {
-    double minAbsEta, maxAbsEta, minPt, maxPt;
+    float minAbsEta, maxAbsEta, minPt, maxPt;
   };
 
   //cut met first
@@ -101,6 +101,9 @@ namespace AnaConsts
 
 namespace AnaFunctions
 {
+  //common 
+  float DeltaPhi(const TLorentzVector& LvecA, const TLorentzVector& LvecB);
+  float DeltaR(const TLorentzVector& LvecA, const TLorentzVector& LvecB);
   //muon
   bool passMu(const TLorentzVector& muLvec, bool passId, bool passIso, const AnaConsts::MuIsoAccRec& musArr);
   int countMus(const std::vector<TLorentzVector> &muLvecVec, const std::vector<bool> &passmuId, const std::vector<bool> &passmuIso, const AnaConsts::MuIsoAccRec& musArr, std::vector<TLorentzVector> &selmuLvecVec);
