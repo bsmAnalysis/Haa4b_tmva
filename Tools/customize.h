@@ -39,11 +39,6 @@ namespace AnaConsts
     double minAbsEta, maxAbsEta, minPt, maxPt, maxIsoEB, maxIsoEE, maxMtw;
   };
 
-  struct ActRec
-  {
-    double minAbsEta, maxAbsEta, minPt, maxPt, mindR, maxdR;
-  };
-
   const int nMuonsSel = 0, nElectronsSel = 0, nTausSel = 0, nIsoTrksSel = 0;
 
   const int nJetsSel = 4, nJetsSelPt30Eta24 = 4, nJetsSelPt50Eta24 = 2, nJetsSelPt70Eta24 = 2;
@@ -73,14 +68,9 @@ namespace AnaConsts
   const MuIsoAccRec musArr = {   -1,       2.4,      25,     -1,       0.2,     -1  };
 
   //                          minAbsEta, maxAbsEta, minPt, maxPt, maxIsoEB, maxIsoEE,  maxMtw
-  const ElIsoAccRec elsArr = {   -1,       2.5,      10,     -1,  0.164369, 0.212604,    -1  };
-
-  //                                minAbsEta, maxAbsEta, minPt, maxPt,   mindR,   maxdR
-  const ActRec     muonsAct =    {   -1,       -1,        10,    -1,       -1,     1.0  };
-  const ActRec      elesAct =    {   -1,       -1,        10,    -1,       -1,     1.0  };
+  const ElIsoAccRec elsArr = {   -1,       2.5,      30,     -1,  0.164369, 0.212604,    -1  };
 
   const double dPhi0_CUT = 0.5, dPhi1_CUT = 0.5, dPhi2_CUT = 0.3;
-  const double minDPhiN_CUT = 6;
 
   const double MT2cut_ = 300, mTcombcut_ = 500;
 

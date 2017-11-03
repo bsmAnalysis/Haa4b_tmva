@@ -81,10 +81,11 @@ namespace AnaFunctions
     }
     return outDPhiVec;
   }
+
   //muon
-  bool passMuon(const TLorentzVector& muon, const double& muonIso, const double& muonMtw, int flagID, const AnaConsts::MuIsoAccRec& muonsArr)
+  bool passMuon(const TLorentzVector& muon, const double& muonIso, const double& muonMtw, int flagID, const AnaConsts::MuIsoAccRec& musArr)
   {
-    const double minAbsEta = muonsArr.minAbsEta, maxAbsEta = muonsArr.maxAbsEta, minPt = muonsArr.minPt, maxPt = muonsArr.maxPt, maxIso = muonsArr.maxIso, maxMtw = muonsArr.maxMtw; 
+    const double minAbsEta = musArr.minAbsEta, maxAbsEta = musArr.maxAbsEta, minPt = musArr.minPt, maxPt = musArr.maxPt, maxIso = musArr.maxIso, maxMtw = musArr.maxMtw; 
     double permuonpt = muon.Pt(), permuoneta = muon.Eta();
     return ( minAbsEta == -1 || fabs(permuoneta) >= minAbsEta )
       && ( maxAbsEta == -1 || fabs(permuoneta) < maxAbsEta )
@@ -95,16 +96,18 @@ namespace AnaFunctions
       && flagID;
   }
 
-  int countMuons(const std::vector<TLorentzVector> &muonsLVec, const std::vector<double> &muonsRelIso, const std::vector<double> &muonsMtw, const std::vector<int> &muonsFlagID, const AnaConsts::MuIsoAccRec& muonsArr)
+  int countMuons(const std::vector<TLorentzVector> &muonsLVec, const std::vector<double> &muonsRelIso, const std::vector<double> &muonsMtw, const std::vector<int> &muonsFlagID, const AnaConsts::MuIsoAccRec& musArr)
   {
 
     int cntNMuons = 0;
-    for(unsigned int im=0; im<muonsLVec.size(); im++){
-      if(passMuon(muonsLVec[im], muonsRelIso[im], muonsMtw[im], muonsFlagID[im], muonsArr)) cntNMuons ++;
+    for (unsigned int im = 0; im < muonsLVec.size(); im++)
+    {
+      if (passMuon(muonsLVec[im], muonsRelIso[im], muonsMtw[im], muonsFlagID[im], musArr)) cntNMuons ++;
     }
     return cntNMuons;
   }
   //end muon
+
   //electron
   bool passElectron(const TLorentzVector& elec, const double electronIso, const double electronMtw, bool isEB, int flagID, const AnaConsts::ElIsoAccRec& elesArr)
   {
@@ -122,9 +125,9 @@ namespace AnaFunctions
   int countElectrons(const std::vector<TLorentzVector> &electronsLVec, const std::vector<double> &electronsRelIso, const std::vector<double> &electronsMtw, const std::vector<unsigned int>& isEBVec, const std::vector<int> &electronsFlagID, const AnaConsts::ElIsoAccRec& elesArr)
   {
     int cntNElectrons = 0;
-    for(unsigned int ie=0; ie<electronsLVec.size(); ie++)
+    for (unsigned int ie = 0; ie < electronsLVec.size(); ie++)
     {
-      if(passElectron(electronsLVec[ie], electronsRelIso[ie], electronsMtw[ie], isEBVec[ie], electronsFlagID[ie], elesArr)) cntNElectrons ++;
+      if (passElectron(electronsLVec[ie], electronsRelIso[ie], electronsMtw[ie], isEBVec[ie], electronsFlagID[ie], elesArr)) cntNElectrons ++;
     }
     return cntNElectrons;
   }
