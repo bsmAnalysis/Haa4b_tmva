@@ -104,6 +104,29 @@ namespace AnaFunctions
   //end mtw
 
   //jet pre-selection (for hard b jet, pt>20)
+  bool passJetLepClean(const TLorentzVector &jetLvec, const std::vector<TLorentzVector> &selmuLvecVec, const std::vector<TLorentzVector> &selelLvecVec)
+  {
+    bool thispassJetLepClean = true;
+    int selmusize = selmuLvecVec.size(); int selelsize = selelLvecVec.size();
+
+    if (selmusize != 0)
+    {
+      for ( int i = 0; i < selmusize; i++)
+      {
+        if ( DeltaR(jetLvec, selmuLvecVec[i]) < AnaConsts::minDeltaRJetMu) { return false; }
+      }
+    }
+
+    if (selelsize != 0)
+    {
+      for ( int i = 0; i < selelsize; i++)
+      { 
+        if ( DeltaR(jetLvec, selelLvecVec[i]) < AnaConsts::minDeltaRJetEl) { return false; }
+      }
+    }
+    return thispassJetLepClean;
+  }
+
   std::vector<bool> preSelJet(const std::vector<TLorentzVector> &jetLvecVec, const AnaConsts::JetAccRec& jetsArr, const std::vector<TLorentzVector> &selmuLvecVec, const std::vector<TLorentzVector> &selelLvecVec)
   {
     std::vector<bool> passJetPreSel;
@@ -117,9 +140,9 @@ namespace AnaFunctions
       && ( maxAbsEta == -1 || fabs(perjeteta) < maxAbsEta )
       && (     minPt == -1 || perjetpt >= minPt )
       && (     maxPt == -1 || perjetpt < maxPt );
-
-      bool thispassJetLepClean = true;
+      bool thispassJetLepClean = passJetLepClean(jetLvecVec[i], selmuLvecVec, selelLvecVec);
       thispassJetPreSel = thispassJetAcc && thispassJetLepClean;
+      //if ( thispassJetAcc && !thispassJetLepClean ){ std::cout <<  perjetpt << "," << perjeteta << std::endl; }
       //if (thispassJetPreSel){ std::cout <<  perjetpt << "," << perjeteta << std::endl; }
       passJetPreSel.push_back(thispassJetPreSel);
     }

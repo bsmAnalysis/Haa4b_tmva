@@ -58,6 +58,7 @@ namespace AnaConsts
   //then for jets preselection
   //                         minAbsEta, maxAbsEta, minPt, maxPt
   const JetAccRec jetsArr = {   -1,        2.5,      20,    -1  };
+  const float minDeltaRJetMu = 0.4, minDeltaRJetEl= 0.2;
 
   //then select hard and soft b jets
   const int minNHardBJets = 2, maxNHardBJets = -1;
@@ -116,6 +117,7 @@ namespace AnaFunctions
   float calcMtW(TLorentzVector metLvec, TLorentzVector lepLvec);
 
   //jet pre-selection (for hard b jet, pt>20)
+  bool passJetLepClean(const TLorentzVector &jetLvec, const std::vector<TLorentzVector> &selmuLvecVec, const std::vector<TLorentzVector> &selelLvecVec);
   std::vector<bool> preSelJet(const std::vector<TLorentzVector> &jetLvecVec, const AnaConsts::JetAccRec& jetsArr, const std::vector<TLorentzVector> &selmuLvecVec, const std::vector<TLorentzVector> &selelLvecVec);
   //hard b-jet selection
   int countHardBJets(const std::vector<TLorentzVector> &jetLvecVec, const std::vector<bool> & passJetPreSel, const std::vector<bool> &passBTag, std::vector<TLorentzVector> &selhardbLvecVec);
