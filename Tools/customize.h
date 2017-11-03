@@ -31,14 +31,15 @@ namespace AnaConsts
 
   struct MuIsoAccRec
   {
-    double minAbsEta, maxAbsEta, minPt, maxPt;
+    float minAbsEta, maxAbsEta, minPt, maxPt;
   };
 
   struct ElIsoAccRec
   {
-    double minAbsEta, maxAbsEta, minPt, maxPt, maxIsoEB, maxIsoEE, maxMtw;
+    float minAbsEta, maxAbsEta, minPt, maxPt;
   };
-
+  const float defaultMETcut = 25.0;
+  const float minMtW = 50.0, maxMtW = 250.0;
   const int nMusSel = 1, nElsSel = 1;
 
   const int nJetsSel = 4, nJetsSelPt30Eta24 = 4, nJetsSelPt50Eta24 = 2, nJetsSelPt70Eta24 = 2;
@@ -60,15 +61,12 @@ namespace AnaConsts
   //Note the new working points are for Spring15 samples & data: cutCSVS is the medium working point
   //According to https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation80X, the CSVv2M cut is 0.800
   const double cutCSVS = 0.8484, cutCSVL = 0.5426, cutCSVT = 0.9535, cutCSVSold = 0.800; // old is for ICHEP working point
-  const double defaultMETcut = 250;
-  const double defaultMT2cut = 200;
-  const double defaultHTcut = 300;
 
   //                           minAbsEta, maxAbsEta, minPt, maxPt
   const MuIsoAccRec musArr = {   -1,       2.4,      25,     -1   };
 
-  //                          minAbsEta, maxAbsEta, minPt, maxPt, maxIsoEB, maxIsoEE,  maxMtw
-  const ElIsoAccRec elsArr = {   -1,       2.5,      30,     -1,  0.164369, 0.212604,    -1  };
+  //                           minAbsEta, maxAbsEta, minPt, maxPt
+  const ElIsoAccRec elsArr = {   -1,       2.5,      30,     -1,  };
 
   const double dPhi0_CUT = 0.5, dPhi1_CUT = 0.5, dPhi2_CUT = 0.3;
 

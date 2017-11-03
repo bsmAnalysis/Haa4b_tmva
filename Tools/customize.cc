@@ -85,8 +85,8 @@ namespace AnaFunctions
   //muon
   bool passMu(const TLorentzVector& muLvec, bool passId, bool passIso, const AnaConsts::MuIsoAccRec& musArr)
   {
-    const double minAbsEta = musArr.minAbsEta, maxAbsEta = musArr.maxAbsEta, minPt = musArr.minPt, maxPt = musArr.maxPt; 
-    double permupt = muLvec.Pt(), permueta = muLvec.Eta();
+    const float minAbsEta = musArr.minAbsEta, maxAbsEta = musArr.maxAbsEta, minPt = musArr.minPt, maxPt = musArr.maxPt; 
+    float permupt = muLvec.Pt(), permueta = muLvec.Eta();
     return ( minAbsEta == -1 || fabs(permueta) >= minAbsEta )
       && ( maxAbsEta == -1 || fabs(permueta) < maxAbsEta )
       && (     minPt == -1 || permupt >= minPt )
@@ -109,8 +109,8 @@ namespace AnaFunctions
   //electron
   bool passEl(const TLorentzVector& elLvec, bool passId, bool passIso, const AnaConsts::ElIsoAccRec& elsArr)
   {
-    const double minAbsEta = elsArr.minAbsEta, maxAbsEta = elsArr.maxAbsEta, minPt = elsArr.minPt, maxPt = elsArr.maxPt;
-    double perelpt = elLvec.Pt(), pereleta = elLvec.Eta();
+    const float minAbsEta = elsArr.minAbsEta, maxAbsEta = elsArr.maxAbsEta, minPt = elsArr.minPt, maxPt = elsArr.maxPt;
+    float perelpt = elLvec.Pt(), pereleta = elLvec.Eta();
     return ( minAbsEta == -1 || fabs(pereleta) >= minAbsEta )
       && ( maxAbsEta == -1 || fabs(pereleta) < maxAbsEta )
       && (     minPt == -1 || perelpt >= minPt )

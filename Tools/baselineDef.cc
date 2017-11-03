@@ -247,12 +247,10 @@ void BaselineVessel::PreProcessing()
 
 void BaselineVessel::PassBaseline()
 {
-  // Initial value
-  passBaseline          = true;
+  //Initial value
+  passBaseline = true;
 
-  // Form TLorentzVector of MET
-  //metLVec.SetPtEtaPhiM(tr->getVar<double>(METLabel), 0, tr->getVar<double>(METPhiLabel), 0);
-
+  //lepton selection
   int nmus = AnaFunctions::countMus(tr->getVec<TLorentzVector>("mnLVec"), tr->getVec<bool>("mn_passId_vec"), tr->getVec<bool>("mn_passIso_vec"), AnaConsts::musArr);
   tr->registerDerivedVar("nmus_CUT", nmus);
   int nels = AnaFunctions::countEls(tr->getVec<TLorentzVector>("enLVec"), tr->getVec<bool>("en_passId_vec"), tr->getVec<bool>("en_passIso_vec"), AnaConsts::elsArr);
@@ -262,6 +260,17 @@ void BaselineVessel::PassBaseline()
   tr->registerDerivedVar("passMusSel", passMusSel); tr->registerDerivedVar("passElsSel", passElsSel);
   bool passLeptonSel = ( passMusSel && !passElsSel ) || ( !passMusSel && passElsSel );
   tr->registerDerivedVar("passLeptonSel", passLeptonSel);
+
+  //MtW cut, note, must done it after lepton selection! force to be 0 if no lepton selected
+  float mtw = 0;
+  bool passMtW = ( mtw >= AnaConsts::minMtW ) && ( mtw < AnaConsts::maxMtW );
+  tr->registerDerivedVar("passMtW", passMtW);
+  
+  //MET cut
+  metLVec.SetPtEtaPhiM(tr->getVar<float>("met_pt"), 0, tr->getVar<float>("met_phi"), 0);
+  bool passMET = (metLVec.Pt() >= AnaConsts::defaultMETcut);
+  tr->registerDerivedVar("passMET", passMET);
+
   /*
   // Calculate number of jets and b-tagged jets
   int cntCSVS = AnaFunctions::countCSVS(tr->getVec<TLorentzVector>(jetVecLabel), tr->getVec<double>(CSVVecLabel), AnaConsts::cutCSVS, AnaConsts::bTagArr);
