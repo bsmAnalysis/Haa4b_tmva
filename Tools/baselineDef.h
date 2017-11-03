@@ -17,15 +17,9 @@ class BaselineVessel
 {
  private:
   std::string spec;
-  bool isfastsim;
   std::string firstSpec;
-  bool printOnce;
 
   NTupleReader *tr;
-  TFile *WMassCorFile;
-  TF1   *puppisd_corrGEN;
-  TF1   *puppisd_corrRECO_cen;
-  TF1   *puppisd_corrRECO_for;
   TLorentzVector metLvec;
 
   template<typename T> void ArrayToVec( int size, std::string name, const T* var );
@@ -60,28 +54,14 @@ class BaselineVessel
   ~BaselineVessel();
 
   void PassBaseline();
-  bool passNoiseEventFilterFunc();
-  bool passQCDHighMETFilterFunc();
-  bool passFastsimEventFilterFunc();
-  bool PredefineSpec();
-  bool UseLepCleanJets();
-  bool OpenWMassCorrFile();
 
   void operator()(NTupleReader& tr);
-
-  bool GetMHT() const;
-  bool GetLeptons() const;
-  bool GetRecoZ( const int zMassMin, const int zMassMax) const;
-  bool GetRecoZ(const std::string leptype, const std::string lepchg, std::vector<TLorentzVector>* recoZVec,
-  std::map<unsigned int, std::pair<unsigned int, unsigned int> > *TypeZLepIdx, 
-  const int zMassMin, const int zMassMax) const;
 };
 
 inline void passBaselineFunc(NTupleReader &tr, std::string filterstring)
 {
   BaselineVessel blv(tr, "", filterstring);
   blv.PassBaseline();
-  blv.GetMHT();
 }
 
 #endif

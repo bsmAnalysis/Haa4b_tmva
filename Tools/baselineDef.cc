@@ -31,8 +31,6 @@ BaselineVessel::BaselineVessel(NTupleReader &tr_, const std::string specializati
   passBaseline          = true;
   metLvec.SetPtEtaPhiM(0, 0, 0, 0);
 
-  if(filterString.compare("fastsim") ==0) isfastsim = true; else isfastsim = false; 
-
   //Check if simplified tagger is called for
   std::string taggerLabel = "";
   const std::string aggBinLabel = "AggregatedBins";
@@ -54,13 +52,10 @@ BaselineVessel::BaselineVessel(NTupleReader &tr_, const std::string specializati
     TObjArray * objArr = stripT.Tokenize(" ");
     TObjString* firstObj = dynamic_cast<TObjString*>(objArr->At(0));
     firstSpec = firstObj->GetString().Data();
-    std::cout<<"\nfirstSpec : "<<firstSpec.c_str()<<"  spec : "<<spec.c_str()<<"  isfastsim : "<<isfastsim<<std::endl<<std::endl;
   }
   firstSpec += taggerLabel;
 
-  printOnce = false;
-
-  PredefineSpec();
+  //PredefineSpec();
 }
 
 // ===  FUNCTION  ============================================================
@@ -71,132 +66,6 @@ BaselineVessel::~BaselineVessel()
 {
 }
 // -----  end of function BaselineVessel::~BaselineVessel  -----
-
-// ===  FUNCTION  ============================================================
-//         Name:  BaselineVessel::PredefineSpec
-//  Description:  
-// ===========================================================================
-bool BaselineVessel::PredefineSpec()
-{
-
-  if( spec.compare("noIsoTrksVeto") == 0)
-  {
-    doIsoTrksVeto = false;
-  }
-  else if( spec.compare("incZEROtop") == 0)
-  {
-    incZEROtop = true;
-  }
-  else if( spec.compare("hadtau") == 0)
-  {
-    doMuonVeto = false;
-    doIsoTrksVeto = false;
-    METLabel = "met_hadtau";
-    METPhiLabel = "metphi_hadtau";
-    jetVecLabel = "jetsLVec_hadtau";
-    CSVVecLabel = "recoJetsBtag_0_hadtau";
-  }
-  else if( spec.compare("lostlept") == 0)
-  {
-    doMuonVeto = false;
-    doEleVeto = false; 
-    doIsoTrksVeto = false;
-  }
-  else if(spec.compare("Zinv") == 0 || spec.compare("Zinv1b") == 0 || spec.compare("Zinv2b") == 0 || spec.compare("Zinv3b") == 0 || spec.compare("ZinvJEUUp") == 0 || spec.compare("ZinvJEUDn") == 0 || spec.compare("ZinvMEUUp") == 0 || spec.compare("ZinvMEUDn") == 0) 
-  {
-    jetVecLabel = "jetsLVecLepCleaned";
-    CSVVecLabel = "recoJetsBtag_0_LepCleaned";
-    METLabel    = "cleanMetPt";
-    METPhiLabel = "cleanMetPhi";
-    doMuonVeto  = false;
-    doEleVeto   = false;
-    doIsoTrksVeto = false;
-    if(spec.compare("Zinv1b") == 0)
-    {
-      CSVVecLabel = "cleanJetpt30ArrBTag1fake";
-      bToFake = 1;
-    }
-    else if(spec.compare("Zinv2b") == 0)
-    {
-      CSVVecLabel = "cleanJetpt30ArrBTag2fake";
-      bToFake = 1; // This is not a typo
-    }
-    else if(spec.compare("Zinv3b") == 0)
-    {
-      CSVVecLabel = "cleanJetpt30ArrBTag3fake";
-      bToFake = 1; // This is not a typo
-    }
-    else if(spec.compare("ZinvJEUUp") == 0)
-    {
-      jetVecLabel = "jetLVecUp";
-    }
-    else if(spec.compare("ZinvJEUDn") == 0)
-    {
-      jetVecLabel = "jetLVecDn";
-    }
-    else if(spec.compare("ZinvMEUUp") == 0)
-    {
-      METLabel    = "metMEUUp";
-    }
-    else if(spec.compare("ZinvMEUDn") == 0)
-    {
-      METLabel    = "metMEUDn";
-    }
-  }
-  else if(spec.compare("QCD") == 0)
-  {
-    doMET = false;
-    dodPhis = false;
-  }
-  else if( spec.find("jecUp") != std::string::npos || spec.find("jecDn") != std::string::npos || spec.find("metMagUp") != std::string::npos || spec.find("metMagDn") != std::string::npos || spec.find("metPhiUp") != std::string::npos || spec.find("metPhiDn") != std::string::npos )
-  {
-    if( spec.find("jecUp") != std::string::npos )
-    {
-      jetVecLabel = "jetLVec_jecUp";
-      CSVVecLabel = "recoJetsBtag_jecUp";
-    }
-    else if(spec.find("jecDn") != std::string::npos )
-    {
-      jetVecLabel = "jetLVec_jecDn";
-      CSVVecLabel = "recoJetsBtag_jecDn";
-    }
-    else if(spec.find("metMagUp") != std::string::npos )
-    {
-      METLabel = "met_metMagUp";
-    }
-    else if(spec.find("metMagDn") != std::string::npos )
-    {
-      METLabel = "met_metMagDn";
-    }
-    else if(spec.find("metPhiUp") != std::string::npos )
-    {
-      METPhiLabel = "metphi_metPhiUp";
-    }
-    else if(spec.find("metPhiDn") != std::string::npos )
-    {
-      METPhiLabel = "metphi_metPhiDn";
-    }
-    if( spec.find("usegenmet") != std::string::npos )
-    {
-      METLabel = "genmet";
-      METPhiLabel = "genmetphi";
-    } 
-  }
-  else if( spec.compare("usegenmet") == 0 )
-  {
-    METLabel = "genmet";
-    METPhiLabel = "genmetphi";
-  }
-
-  if( !printOnce )
-  {
-    printOnce = true;
-    std::cout<<"spec : "<<spec.c_str()<<"  jetVecLabel : "<<jetVecLabel.c_str() <<"  CSVVecLabel : "<<CSVVecLabel.c_str() <<"  METLabel : "<<METLabel.c_str()<< std::endl;
-  }  
-  
-  return true;
-}
-// -----  end of function BaselineVessel::PredefineSpec  -----
 
 void BaselineVessel::PreProcessing()
 {
@@ -320,202 +189,23 @@ void BaselineVessel::PassBaseline()
 
   /*
   // Calculate number of jets and b-tagged jets
-  tr->registerDerivedVar("passNoiseEventFilter" + firstSpec, passNoiseEventFilter);
-  tr->registerDerivedVar("passFastsimEventFilter" + firstSpec, passFastsimEventFilter);
   tr->registerDerivedVar("passBaseline" + firstSpec, passBaseline);
 
   if( debug ) std::cout<<"passBaseline : "<<passBaseline<<"  passBaseline : "<<passBaseline<<std::endl;
   */
 } 
 
-bool BaselineVessel::passNoiseEventFilterFunc()
-{
-  // According to https://twiki.cern.ch/twiki/bin/view/CMS/SUSRecommendationsICHEP16#Filters_to_be_applied,
-  // "Do not apply filters to signal monte carlo (fastsim)"
-  if( isfastsim ) return true;
-
-  try
-  {
-    bool cached_rethrow = tr->getReThrow();
-    tr->setReThrow(false);
-
-    bool passDataSpec = true;
-    if( tr->getVar<unsigned int>("run") >= 100000 ){ // hack to know if it's data or MC...
-      int goodVerticesFilter = tr->getVar<int>("goodVerticesFilter");
-      // new filters
-      const int & globalTightHalo2016Filter = tr->getVar<int>("globalTightHalo2016Filter");
-      bool passglobalTightHalo2016Filter = (&globalTightHalo2016Filter) != nullptr? tr->getVar<int>("globalTightHalo2016Filter") !=0 : true;
-
-      int eeBadScFilter = tr->getVar<int>("eeBadScFilter");
-
-      passDataSpec = goodVerticesFilter && eeBadScFilter && passglobalTightHalo2016Filter;
-    }
-
-    unsigned int hbheNoiseFilter = isfastsim? 1:tr->getVar<unsigned int>("HBHENoiseFilter");
-    unsigned int hbheIsoNoiseFilter = isfastsim? 1:tr->getVar<unsigned int>("HBHEIsoNoiseFilter");
-    int ecalTPFilter = tr->getVar<int>("EcalDeadCellTriggerPrimitiveFilter");
-
-    int jetIDFilter = isfastsim? 1:tr->getVar<int>("looseJetID_NoLep");
-    // new filters
-    const unsigned int & BadPFMuonFilter = tr->getVar<unsigned int>("BadPFMuonFilter");
-    bool passBadPFMuonFilter = (&BadPFMuonFilter) != nullptr? tr->getVar<unsigned int>("BadPFMuonFilter") !=0 : true;
-
-    const unsigned int & BadChargedCandidateFilter = tr->getVar<unsigned int>("BadChargedCandidateFilter");
-    bool passBadChargedCandidateFilter = (&BadChargedCandidateFilter) != nullptr? tr->getVar<unsigned int>("BadChargedCandidateFilter") !=0 : true;
-
-    bool passMETratioFilter = tr->getVar<double>("calomet")!=0 ? tr->getVar<double>("met")/tr->getVar<double>("calomet") < 5 : true;
-
-    tr->setReThrow(cached_rethrow);
-    return passDataSpec && hbheNoiseFilter && hbheIsoNoiseFilter && ecalTPFilter && jetIDFilter && passBadPFMuonFilter && passBadChargedCandidateFilter && passMETratioFilter;
-  }
-  catch (std::string var)
-  {
-    if(tr->isFirstEvent()) 
-    {
-      printf("NTupleReader::getTupleObj(const std::string var):  Variable not found: \"%s\"!!!\n", var.c_str());
-      printf("Running with PHYS14 Config\n");
-    }
-  }
-  return true;
-}
-
-bool BaselineVessel::passFastsimEventFilterFunc()
-{
-  bool passFilter = true;
-
-  if( isfastsim ){
-    bool cached_rethrow = tr->getReThrow();
-    tr->setReThrow(false);
-    const std::vector<TLorentzVector> & genjetsLVec = tr->getVec<TLorentzVector>("genjetsLVec");
-    const std::vector<TLorentzVector> & recoJetsLVec = tr->getVec<TLorentzVector>("jetsLVec");
-    const std::vector<double> & recoJetschargedHadronEnergyFraction = tr->getVec<double>("recoJetschargedHadronEnergyFraction");
-
-    if( recoJetschargedHadronEnergyFraction.size() != recoJetsLVec.size() ) std::cout<<"\nWARNING ... Non-equal recoJetschargedHadronEnergyFraction.size : "<<recoJetschargedHadronEnergyFraction.size()<<"  recoJetsLVec.size : "<<recoJetsLVec.size()<<std::endl<<std::endl;
-
-    if( !recoJetsLVec.empty() && (&genjetsLVec) != nullptr )
-    {
-      for(unsigned int ij=0; ij<recoJetsLVec.size(); ij++)
-      {
-        //                if( !AnaFunctions::jetPassCuts(recoJetsLVec[ij], AnaConsts::pt20Eta25Arr) ) continue;
-        //if( !AnaFunctions::jetPassCuts(recoJetsLVec[ij], AnaConsts::pt30Eta24Arr) ) continue;
-        double mindeltaR = 999.0;
-        int matchedgenJetsIdx = -1;
-        for(unsigned int ig=0; ig<genjetsLVec.size(); ig++){
-          double dR = recoJetsLVec[ij].DeltaR(genjetsLVec[ig]);
-          if( mindeltaR > dR ){ mindeltaR = dR; matchedgenJetsIdx = (int)ig; }
-        }
-        if( matchedgenJetsIdx != -1 && mindeltaR > 0.3 && recoJetschargedHadronEnergyFraction[ij] < 0.1 ) passFilter = false;
-      }
-    }
-    tr->setReThrow(cached_rethrow);
-  }
-  return passFilter;
-}
-
 void BaselineVessel::operator()(NTupleReader& tr_)
 {
   tr = &tr_;
   PreProcessing();
   PassBaseline();
-  //GetMHT();
-  //GetLeptons();
-  //GetRecoZ(81, 101);
 }
 
 // ===  FUNCTION  ============================================================
 //         Name:  BaselineVessel::GetMHT
 //  Description:  /* cursor */
 // ===========================================================================
-bool BaselineVessel::GetMHT() const
-{
-  // Calculate MHT
-  TLorentzVector MHT(0, 0, 0, 0);
-  double SumHT = 0.0; //Using jet > 30 , |eta| < 5
-  for(auto &jet : tr->getVec<TLorentzVector>("jetsLVecLepCleaned"))
-  {
-    if (jet.Pt() >= 30)
-    {
-      MHT -= jet;
-      SumHT += jet.Pt();
-    }
-  }
-  tr->registerDerivedVar("MHT"+firstSpec, MHT.Pt());
-  tr->registerDerivedVar("MHTPhi"+firstSpec, MHT.Phi());
-  tr->registerDerivedVar("MHTSig"+firstSpec, MHT.Pt()/ sqrt(SumHT));
-  tr->registerDerivedVar("METSig"+firstSpec, tr->getVar<double>(METLabel)/ sqrt(SumHT));
-  return true;
-}
-// -----  end of function BaselineVessel::GetMHT  -----
-
-// ===  FUNCTION  ============================================================
-//         Name:  BaselineVessel::GetLeptons
-//  Description:  
-// ===========================================================================
-bool BaselineVessel::GetLeptons() const
-{
-
-  return true;
-}
-// -----  end of function BaselineVessel::GetLeptons  -----
-
-
-// ===  FUNCTION  ============================================================
-//         Name:  BaselineVessel::GetRecoZ
-//  Description:  
-// ===========================================================================
-bool BaselineVessel::GetRecoZ( const int zMassMin, const int zMassMax) const
-{
-  std::vector<TLorentzVector>* recoZVec = new std::vector<TLorentzVector>();
-  std::map<unsigned int, std::pair<unsigned int, unsigned int> > *ZLepIdx = 
-    new std::map<unsigned int, std::pair<unsigned int, unsigned int> >();
-
-  GetRecoZ("cutMuVec"+firstSpec,"cutMuCharge"+firstSpec, recoZVec, ZLepIdx, zMassMin, zMassMax );
-  GetRecoZ("cutEleVec"+firstSpec,"cutEleCharge"+firstSpec, recoZVec, ZLepIdx, zMassMin, zMassMax );
-
-  tr->registerDerivedVec("recoZVec"+spec, recoZVec);
-  tr->registerDerivedVec("ZLepIdx"+spec, ZLepIdx);
-  return true;
-}
-// -----  end of function BaselineVessel::GetRecoZ  -----
-
-
-// ===  FUNCTION  ============================================================
-//         Name:  BaselineVessel::GetRecoZ
-//  Description:  
-// ===========================================================================
-bool BaselineVessel::GetRecoZ(const std::string leptype, const std::string lepchg, 
-    std::vector<TLorentzVector>* recoZVec ,
-    std::map<unsigned int, std::pair<unsigned int, unsigned int> > *ZLepIdx,
-    const int zMassMin, const int zMassMax) const
-{
-  
-  const std::vector<TLorentzVector> & LepVec = tr->getVec<TLorentzVector>(leptype);
-  const std::vector<int> & LepChg = tr->getVec<int>(lepchg);
-
-  for(unsigned int i = 0; i < LepVec.size(); ++i)
-  {
-    for(unsigned int j = i; j < LepVec.size(); ++j)
-    {
-      double zm = (LepVec.at(i) + LepVec.at(j)).M();
-      int sumchg = LepChg.at(i) + LepChg.at(j); 
-      if (sumchg == 0 && zm > zMassMin && zm < zMassMax)
-      {
-        recoZVec->push_back((LepVec.at(i) + LepVec.at(j)));
-        if (leptype.find("Mu") != std::string::npos)
-        {
-          ZLepIdx->insert(std::make_pair( recoZVec->size(), 
-                std::make_pair(i, j)));
-        }
-        if (leptype.find("Ele") != std::string::npos) // offset by 100
-        {
-          ZLepIdx->insert(std::make_pair( recoZVec->size(), 
-                std::make_pair(i+100, j+100)));
-        }
-      }
-    }
-  }
-  return true;
-}
 
 template<typename T> void BaselineVessel::ArrayToVec( int size, std::string name, const T* var )
 {
@@ -543,4 +233,3 @@ std::vector<TLorentzVector> BaselineVessel::ConstructVecLVec( std::vector<float>
   }
   return VecLVec;
 }
-// -----  end of function BaselineVessel::GetRecoZ  -----
