@@ -254,7 +254,7 @@ void BaselineVessel::PassBaseline()
   metLvec.SetPtEtaPhiM(tr->getVar<float>("met_pt"), 0, tr->getVar<float>("met_phi"), 0);
   bool passMET = (metLvec.Pt() >= AnaConsts::defaultMETcut);
   tr->registerDerivedVar("passMET", passMET);
-
+  //end MET
   //lepton selection
   std::vector<TLorentzVector> selmuLvecVec;
   int nmus = AnaFunctions::countMus(tr->getVec<TLorentzVector>("mnLVec"), tr->getVec<bool>("mn_passId_vec"), tr->getVec<bool>("mn_passIso_vec"), AnaConsts::musArr, selmuLvecVec);
@@ -267,7 +267,7 @@ void BaselineVessel::PassBaseline()
   tr->registerDerivedVar("passMusSel", passMusSel); tr->registerDerivedVar("passElsSel", passElsSel);
   bool passLeptonSel = ( passMusSel && !passElsSel ) || ( !passMusSel && passElsSel );
   tr->registerDerivedVar("passLeptonSel", passLeptonSel);
-
+  //end lepton selection
   //MtW cut, note, must done it after lepton selection! force to be 0 if no lepton selected
   float mtw = 0;
   if ( ( passMusSel && !passElsSel ) )
@@ -284,7 +284,10 @@ void BaselineVessel::PassBaseline()
   tr->registerDerivedVar("mtw", mtw);
   bool passMtW = ( mtw >= AnaConsts::minMtW ) && ( mtw < AnaConsts::maxMtW );
   tr->registerDerivedVar("passMtW", passMtW);
-  
+  //end MtW
+
+  //b jets selection
+  //jet pre selection, acc and lepton clean
 
   std::vector<TLorentzVector> selhardbLvecVec;
   int nhardbjets = 0;
@@ -450,10 +453,12 @@ bool BaselineVessel::passFastsimEventFilterFunc()
 
     if( recoJetschargedHadronEnergyFraction.size() != recoJetsLVec.size() ) std::cout<<"\nWARNING ... Non-equal recoJetschargedHadronEnergyFraction.size : "<<recoJetschargedHadronEnergyFraction.size()<<"  recoJetsLVec.size : "<<recoJetsLVec.size()<<std::endl<<std::endl;
 
-    if( !recoJetsLVec.empty() && (&genjetsLVec) != nullptr ){
-      for(unsigned int ij=0; ij<recoJetsLVec.size(); ij++){
+    if( !recoJetsLVec.empty() && (&genjetsLVec) != nullptr )
+    {
+      for(unsigned int ij=0; ij<recoJetsLVec.size(); ij++)
+      {
         //                if( !AnaFunctions::jetPassCuts(recoJetsLVec[ij], AnaConsts::pt20Eta25Arr) ) continue;
-        if( !AnaFunctions::jetPassCuts(recoJetsLVec[ij], AnaConsts::pt30Eta24Arr) ) continue;
+        //if( !AnaFunctions::jetPassCuts(recoJetsLVec[ij], AnaConsts::pt30Eta24Arr) ) continue;
         double mindeltaR = 999.0;
         int matchedgenJetsIdx = -1;
         for(unsigned int ig=0; ig<genjetsLVec.size(); ig++){

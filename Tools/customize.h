@@ -36,13 +36,14 @@ namespace AnaConsts
     float minAbsEta, maxAbsEta, minPt, maxPt;
   };
 
-  struct AccRec
+  struct JetAccRec
   {
     double minAbsEta, maxAbsEta, minPt, maxPt;
   };
 
   //cut met first
   const float defaultMETcut = 25.0;
+  
   //then select lepton
   const int nMusSel = 1, nElsSel = 1;
   //                           minAbsEta, maxAbsEta, minPt, maxPt
@@ -50,37 +51,17 @@ namespace AnaConsts
 
   //                           minAbsEta, maxAbsEta, minPt, maxPt
   const ElIsoAccRec elsArr = {   -1,       2.5,      30,     -1,  };
+  
   //then calculate mtw
   const float minMtW = 50.0, maxMtW = 250.0;
+
+  //then for jets preselection
+  //                         minAbsEta, maxAbsEta, minPt, maxPt
+  const JetAccRec jetsArr = {   -1,        2.5,      20,    -1  };
 
   //then select hard and soft b jets
   const int minNHardBJets = 2, maxNHardBJets = -1;
   const int minNAllBJets = 3, maxNAllBJets = 4;
-
-
-  const int nJetsSel = 4, nJetsSelPt30Eta24 = 4, nJetsSelPt50Eta24 = 2, nJetsSelPt70Eta24 = 2;
-  //[low_nJetsSelBtagged, high_nJetsSelBtagged)
-  const int low_nJetsSelBtagged = 1, high_nJetsSelBtagged = -1;
-  //[low_nTopCandSortedSel, high_nTopCandSortedSel)
-  const int low_nTopCandSortedSel = 1, high_nTopCandSortedSel = -1;
-  const double minJetPt = 30;
-  //                               minAbsEta, maxAbsEta, minPt, maxPt
-  const AccRec      pt30Arr = {   -1,        -1,      30,    -1  };
-  const AccRec pt30Eta24Arr = {   -1,       2.4,      30,    -1  };
-  const AccRec pt50Eta24Arr = {   -1,       2.4,      50,    -1  };
-  const AccRec      dphiArr = {   -1,       4.7,      30,    -1  };
-  const AccRec     dphiNArr = {   -1,       2.4,      30,    -1  };
-  const AccRec      bTagArr = {   -1,       2.4,      30,    -1  };
-  const AccRec pt20Eta25Arr = {   -1,       2.5,      20,    -1  };
-
-  //const double cutCSVS = 0.814, cutCSVSold = 0.679; // for T5tttt signals, currently old b-tagging was used
-  //Note the new working points are for Spring15 samples & data: cutCSVS is the medium working point
-  //According to https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation80X, the CSVv2M cut is 0.800
-  const double cutCSVS = 0.8484, cutCSVL = 0.5426, cutCSVT = 0.9535, cutCSVSold = 0.800; // old is for ICHEP working point
-
-  const double dPhi0_CUT = 0.5, dPhi1_CUT = 0.5, dPhi2_CUT = 0.3;
-
-  const double MT2cut_ = 300, mTcombcut_ = 500;
 
   static std::set<std::string> activatedBranchNames_DataOnly = 
   { 
@@ -120,13 +101,6 @@ namespace AnaConsts
 
 namespace AnaFunctions
 {
-  bool jetPassCuts(const TLorentzVector& jet, const AnaConsts::AccRec& jetCutsArr);
-  int countJets(const std::vector<TLorentzVector> &inputJets, const AnaConsts::AccRec& jetCutsArr);
-  int countCSVS(const std::vector<TLorentzVector> &inputJets, const std::vector<double> &inputCSVS, const double cutCSVS, const AnaConsts::AccRec& jetCutsArr);
-  std::vector<double> calcDPhi(const std::vector<TLorentzVector> &inputJets, const double metphi, const int nDPhi, const AnaConsts::AccRec& jetCutsArr);
-  double calcDeltaT(unsigned int pickedJetIdx, const std::vector<TLorentzVector> &inputJets, const AnaConsts::AccRec& jetCutsArr);
-  std::vector<double> calcDPhiN(const std::vector<TLorentzVector> &inputJets, const TLorentzVector &metLVec, const int nDPhi, const AnaConsts::AccRec& jetCutsArr);
-  
   //muon
   bool passMu(const TLorentzVector& muLvec, bool passId, bool passIso, const AnaConsts::MuIsoAccRec& musArr);
   int countMus(const std::vector<TLorentzVector> &muLvecVec, const std::vector<bool> &passmuId, const std::vector<bool> &passmuIso, const AnaConsts::MuIsoAccRec& musArr, std::vector<TLorentzVector> &selmuLvecVec);
@@ -136,15 +110,14 @@ namespace AnaFunctions
   int countEls(const std::vector<TLorentzVector> &elLvecVec, const std::vector<bool> &passelId, const std::vector<bool> &passelIso, const AnaConsts::ElIsoAccRec& elsArr, std::vector<TLorentzVector> &selelLvecVec);
   
   //calculate mtw
-  float calcMtW( TLorentzVector metLvec, TLorentzVector lepLvec);
+  float calcMtW(TLorentzVector metLvec, TLorentzVector lepLvec);
 
-  void preparecntNJets(const std::vector<TLorentzVector> &inijetsLVec, const std::vector<double> &inirecoJetsBtag, const double cutCSVS, std::vector<int> &cntNJetsVec, std::vector<int> &cntNbJetsVec);
-  void preparecalcDPhi(const std::vector<TLorentzVector> &inijetsLVec, const double metphi, std::vector<double> &outDPhiVec);
-  void prepareForNtupleReader();
-  double calcHT(const std::vector<TLorentzVector> &inputJets, const AnaConsts::AccRec& jetCutsArr);
-  bool passBaseline();
-  int jetLepdRMatch(const TLorentzVector& lep, const std::vector<TLorentzVector>& jetsLVec, const double jldRMax);
-  TLorentzVector calcMHT(const std::vector<TLorentzVector> &inputJets, const AnaConsts::AccRec& jetCutsArr);
+  //jet pre-selection (for hard b jet, pt>20)
+  std::vector<bool> preSelJet(const std::vector<TLorentzVector> &jetLvecVec, const AnaConsts::JetAccRec& jetsArr, const std::vector<TLorentzVector> &selmuLvecVec, const std::vector<TLorentzVector> &selelLvecVec);
+  //hard b-jet selection
+  int countHardBJets(const std::vector<TLorentzVector> &jetLvecVec, const std::vector<bool> & passJetPreSel, const std::vector<bool> &passBTag, std::vector<TLorentzVector> &selbjetLvecVec);
+  //soft b-jet selection
+  int countSoftBJets();
 }
 
 #endif
