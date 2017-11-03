@@ -80,39 +80,15 @@ namespace AnaConsts
   const int minSVnTrk = 3;
   const float maxSVPVdxy = 3.0, minSVPVdxyzSignif = 4.0, minSVPVCosdiffAngle = 0.98;
 
-  static std::set<std::string> activatedBranchNames_DataOnly = 
+  static std::set<std::string> activatedBranchNames_Common = 
   { 
-    "run", "lumi", "event", "evtWeight", 
-    "jetsLVec", "recoJetsBtag_0", "muMatchedJetIdx", "eleMatchedJetIdx", "looseisoTrksMatchedJetIdx", "trksForIsoVetoMatchedJetIdx",
-    "recoJetsJecUnc", "recoJetsJecScaleRawToFull",
-    "muonsLVec", "muonsMtw", "muonsRelIso", "muonsMiniIso", "muonsFlagMedium", "muonsFlagTight", "muonspfActivity",
-    "elesLVec", "elesMtw", "elesRelIso", "elesMiniIso", "elesisEB", "elesFlagVeto", "elesFlagMedium", "elespfActivity",
-    "loose_isoTrksLVec", "loose_isoTrks_iso", "loose_isoTrks_mtw", "loose_isoTrks_pdgId",
-    "met", "metphi", 
-    "tru_npv", "vtxSize",
-    "recoJetsBtag_0_LepCleaned", "jetsLVecLepCleaned",
-    "recoJetschargedEmEnergyFraction", "recoJetsneutralEmEnergyFraction", "recoJetschargedHadronEnergyFraction", "recoJetsmuonEnergyFraction",
-    //"looseJetID", "tightJetID", "looseJetID_NoLep", "tightJetID_NoLep", "CSCTightHaloFilter", "EcalDeadCellTriggerPrimitiveFilter", "HBHENoiseFilter", "HBHEIsoNoiseFilter",
-    "looseJetID", "tightJetID", "looseJetID_NoLep", "tightJetID_NoLep", "EcalDeadCellTriggerPrimitiveFilter", "HBHENoiseFilter", "HBHEIsoNoiseFilter", "goodVerticesFilter", "eeBadScFilter", "eeBadScListFilter", "CSCTightHaloListFilter", "badResolutionTrackListFilter", "muonBadTrackListFilter",
-    "TriggerNames", "PassTrigger", "TriggerPrescales", 
-    "stored_weight",
-    "globalTightHalo2016Filter", "BadChargedCandidateFilter", "BadPFMuonFilter",
-    "calomet"
+    "run", "lumi", "event"
   };
 
-  static std::set<std::string> activatedBranchNames = 
+  static std::set<std::string> activatedBranchNames_MCOnly = 
   {
     // Only exist in MC samples
-    "genDecayIdxVec", "genDecayLVec", "genDecayMomIdxVec", "genDecayPdgIdVec", "genDecayStrVec", "genDecayMomRefVec",
-    "W_emuVec", "W_tau_emuVec", "W_tau_prongsVec", "W_tau_nuVec",
-    "genHT", "PDFweights", "PDFids",
-    "id1", "id2", "x1", "x2", "q",
-    "W_emu_pfActivityVec", "W_tau_emu_pfActivityVec", "W_tau_prongs_pfActivityVec", "ScaleWeightsMiniAOD",
-    "recoJetsJecUncLepCleaned", "metMagUp", "metMagDown", "metPhiUp", "metPhiDown",
-    "SusyMotherMass", "SusyLSPMass", "recoJetsFlavor",
-    "genjetsLVec", "genmet", "genmetphi",
-    "NJetsISR",
-    "specialFixtype", "specialFixMuonsCharge", "specialFixMuonsLVec"
+    "genDecayIdxVec", "genDecayLVec", "genDecayMomIdxVec", "genDecayPdgIdVec", "genDecayStrVec", "genDecayMomRefVec"
   };
 }
 

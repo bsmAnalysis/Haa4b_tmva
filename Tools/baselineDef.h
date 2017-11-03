@@ -20,9 +20,12 @@ class BaselineVessel
 
   NTupleReader *tr;
   TLorentzVector metLvec;
-
+  //PreProcessing()
   template<typename T> void ArrayToVec( int size, std::string name, const T* var );
   std::vector<TLorentzVector> ConstructVecLVec( std::vector<float> px, std::vector<float> py, std::vector<float> pz, std::vector<float> en );
+  //PassBaseline()
+  void prepareWHMVA( const std::vector<TLorentzVector>& selmuLvecVec, const std::vector<TLorentzVector>& selelLvecVec, const TLorentzVector& metLvec, const std::vector<TLorentzVector>& selhardbLvecVec, const std::vector<TLorentzVector>& selsoftbLvecVec, std::string MVATag);
+
  public:
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Member ~~~~~
   bool debug;

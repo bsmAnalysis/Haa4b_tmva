@@ -86,11 +86,6 @@ void BaselineVessel::PassBaseline()
   passBaseline = true;
   passSelPreMVA = true;
 
-  //MET cut
-  metLvec.SetPtEtaPhiM(tr->getVar<float>("met_pt"), 0, tr->getVar<float>("met_phi"), 0);
-  bool passMET = (metLvec.Pt() >= AnaConsts::defaultMETcut);
-  tr->registerDerivedVar("passMET", passMET);
-  //end MET
   //lepton selection
   std::vector<TLorentzVector> selmuLvecVec;
   int nmus = AnaFunctions::countMus(tr->getVec<TLorentzVector>("mnLVec"), tr->getVec<bool>("mn_passId_vec"), tr->getVec<bool>("mn_passIso_vec"), AnaConsts::musArr, selmuLvecVec);
@@ -104,6 +99,12 @@ void BaselineVessel::PassBaseline()
   bool passLeptonSel = ( passMusSel && !passElsSel ) || ( !passMusSel && passElsSel );
   tr->registerDerivedVar("passLeptonSel", passLeptonSel);
   //end lepton selection
+
+  //MET cut
+  metLvec.SetPtEtaPhiM(tr->getVar<float>("met_pt"), 0, tr->getVar<float>("met_phi"), 0);
+  bool passMET = (metLvec.Pt() >= AnaConsts::defaultMETcut);
+  tr->registerDerivedVar("passMET", passMET);
+  //end MET
 
   //MtW cut, note, must done it after lepton selection! force to be 0 if no lepton selected
   float mtw = 0;
@@ -150,6 +151,11 @@ void BaselineVessel::PassBaseline()
   //end b jets selection
   //done with pre mva selection
 
+  //prepare for MVA variables, except for mtw
+  //W = lepton + MET
+  prepareWHMVA(selmuLvecVec, selelLvecVec, metLvec, selhardbLvecVec, selsoftbLvecVec, "_calcMVA");
+
+
   passSelPreMVA = passMET
                && passLeptonSel
                && passMtW
@@ -178,12 +184,10 @@ void BaselineVessel::operator()(NTupleReader& tr_)
 
 template<typename T> void BaselineVessel::ArrayToVec( int size, std::string name, const T* var )
 {
-  //const T * arr_head = & ( tr->getVar<T>(name) );
   std::vector<T> * vec = new std::vector<T>();
 
   for (int i = 0; i < size; i++)
   {
-    //vec->push_back( *(arr_head + i) );
     vec->push_back( *(var + i) );
   }
   tr->registerDerivedVec( name + "_vec", vec);
@@ -202,3 +206,24 @@ std::vector<TLorentzVector> BaselineVessel::ConstructVecLVec( std::vector<float>
   }
   return VecLVec;
 }
+
+void BaselineVessel::prepareWHMVA( const std::vector<TLorentzVector>& selmuLvecVec, const std::vector<TLorentzVector>& selelLvecVec, const TLorentzVector& metLvec, const std::vector<TLorentzVector>& selhardbLvecVec, const std::vector<TLorentzVector>& selsoftbLvecVec, std::string MVATag)
+{
+  //W boson related only
+  float WpT = -1.0;
+
+  //Higgs boson related only
+  float Hmass = -1.0, HpT = -1.0;
+  float bbdRAve = -1.0, bbdMMin = -1.0;
+  //dr W and Higgs 
+  float WHdR = -1.0;
+
+  tr->registerDerivedVar("WpT"     + MVATag, WpT);
+  tr->registerDerivedVar("Hmass"   + MVATag, Hmass);
+  tr->registerDerivedVar("HpT"     + MVATag, HpT);
+  tr->registerDerivedVar("bbdRAve" + MVATag, bbdRAve);
+  tr->registerDerivedVar("bbdMMin" + MVATag, bbdMMin);
+  tr->registerDerivedVar("WHdR"    + MVATag, WHdR);
+  return ;
+}
+
