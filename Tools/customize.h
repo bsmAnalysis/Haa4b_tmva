@@ -29,12 +29,12 @@ namespace AnaConsts
     double minAbsEta, maxAbsEta, minPt, maxPt;
   };
 
-  struct IsoAccRec
+  struct MuIsoAccRec
   {
     double minAbsEta, maxAbsEta, minPt, maxPt, maxIso, maxMtw;
   };
 
-  struct ElecIsoAccRec
+  struct ElIsoAccRec
   {
     double minAbsEta, maxAbsEta, minPt, maxPt, maxIsoEB, maxIsoEE, maxMtw;
   };
@@ -69,19 +69,11 @@ namespace AnaConsts
   const double defaultMT2cut = 200;
   const double defaultHTcut = 300;
 
-  //                                  minAbsEta, maxAbsEta, minPt, maxPt,   maxIso,  maxMtw
-  const IsoAccRec     muonsArr =    {   -1,       2.4,      10,     -1,       0.2,     -1  };
-  const IsoAccRec muonsMiniIsoArr = {   -1,       2.4,      10,     -1,       0.2,     -1  };
-  const IsoAccRec muonsTrigArr =    {   -1,       2.4,       5,     -1,       0.4,     -1  };
-  //const IsoAccRec   isoTrksArr =    {   -1,        -1,      10,     -1,       0.1,    100  };
-  const IsoAccRec   isoLepTrksArr = {   -1,       2.5,       5,     -1,       0.2,    100  };
-  const IsoAccRec   isoHadTrksArr = {   -1,       2.5,      10,     -1,       0.1,    100  };
-  //const IsoAccRec   isoTrksArr =    {   -1,        -1,     10,     -1,       0.1,    120  };
+  //                           minAbsEta, maxAbsEta, minPt, maxPt,   maxIso,  maxMtw
+  const MuIsoAccRec musArr = {   -1,       2.4,      25,     -1,       0.2,     -1  };
 
-  //                                     minAbsEta, maxAbsEta, minPt, maxPt, maxIsoEB, maxIsoEE,  maxMtw
-  const ElecIsoAccRec     elesArr =    {   -1,       2.5,      10,     -1,  0.164369, 0.212604,    -1  };
-  const ElecIsoAccRec elesMiniIsoArr = {   -1,       2.5,      10,     -1,     0.10,     0.10,     -1  };
-  const ElecIsoAccRec  oldelesArr =    {   -1,       2.5,       5,     -1,     0.15,     0.15,     -1  };
+  //                          minAbsEta, maxAbsEta, minPt, maxPt, maxIsoEB, maxIsoEE,  maxMtw
+  const ElIsoAccRec elsArr = {   -1,       2.5,      10,     -1,  0.164369, 0.212604,    -1  };
 
   //                                minAbsEta, maxAbsEta, minPt, maxPt,   mindR,   maxdR
   const ActRec     muonsAct =    {   -1,       -1,        10,    -1,       -1,     1.0  };
@@ -136,25 +128,22 @@ namespace AnaFunctions
   std::vector<double> calcDPhi(const std::vector<TLorentzVector> &inputJets, const double metphi, const int nDPhi, const AnaConsts::AccRec& jetCutsArr);
   double calcDeltaT(unsigned int pickedJetIdx, const std::vector<TLorentzVector> &inputJets, const AnaConsts::AccRec& jetCutsArr);
   std::vector<double> calcDPhiN(const std::vector<TLorentzVector> &inputJets, const TLorentzVector &metLVec, const int nDPhi, const AnaConsts::AccRec& jetCutsArr);
-  //muon
-  bool passMuon(const TLorentzVector& muon, const double& muonIso, const double& muonMtw, int flagID, const AnaConsts::IsoAccRec& muonsArr);
-  int countMuons(const std::vector<TLorentzVector> &muonsLVec, const std::vector<double> &muonsRelIso, const std::vector<double> &muonsMtw, const std::vector<int> &muonsFlagID, const AnaConsts::IsoAccRec& muonsArr);
-  //electron
-  bool passElectron(const TLorentzVector& elec, const double electronIso, const double electronMtw, bool isEB, int flagID, const AnaConsts::ElecIsoAccRec& elesArr);
-  int countElectrons(const std::vector<TLorentzVector> &electronsLVec, const std::vector<double> &electronsRelIso, const std::vector<double> &electronsMtw, const std::vector<unsigned int>& isEBVec, const std::vector<int> &electronsFlagID, const AnaConsts::ElecIsoAccRec& elesArr);
   
-  bool passIsoTrk(const TLorentzVector& isoTrk, const double isoTrkIso, const double isoTrkMtw, const AnaConsts::IsoAccRec& isoTrksArr);
-  int countIsoTrks(const std::vector<TLorentzVector> &isoTrksLVec, const std::vector<double> &isoTrksIso, const std::vector<double> &isoTrksMtw, const std::vector<int> &isoTrkspdgId);
+  //muon
+  bool passMuon(const TLorentzVector& muon, const double& muonIso, const double& muonMtw, int flagID, const AnaConsts::MuIsoAccRec& muonsArr);
+  int countMuons(const std::vector<TLorentzVector> &muonsLVec, const std::vector<double> &muonsRelIso, const std::vector<double> &muonsMtw, const std::vector<int> &muonsFlagID, const AnaConsts::MuIsoAccRec& muonsArr);
+  
+  //electron
+  bool passElectron(const TLorentzVector& elec, const double electronIso, const double electronMtw, bool isEB, int flagID, const AnaConsts::ElIsoAccRec& elesArr);
+  int countElectrons(const std::vector<TLorentzVector> &electronsLVec, const std::vector<double> &electronsRelIso, const std::vector<double> &electronsMtw, const std::vector<unsigned int>& isEBVec, const std::vector<int> &electronsFlagID, const AnaConsts::ElIsoAccRec& elesArr);
+  
   void preparecntNJets(const std::vector<TLorentzVector> &inijetsLVec, const std::vector<double> &inirecoJetsBtag, const double cutCSVS, std::vector<int> &cntNJetsVec, std::vector<int> &cntNbJetsVec);
   void preparecalcDPhi(const std::vector<TLorentzVector> &inijetsLVec, const double metphi, std::vector<double> &outDPhiVec);
   void prepareForNtupleReader();
   double calcHT(const std::vector<TLorentzVector> &inputJets, const AnaConsts::AccRec& jetCutsArr);
   bool passBaseline();
   int jetLepdRMatch(const TLorentzVector& lep, const std::vector<TLorentzVector>& jetsLVec, const double jldRMax);
-  bool passElectronAccOnly(const TLorentzVector& elec, const AnaConsts::ElecIsoAccRec& elesArr);
   TLorentzVector calcMHT(const std::vector<TLorentzVector> &inputJets, const AnaConsts::AccRec& jetCutsArr);
-  int countIsoLepTrks(const std::vector<TLorentzVector> &isoTrksLVec, const std::vector<double> &isoTrksIso, const std::vector<double> &isoTrksMtw, const std::vector<int> &isoTrkspdgId);
-  int countIsoPionTrks(const std::vector<TLorentzVector> &isoTrksLVec, const std::vector<double> &isoTrksIso, const std::vector<double> &isoTrksMtw, const std::vector<int> &isoTrkspdgId);
 }
 
 #endif

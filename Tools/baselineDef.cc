@@ -258,11 +258,8 @@ void BaselineVessel::PassBaseline()
   // Calculate number of leptons
   const std::vector<int> & muonsFlagIDVec = muonsFlagIDLabel.empty()? std::vector<int>(tr->getVec<double>("muonsMiniIso").size(), 1):tr->getVec<int>(muonsFlagIDLabel.c_str()); // We have muonsFlagTight as well, but currently use medium ID
   const std::vector<int> & elesFlagIDVec = elesFlagIDLabel.empty()? std::vector<int>(tr->getVec<double>("elesMiniIso").size(), 1):tr->getVec<int>(elesFlagIDLabel.c_str()); // Fake electrons since we don't have different ID for electrons now, but maybe later
-  int nMuons = AnaFunctions::countMuons(tr->getVec<TLorentzVector>("muonsLVec"), tr->getVec<double>("muonsMiniIso"), tr->getVec<double>("muonsMtw"), muonsFlagIDVec, AnaConsts::muonsMiniIsoArr);
-  int nElectrons = AnaFunctions::countElectrons(tr->getVec<TLorentzVector>("elesLVec"), tr->getVec<double>("elesMiniIso"), tr->getVec<double>("elesMtw"), tr->getVec<unsigned int>("elesisEB"), elesFlagIDVec, AnaConsts::elesMiniIsoArr);
-  int nIsoTrks = AnaFunctions::countIsoTrks(tr->getVec<TLorentzVector>("loose_isoTrksLVec"), tr->getVec<double>("loose_isoTrks_iso"), tr->getVec<double>("loose_isoTrks_mtw"), tr->getVec<int>("loose_isoTrks_pdgId"));
-  int nIsoLepTrks = AnaFunctions::countIsoLepTrks(tr->getVec<TLorentzVector>("loose_isoTrksLVec"), tr->getVec<double>("loose_isoTrks_iso"), tr->getVec<double>("loose_isoTrks_mtw"), tr->getVec<int>("loose_isoTrks_pdgId"));
-  int nIsoPionTrks = AnaFunctions::countIsoPionTrks(tr->getVec<TLorentzVector>("loose_isoTrksLVec"), tr->getVec<double>("loose_isoTrks_iso"), tr->getVec<double>("loose_isoTrks_mtw"), tr->getVec<int>("loose_isoTrks_pdgId"));
+  int nMuons = AnaFunctions::countMuons(tr->getVec<TLorentzVector>("muonsLVec"), tr->getVec<double>("muonsMiniIso"), tr->getVec<double>("muonsMtw"), muonsFlagIDVec, AnaConsts::musArr);
+  int nElectrons = AnaFunctions::countElectrons(tr->getVec<TLorentzVector>("elesLVec"), tr->getVec<double>("elesMiniIso"), tr->getVec<double>("elesMtw"), tr->getVec<unsigned int>("elesisEB"), elesFlagIDVec, AnaConsts::elsArr);
 
   // Calculate number of jets and b-tagged jets
   int cntCSVS = AnaFunctions::countCSVS(tr->getVec<TLorentzVector>(jetVecLabel), tr->getVec<double>(CSVVecLabel), AnaConsts::cutCSVS, AnaConsts::bTagArr);
@@ -275,15 +272,12 @@ void BaselineVessel::PassBaseline()
   (*dPhiVec) = AnaFunctions::calcDPhi(tr->getVec<TLorentzVector>(jetVecLabel), metLVec.Phi(), 3, AnaConsts::dphiArr);
 
   // Pass lepton veto?
-  bool passMuonVeto = (nMuons == AnaConsts::nMuonsSel), passEleVeto = (nElectrons == AnaConsts::nElectronsSel), passIsoTrkVeto = (nIsoTrks == AnaConsts::nIsoTrksSel);
-  bool passIsoLepTrkVeto = (nIsoLepTrks == AnaConsts::nIsoTrksSel), passIsoPionTrkVeto = (nIsoPionTrks == AnaConsts::nIsoTrksSel);
-  bool passLeptVeto = passMuonVeto && passEleVeto && passIsoTrkVeto;
+  bool passMuonVeto = (nMuons == AnaConsts::nMuonsSel), passEleVeto = (nElectrons == AnaConsts::nElectronsSel);
+  bool passLeptVeto = passMuonVeto && passEleVeto;
   if ( doMuonVeto && !passMuonVeto ){ passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; }
   if ( doEleVeto && !passEleVeto ){ passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; }
-  // Isolated track veto is disabled for now
-  if ( doIsoTrksVeto && !passIsoTrkVeto ){ passBaseline = false; passBaselineNoTagMT2 = false; passBaselineNoTag = false; }
 
-  if ( debug ) std::cout<<"nMuons : "<<nMuons<<"  nElectrons : "<<nElectrons<<"  nIsoTrks : "<<nIsoTrks<<"  passBaseline : "<<passBaseline<<std::endl;
+  if ( debug ) std::cout<<"nMuons : "<<nMuons<<"  nElectrons : "<<nElectrons<<"  passBaseline : "<<passBaseline<<std::endl;
 
   // Pass number of jets?
   bool passnJets = true;
@@ -492,7 +486,7 @@ bool BaselineVessel::GetLeptons() const
   const std::vector<int>            &muonsFlagID = tr->getVec<int>(muonsFlagIDLabel.c_str());
   const std::vector<double>         &muonsCharge = tr->getVec<double>("muonsCharge");
   for(unsigned int im=0; im<muonsLVec.size(); im++){
-    if(AnaFunctions::passMuon(muonsLVec[im], muonsRelIso[im], muonsMtw[im], muonsFlagID[im], AnaConsts::muonsMiniIsoArr))
+    if(AnaFunctions::passMuon(muonsLVec[im], muonsRelIso[im], muonsMtw[im], muonsFlagID[im], AnaConsts::musArr))
     {
       if (!vMuons->empty()) // Making sure the vMuons are sorted in Pt
         assert(muonsLVec.at(im).Pt() <= vMuons->back().Pt());
@@ -509,7 +503,7 @@ bool BaselineVessel::GetLeptons() const
   const std::vector<double>         &electronsCharge = tr->getVec<double>("elesCharge");
   for (unsigned int ie = 0; ie<electronsLVec.size(); ie++)
   {
-    if (AnaFunctions::passElectron(electronsLVec[ie], electronsRelIso[ie], electronsMtw[ie], isEBVec[ie], electronsFlagID[ie], AnaConsts::elesMiniIsoArr)) 
+    if (AnaFunctions::passElectron(electronsLVec[ie], electronsRelIso[ie], electronsMtw[ie], isEBVec[ie], electronsFlagID[ie], AnaConsts::elsArr)) 
     {
       // Making sure the vEles are sorted in Pt
       if (!vEles->empty()) { assert(electronsLVec.at(ie).Pt() <= vEles->back().Pt()); }
