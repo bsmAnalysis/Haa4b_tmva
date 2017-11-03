@@ -107,27 +107,26 @@ namespace AnaFunctions
   //end muon
 
   //electron
-  bool passElectron(const TLorentzVector& elec, const double electronIso, const double electronMtw, bool isEB, int flagID, const AnaConsts::ElIsoAccRec& elesArr)
+  bool passEl(const TLorentzVector& elLvec, bool passId, bool passIso, const AnaConsts::ElIsoAccRec& elsArr)
   {
-    const double minAbsEta = elesArr.minAbsEta, maxAbsEta = elesArr.maxAbsEta, minPt = elesArr.minPt, maxPt = elesArr.maxPt, maxIso = (isEB)?(elesArr.maxIsoEB):(elesArr.maxIsoEE), maxMtw = elesArr.maxMtw;
-    double perelectronpt = elec.Pt(), perelectroneta = elec.Eta();
-    return ( minAbsEta == -1 || fabs(perelectroneta) >= minAbsEta )
-      && ( maxAbsEta == -1 || fabs(perelectroneta) < maxAbsEta )
-      && (     minPt == -1 || perelectronpt >= minPt )
-      && (     maxPt == -1 || perelectronpt < maxPt ) 
-      && (    maxIso == -1 || electronIso < maxIso )
-      && (    maxMtw == -1 || electronMtw < maxMtw )
-      && flagID;
+    const double minAbsEta = elsArr.minAbsEta, maxAbsEta = elsArr.maxAbsEta, minPt = elsArr.minPt, maxPt = elsArr.maxPt;
+    double perelpt = elLvec.Pt(), pereleta = elLvec.Eta();
+    return ( minAbsEta == -1 || fabs(pereleta) >= minAbsEta )
+      && ( maxAbsEta == -1 || fabs(pereleta) < maxAbsEta )
+      && (     minPt == -1 || perelpt >= minPt )
+      && (     maxPt == -1 || perelpt < maxPt ) 
+      && passId
+      && passIso;
   }
 
-  int countElectrons(const std::vector<TLorentzVector> &electronsLVec, const std::vector<double> &electronsRelIso, const std::vector<double> &electronsMtw, const std::vector<unsigned int>& isEBVec, const std::vector<int> &electronsFlagID, const AnaConsts::ElIsoAccRec& elesArr)
+  int countEls(const std::vector<TLorentzVector> &elLvecVec, const std::vector<bool> &passelId, const std::vector<bool> &passelIso, const AnaConsts::ElIsoAccRec& elsArr)
   {
-    int cntNElectrons = 0;
-    for (unsigned int ie = 0; ie < electronsLVec.size(); ie++)
+    int cntNEls = 0;
+    for (unsigned int ie = 0; ie < elLvecVec.size(); ie++)
     {
-      if (passElectron(electronsLVec[ie], electronsRelIso[ie], electronsMtw[ie], isEBVec[ie], electronsFlagID[ie], elesArr)) cntNElectrons ++;
+      if (passEl(elLvecVec[ie], passelId[ie], passelIso[ie], elsArr)) cntNEls ++;
     }
-    return cntNElectrons;
+    return cntNEls;
   }
   //end electron
 

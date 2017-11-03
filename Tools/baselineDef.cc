@@ -257,11 +257,10 @@ void BaselineVessel::PassBaseline()
   // Form TLorentzVector of MET
   //metLVec.SetPtEtaPhiM(tr->getVar<double>(METLabel), 0, tr->getVar<double>(METPhiLabel), 0);
 
-  //const std::vector<int> & elesFlagIDVec = elesFlagIDLabel.empty()? std::vector<int>(tr->getVec<double>("elesMiniIso").size(), 1):tr->getVec<int>(elesFlagIDLabel.c_str()); // Fake electrons since we don't have different ID for electrons now, but maybe later
   int nmus = AnaFunctions::countMus(tr->getVec<TLorentzVector>("mnLVec"), tr->getVec<bool>("mn_passId_vec"), tr->getVec<bool>("mn_passIso_vec"), AnaConsts::musArr);
   tr->registerDerivedVar("nmus_CUT", nmus);
-
-  //int nElectrons = AnaFunctions::countElectrons(tr->getVec<TLorentzVector>("elesLVec"), tr->getVec<double>("elesMiniIso"), tr->getVec<double>("elesMtw"), tr->getVec<unsigned int>("elesisEB"), elesFlagIDVec, AnaConsts::elsArr);
+  int nels = AnaFunctions::countEls(tr->getVec<TLorentzVector>("enLVec"), tr->getVec<bool>("en_passId_vec"), tr->getVec<bool>("en_passIso_vec"), AnaConsts::elsArr);
+  tr->registerDerivedVar("nels_CUT", nels);
 
   /*
   // Calculate number of jets and b-tagged jets

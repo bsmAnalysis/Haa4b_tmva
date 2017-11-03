@@ -60,7 +60,7 @@ int main()
         //}
       }
      
-      std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nmus_CUT") << std::endl;
+      std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nmus_CUT") << " " << tr->getVar<int>("nels_CUT") << std::endl;
       /*
       std::vector<TLorentzVector> jetLVec = tr->getVec<TLorentzVector>("jetLVec");
       for (int i = 0; i < jetLVec.size(); i++)
