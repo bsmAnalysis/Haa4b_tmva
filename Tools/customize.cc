@@ -24,6 +24,16 @@ namespace AnaFunctions
     float dr = std::sqrt( deta*deta + dphi*dphi );
     return dr;
   }
+  //TL sort boolean, from big to small
+  bool TLvecSortByPt(const TLorentzVector& a, const TLorentzVector& b)
+  {
+    return a.Pt() > b.Pt();
+  }
+
+  bool TLvecSortByM(const TLorentzVector& a, const TLorentzVector& b)
+  {
+    return a.M() > b.M();
+  }
   //end common
 
   //muon
@@ -253,16 +263,31 @@ namespace AnaFunctions
   //MVA calculator
   float calcbbdRAve(const std::vector<TLorentzVector> &mergedBJetsLvecVec)
   {
+    //note, we only use first 4 hardest pt b jet candidate for ave dR calculation
     float bbdRAve = 0;
+    std::vector<TLorentzVector> mergedBJetsLvecVec_copy (mergedBJetsLvecVec.begin(), mergedBJetsLvecVec.end());
+    std::sort (mergedBJetsLvecVec_copy.begin(), mergedBJetsLvecVec_copy.end(), TLvecSortByPt);
+    int n = mergedBJetsLvecVec_copy.size();
+    for (int i = 0; i < n; i++)
+    {
+      std::cout << mergedBJetsLvecVec_copy[i].Pt() << ",";
+    }
+    std::cout << std::endl;
     return bbdRAve;
   }
 
   float calcbbdMMin(const std::vector<TLorentzVector> &mergedBJetsLvecVec)
   {
+    //note, we all b jets candidates for min dm calculation
     float bbdMMin = 0;
-    //std::vector<TLorentzVector> mergedBJetsLvecVec_copy (mergedBJetsLvecVec.begin(), mergedBJetsLvecVec.end());
-    //std::sort (mergedBJetsLvecVec_copy.begin(), mergedBJetsLvecVec_copy.end(), mergedBJetsLvecVec);
-    //int n = mergedBJetsLvecVec_copy.size();
+    std::vector<TLorentzVector> mergedBJetsLvecVec_copy (mergedBJetsLvecVec.begin(), mergedBJetsLvecVec.end());
+    std::sort (mergedBJetsLvecVec_copy.begin(), mergedBJetsLvecVec_copy.end(), TLvecSortByM);
+    int n = mergedBJetsLvecVec_copy.size();
+    //for (int i = 0; i < n; i++)
+    //{
+    //  std::cout << mergedBJetsLvecVec_copy[i].M() << ",";
+    //}
+    //std::cout << std::endl;
     //float bbdMMin = std::abs ( mergedBJetsLvecVec_copy[1].M() - mergedBJetsLvecVec_copy[0].M() );
     //for (int i = 2 ; i != n ; i++)
     //{

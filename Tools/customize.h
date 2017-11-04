@@ -98,7 +98,10 @@ namespace AnaFunctions
   //common 
   float DeltaPhi(const TLorentzVector& LvecA, const TLorentzVector& LvecB);
   float DeltaR(const TLorentzVector& LvecA, const TLorentzVector& LvecB);
-  
+  //TL sort boolean, from big to small
+  bool TLvecSortByM(const TLorentzVector& a, const TLorentzVector& b);
+  bool TLvecSortByPt(const TLorentzVector& a, const TLorentzVector& b);
+
   //muon
   bool passMu(const TLorentzVector& muLvec, bool passId, bool passIso, const AnaConsts::MuIsoAccRec& musArr);
   int countMus(const std::vector<TLorentzVector> &muLvecVec, const std::vector<bool> &passmuId, const std::vector<bool> &passmuIso, const AnaConsts::MuIsoAccRec& musArr, std::vector<TLorentzVector> &selmuLvecVec);
