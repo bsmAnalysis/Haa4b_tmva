@@ -248,4 +248,36 @@ namespace AnaFunctions
     }
     return cntSoftBJets;
   }
+  //end of b selection
+
+  //MVA calculator
+  float calcbbdRAve(const std::vector<TLorentzVector> &mergedBJetsLvecVec)
+  {
+    float bbdRAve = 0;
+    return bbdRAve;
+  }
+
+  float calcbbdMMin(const std::vector<TLorentzVector> &mergedBJetsLvecVec)
+  {
+    float bbdMMin = 0;
+    //std::vector<TLorentzVector> mergedBJetsLvecVec_copy (mergedBJetsLvecVec.begin(), mergedBJetsLvecVec.end());
+    //std::sort (mergedBJetsLvecVec_copy.begin(), mergedBJetsLvecVec_copy.end(), mergedBJetsLvecVec);
+    //int n = mergedBJetsLvecVec_copy.size();
+    //float bbdMMin = std::abs ( mergedBJetsLvecVec_copy[1].M() - mergedBJetsLvecVec_copy[0].M() );
+    //for (int i = 2 ; i != n ; i++)
+    //{
+      //bbdMMin = Math.min(bbdMMin, a[i]-a[i-1]);
+    //}
+    return bbdMMin;
+  }
+  float calcHHt(const std::vector<TLorentzVector> &mergedBJetsLvecVec)
+  {
+    float HHt = 0;
+    for( int i = 0; i < mergedBJetsLvecVec.size(); i++)
+    {
+      HHt += (mergedBJetsLvecVec[i]).Pt();
+    }
+    return HHt;
+  }
+  //end of MVA calculator
 }

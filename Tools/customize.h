@@ -8,6 +8,7 @@
 #include "TMath.h"
 #include "Math/VectorUtil.h"
 
+#include <algorithm>    // std::sort
 #include <iostream>
 #include <cstdio>
 #include <string>
@@ -123,5 +124,9 @@ namespace AnaFunctions
   std::vector<bool> passSoftBTag(const std::vector<int> sv_ntrk_vec, std::vector<float> sv_dxy_vec, std::vector<float> sv_dxyz_signif_vec, std::vector<float> sv_cos_dxyz_p_vec);
   int countSoftBJets(const std::vector<TLorentzVector> &svLvecVec, const std::vector<bool> & passSVPreSel, const std::vector<bool> &SoftBTag, std::vector<TLorentzVector> &selsoftbLvecVec);
 
+  //MVA variable calculator
+  float calcbbdRAve(const std::vector<TLorentzVector> &mergedBJetsLvecVec);
+  float calcbbdMMin(const std::vector<TLorentzVector> &mergedBJetsLvecVec);
+  float calcHHt(const std::vector<TLorentzVector> &mergedBJetsLvecVec);
 }
 #endif

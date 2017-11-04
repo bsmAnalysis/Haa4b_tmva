@@ -243,9 +243,9 @@ void BaselineVessel::prepareWHMVA( const std::vector<TLorentzVector>& selmuLvecV
     }
     Hmass = HLvec.M();
     HpT = HLvec.Pt();
-    bbdRAve = 0;
-    bbdMMin = 0;
-    HHt = 0;
+    bbdRAve = AnaFunctions::calcbbdRAve(mergedBJetsLvecVec);
+    bbdMMin = AnaFunctions::calcbbdMMin(mergedBJetsLvecVec);
+    HHt = AnaFunctions::calcHHt(mergedBJetsLvecVec);
   }
 
   //dr W and Higgs 
