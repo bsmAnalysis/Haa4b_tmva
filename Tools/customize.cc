@@ -261,46 +261,58 @@ namespace AnaFunctions
   //end of b selection
 
   //MVA calculator
-  float calcbbdRAve(const std::vector<TLorentzVector> &mergedBJetsLvecVec)
+  float calcbbdRAve(const std::vector<TLorentzVector> &mergedBJetsLvecVec_PtSorted)
   {
-    //note, we only use first 4 hardest pt b jet candidate for ave dR calculation
+    //note, we only use first 4 hardest pt b jet candidate for ave dR calculation, sort with pt before proceed
     float bbdRAve = 0;
-    std::vector<TLorentzVector> mergedBJetsLvecVec_copy (mergedBJetsLvecVec.begin(), mergedBJetsLvecVec.end());
-    std::sort (mergedBJetsLvecVec_copy.begin(), mergedBJetsLvecVec_copy.end(), TLvecSortByPt);
-    int n = mergedBJetsLvecVec_copy.size();
-    for (int i = 0; i < n; i++)
+    int n = mergedBJetsLvecVec_PtSorted.size();
+    // be careful!!! we are hard coded here!!!
+    if ( n >= 3 )
     {
-      std::cout << mergedBJetsLvecVec_copy[i].Pt() << ",";
+      bbdRAve = DeltaR(mergedBJetsLvecVec_PtSorted[0], mergedBJetsLvecVec_PtSorted[1]) + DeltaR(mergedBJetsLvecVec_PtSorted[0], mergedBJetsLvecVec_PtSorted[2]) + DeltaR(mergedBJetsLvecVec_PtSorted[1], mergedBJetsLvecVec_PtSorted[2]);
+      if ( n == 3 )
+      {
+        bbdRAve /= 3;
+      }
+      else
+      {
+        bbdRAve += DeltaR(mergedBJetsLvecVec_PtSorted[0], mergedBJetsLvecVec_PtSorted[3]) + DeltaR(mergedBJetsLvecVec_PtSorted[1], mergedBJetsLvecVec_PtSorted[3]) + DeltaR(mergedBJetsLvecVec_PtSorted[2], mergedBJetsLvecVec_PtSorted[3]);;
+        bbdRAve /= 6;
+      }
     }
-    std::cout << std::endl;
+    else { bbdRAve = -1; }
     return bbdRAve;
   }
 
-  float calcbbdMMin(const std::vector<TLorentzVector> &mergedBJetsLvecVec)
+  float calcbbdMMin(const std::vector<TLorentzVector> &mergedBJetsLvecVec_PtSorted)
   {
     //note, we all b jets candidates for min dm calculation
     float bbdMMin = 0;
-    std::vector<TLorentzVector> mergedBJetsLvecVec_copy (mergedBJetsLvecVec.begin(), mergedBJetsLvecVec.end());
-    std::sort (mergedBJetsLvecVec_copy.begin(), mergedBJetsLvecVec_copy.end(), TLvecSortByM);
-    int n = mergedBJetsLvecVec_copy.size();
-    //for (int i = 0; i < n; i++)
-    //{
-    //  std::cout << mergedBJetsLvecVec_copy[i].M() << ",";
-    //}
-    //std::cout << std::endl;
-    //float bbdMMin = std::abs ( mergedBJetsLvecVec_copy[1].M() - mergedBJetsLvecVec_copy[0].M() );
-    //for (int i = 2 ; i != n ; i++)
-    //{
-      //bbdMMin = Math.min(bbdMMin, a[i]-a[i-1]);
-    //}
+    int n = mergedBJetsLvecVec_PtSorted.size();
+    if ( n >= 3 )
+    {
+      if ( n == 3 )
+      {
+        bbdMMin = 0;
+      }
+      else
+      {
+	float dm1 = fabs( (mergedBJetsLvecVec_PtSorted[0] + mergedBJetsLvecVec_PtSorted[1]).M() - (mergedBJetsLvecVec_PtSorted[2] + mergedBJetsLvecVec_PtSorted[3]).M() );
+	float dm2 = fabs( (mergedBJetsLvecVec_PtSorted[0] + mergedBJetsLvecVec_PtSorted[2]).M() - (mergedBJetsLvecVec_PtSorted[1] + mergedBJetsLvecVec_PtSorted[3]).M() );
+        float dm3 = fabs( (mergedBJetsLvecVec_PtSorted[0] + mergedBJetsLvecVec_PtSorted[3]).M() - (mergedBJetsLvecVec_PtSorted[1] + mergedBJetsLvecVec_PtSorted[2]).M() );
+        bbdMMin = std::min( std::min(dm1, dm2), dm3);
+      }
+    }
+    else { bbdMMin = -1; }
     return bbdMMin;
   }
-  float calcHHt(const std::vector<TLorentzVector> &mergedBJetsLvecVec)
+
+  float calcHHt(const std::vector<TLorentzVector> &mergedBJetsLvecVec_PtSorted)
   {
     float HHt = 0;
-    for( int i = 0; i < mergedBJetsLvecVec.size(); i++)
+    for( int i = 0; i < mergedBJetsLvecVec_PtSorted.size(); i++)
     {
-      HHt += (mergedBJetsLvecVec[i]).Pt();
+      HHt += (mergedBJetsLvecVec_PtSorted[i]).Pt();
     }
     return HHt;
   }

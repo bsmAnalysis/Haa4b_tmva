@@ -71,6 +71,9 @@ int main()
         //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("WpT_calcMVA")  << std::endl;
         //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("Hmass_calcMVA")  << std::endl;
         //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("HpT_calcMVA")  << std::endl;
+        //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("bbdRAve_calcMVA")  << std::endl;
+        std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("bbdMMin_calcMVA")  << std::endl;
+        //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("HHt_calcMVA")  << std::endl;
         //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("WHdR_calcMVA")  << std::endl;
       }
       /*

@@ -243,9 +243,12 @@ void BaselineVessel::prepareWHMVA( const std::vector<TLorentzVector>& selmuLvecV
     }
     Hmass = HLvec.M();
     HpT = HLvec.Pt();
-    bbdRAve = AnaFunctions::calcbbdRAve(mergedBJetsLvecVec);
-    bbdMMin = AnaFunctions::calcbbdMMin(mergedBJetsLvecVec);
-    HHt = AnaFunctions::calcHHt(mergedBJetsLvecVec);
+    //be careful!!! sort b collection with pt before we calculate the following variables
+    std::vector<TLorentzVector> mergedBJetsLvecVec_copyPtSort (mergedBJetsLvecVec.begin(), mergedBJetsLvecVec.end());
+    std::sort (mergedBJetsLvecVec_copyPtSort.begin(), mergedBJetsLvecVec_copyPtSort.end(), AnaFunctions::TLvecSortByPt);
+    bbdRAve = AnaFunctions::calcbbdRAve(mergedBJetsLvecVec_copyPtSort);
+    bbdMMin = AnaFunctions::calcbbdMMin(mergedBJetsLvecVec_copyPtSort);
+    HHt = AnaFunctions::calcHHt(mergedBJetsLvecVec_copyPtSort);
   }
 
   //dr W and Higgs 

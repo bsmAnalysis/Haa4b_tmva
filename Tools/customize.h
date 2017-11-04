@@ -128,8 +128,9 @@ namespace AnaFunctions
   int countSoftBJets(const std::vector<TLorentzVector> &svLvecVec, const std::vector<bool> & passSVPreSel, const std::vector<bool> &SoftBTag, std::vector<TLorentzVector> &selsoftbLvecVec);
 
   //MVA variable calculator
-  float calcbbdRAve(const std::vector<TLorentzVector> &mergedBJetsLvecVec);
-  float calcbbdMMin(const std::vector<TLorentzVector> &mergedBJetsLvecVec);
-  float calcHHt(const std::vector<TLorentzVector> &mergedBJetsLvecVec);
+  //note, we need pt sorted bjets TLvec vector input in here!! And also note, we are hard coded with 4 bs in here!!
+  float calcbbdRAve(const std::vector<TLorentzVector> &mergedBJetsLvecVec_PtSorted);
+  float calcbbdMMin(const std::vector<TLorentzVector> &mergedBJetsLvecVec_PtSorted);
+  float calcHHt(const std::vector<TLorentzVector> &mergedBJetsLvecVec_PtSorted);
 }
 #endif
