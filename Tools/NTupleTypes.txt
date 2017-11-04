@@ -1,4 +1,5 @@
                                                         bool passSelPreMVA
+                                                       float WHdR_calcMVA
                                                         bool passAllBJets
                                                        float mtw
                                                         bool passLeptonSel
@@ -28,6 +29,7 @@ std::vector<TLorentzVector, std::allocator<TLorentzVector> > enLVec
                                                        float fjet_subjets_px
                                                          int fjet_subjet_count
                                                          int fjet_partonFlavour
+                                                       float bbdRAve_calcMVA
                   std::vector<float, std::allocator<float> > en_px_vec
                                                        float fjet_parton_en
                                                        float fjet_parton_pz
@@ -44,6 +46,7 @@ std::vector<TLorentzVector, std::allocator<TLorentzVector> > enLVec
                                                         bool passHardBJets
                                                        float qscale
                                                         bool mn_passSoftMuon
+                                                       float HHt_calcMVA
                                                        float fjet_tau3
                                                        float mn_en
                                                          int jet
@@ -89,6 +92,7 @@ std::vector<TLorentzVector, std::allocator<TLorentzVector> > mnLVec
                                                        float fjet_px
 std::vector<TLorentzVector, std::allocator<TLorentzVector> > svLVec
                                                          int run
+                                                       float WpT_calcMVA
                                                        float mcbh_py
                                                          int lumi
 std::vector<TLorentzVector, std::allocator<TLorentzVector> > jetLVec
@@ -105,8 +109,11 @@ std::vector<TLorentzVector, std::allocator<TLorentzVector> > jetLVec
                                                        float pthat
                                                        float genWeight
                                                        float x2
+                                                       float HpT_calcMVA
+                                                       float Hmass_calcMVA
                   std::vector<float, std::allocator<float> > sv_dxyz_signif_vec
                                                          int sv_mc_nbh_daus
+                                                       float bbdMMin_calcMVA
                                                        float mcbh_en
                                                        float mn_px
                                                          int jet_hadronFlavour

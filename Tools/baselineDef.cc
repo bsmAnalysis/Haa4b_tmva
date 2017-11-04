@@ -165,7 +165,6 @@ void BaselineVessel::PassBaseline()
   /*
   // Calculate number of jets and b-tagged jets
   tr->registerDerivedVar("passBaseline" + spec, passBaseline);
-
   if( debug ) std::cout<<"passBaseline : "<<passBaseline<<"  passBaseline : "<<passBaseline<<std::endl;
   */
 } 
@@ -209,20 +208,62 @@ std::vector<TLorentzVector> BaselineVessel::ConstructVecLVec( std::vector<float>
 
 void BaselineVessel::prepareWHMVA( const std::vector<TLorentzVector>& selmuLvecVec, const std::vector<TLorentzVector>& selelLvecVec, const TLorentzVector& metLvec, const std::vector<TLorentzVector>& selhardbLvecVec, const std::vector<TLorentzVector>& selsoftbLvecVec, std::string MVATag)
 {
+  //merge lepton and b classes first
+  std::vector<TLorentzVector> mergedLepLvecVec;
+  mergedLepLvecVec.reserve( selmuLvecVec.size() + selelLvecVec.size() );
+  mergedLepLvecVec.insert( mergedLepLvecVec.end(), selmuLvecVec.begin(), selmuLvecVec.end() );
+  mergedLepLvecVec.insert( mergedLepLvecVec.end(), selelLvecVec.begin(), selelLvecVec.end() );
+
+  std::vector<TLorentzVector> mergedBJetsLvecVec;
+  mergedBJetsLvecVec.reserve( selhardbLvecVec.size() + selsoftbLvecVec.size() );
+  mergedBJetsLvecVec.insert( mergedBJetsLvecVec.end(), selhardbLvecVec.begin(), selhardbLvecVec.end() );
+  mergedBJetsLvecVec.insert( mergedBJetsLvecVec.end(), selsoftbLvecVec.begin(), selsoftbLvecVec.end() );
+
   //W boson related only
   float WpT = -1.0;
+  bool validW = mergedLepLvecVec.size() == AnaConsts::nLepSel;
+  TLorentzVector WLvec;
+  if ( validW )
+  { 
+    WLvec = mergedLepLvecVec[0] + metLvec;
+    WpT = WLvec.Pt(); 
+  }
 
   //Higgs boson related only
   float Hmass = -1.0, HpT = -1.0;
   float bbdRAve = -1.0, bbdMMin = -1.0;
+  float HHt = -1.0;
+  bool validH = (selhardbLvecVec.size() >= AnaConsts::minNHardBJets) && (mergedBJetsLvecVec.size() >= AnaConsts::minNAllBJets);
+  TLorentzVector HLvec;
+  if ( validH )
+  {
+    for (int i = 0; i < mergedBJetsLvecVec.size(); i++)
+    {
+      HLvec += mergedBJetsLvecVec[i];
+    }
+    Hmass = HLvec.M();
+    HpT = HLvec.Pt();
+    bbdRAve = 0;
+    bbdMMin = 0;
+    HHt = 0;
+  }
+
   //dr W and Higgs 
   float WHdR = -1.0;
+  if ( validW && validH )
+  {
+    WHdR = AnaFunctions::DeltaR(WLvec, HLvec);
+  }
 
+  //reg W related only var
   tr->registerDerivedVar("WpT"     + MVATag, WpT);
+  //reg H related only var
   tr->registerDerivedVar("Hmass"   + MVATag, Hmass);
   tr->registerDerivedVar("HpT"     + MVATag, HpT);
   tr->registerDerivedVar("bbdRAve" + MVATag, bbdRAve);
   tr->registerDerivedVar("bbdMMin" + MVATag, bbdMMin);
+  tr->registerDerivedVar("HHt"     + MVATag, HHt);
+  //reg W and H var
   tr->registerDerivedVar("WHdR"    + MVATag, WHdR);
   return ;
 }

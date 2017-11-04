@@ -46,17 +46,17 @@ namespace AnaConsts
     float minAbsEta, maxAbsEta, minPt, maxPt;
   };
 
-  //cut met first
-  const float defaultMETcut = 25.0;
-  
   //then select lepton
-  const int nMusSel = 1, nElsSel = 1;
+  const int nMusSel = 1, nElsSel = 1, nLepSel = 1;
   //                           minAbsEta, maxAbsEta, minPt, maxPt
   const MuIsoAccRec musArr = {   -1,       2.4,      25,     -1   };
 
   //                           minAbsEta, maxAbsEta, minPt, maxPt
   const ElIsoAccRec elsArr = {   -1,       2.5,      30,     -1,  };
-  
+ 
+  //cut met first
+  const float defaultMETcut = 25.0;
+
   //then calculate mtw
   const float minMtW = 50.0, maxMtW = 250.0;
 
@@ -69,7 +69,7 @@ namespace AnaConsts
   ////https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation76X
   const float HardBJetsCSVLooseWP = 0.5426, HardBJetsCSVMediumWP = 0.800, HardBJetsCSVTightWP = 0.935;
   const int minNHardBJets = 2, maxNHardBJets = -1;
-  const int minNAllBJets = 3, maxNAllBJets = 4;
+  const int minNAllBJets = 3, maxNAllBJets = -1;
 
   //then for svs preselection
   //                       minAbsEta, maxAbsEta, minPt, maxPt
@@ -124,5 +124,4 @@ namespace AnaFunctions
   int countSoftBJets(const std::vector<TLorentzVector> &svLvecVec, const std::vector<bool> & passSVPreSel, const std::vector<bool> &SoftBTag, std::vector<TLorentzVector> &selsoftbLvecVec);
 
 }
-
 #endif

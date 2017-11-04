@@ -65,12 +65,21 @@ int main()
       }
       //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nHardBJets") << "," << tr->getVar<int>("nHardBJets_Test") << std::endl;
       //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nSoftBJets")  << std::endl;
-      
+      if ( tr->getVar<bool>("passSelPreMVA") )
+      //if ( !tr->getVar<bool>("passLeptonSel") )
+      {
+        //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("WpT_calcMVA")  << std::endl;
+        //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("Hmass_calcMVA")  << std::endl;
+        //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("HpT_calcMVA")  << std::endl;
+        std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("WHdR_calcMVA")  << std::endl;
+      }
+      /*
       if ( tr->getVar<bool>("passHardBJets") )
       {
         std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nSoftBJets")  << std::endl;
         std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nHardBJets")  << std::endl;
       }
+      */
       /*
       if ( tr->getVar<bool>("passMtW") )
       {
