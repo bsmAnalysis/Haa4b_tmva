@@ -1,4 +1,4 @@
-                                                             met_pt
+                                                       float met_pt
                                                              fjet_subjets_pz
                                                              fjet_subjets_px
                                                              fjet_subjet_count
@@ -29,7 +29,7 @@
                                                        float sv_pz
                                                              mc_status
                                                              mc_id
-                                                             met_phi
+                                                       float met_phi
                                                              mc_en
                                                              mcbh_pz
                                                              vtx_x

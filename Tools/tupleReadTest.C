@@ -130,8 +130,7 @@ int main()
       //} 
       //std::cout << std::endl;
       //std::cout << "NEvent " << tr->getEvtNum() << std::endl;
-      //std::cout << "MET " << tr->getVar<float>("met_pt");
-      //std::cout << "MET " << tr->getVar<float>("met_pt") << std::endl;
+      std::cout << "MET " << tr->getVar<float>("met_pt") << std::endl;
       //std::cout << " Njet " << tr->getVar<int>("jet") << std::endl;
     }
   }
