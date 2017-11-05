@@ -23,15 +23,12 @@ LDFLAGS    =
 
 #OPENCV_DIRECTORY = $(CMSSW_BASE)/src/opencv
 LIBS       = $(shell root-config --glibs)
-#LIBS      += -L$(CMSSW_BASE)/lib/${SCRAM_ARCH}/ -lTopTaggerTopTagger -lTopTaggerCfgParser
-#LIBS      += -L$(OPENCV_DIRECTORY)/lib/ -lopencv_ml -lopencv_core
-
 LHAPDFLIB  = -L$(LHAPDF_DATA_PATH)/../../lib -lLHAPDF
 
 FILES = $(wildcard $(SDIR)/*.cc)
 OBJS := $(FILES:$(SDIR)/%.cc=$(ODIR)/%.o)
 
-PROGRAMS = tupleTest MVATreeMaker
+PROGRAMS = tupleTest
 
 all: mkobj AnaTools sampPyWrap $(PROGRAMS)
 
@@ -64,9 +61,6 @@ $(ODIR)/%.o : $(SDIR)/%.cpp
 	$(CXX) $(CXXFLAGS) $(CXXDEPFLAGS) -o $@ -c $<
 
 tupleTest: $(ODIR)/baselineDef.o $(ODIR)/NTupleReader.o $(ODIR)/SATException.o $(ODIR)/customize.o $(ODIR)/tupleReadTest.o
-	$(LD) $^ $(LIBS) $(LHAPDFLIB) -o $@
-
-MVATreeMaker: $(ODIR)/baselineDef.o $(ODIR)/NTupleReader.o $(ODIR)/SATException.o $(ODIR)/customize.o $(ODIR)/MVATreeMaker.o
 	$(LD) $^ $(LIBS) $(LHAPDFLIB) -o $@
 
 clean:

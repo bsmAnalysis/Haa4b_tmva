@@ -1,5 +1,5 @@
-#ifndef _QCDTFTrimAndSlimCommon_H_
-#define _QCDTFTrimAndSlimCommon_H_
+#ifndef _MVATreeMaker_H_
+#define _MVATreeMaker_H_
 
 #include <string>
 #include <iostream>
