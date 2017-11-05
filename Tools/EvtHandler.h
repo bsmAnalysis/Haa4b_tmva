@@ -7,22 +7,17 @@
 #include <fstream>
 #include <set>
 #include <cmath>
+#include <vector>
 
-#include "Math/LorentzVector.h"
 #include "TMath.h"
 #include "TVector2.h"
 #include "TVector3.h"
 #include "TTree.h"
 #include "TLorentzVector.h"
 
-typedef ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<double>> LorentzVector;
-typedef std::vector<LorentzVector> LorentzVectorCollection;
-
 #define MAXPARTICLES 50
-#define MAXMCPARTICLES 250
-#define MAXLHEWEIGHTS 500
 
-struct DataEvtSummary_t
+struct DataEvtContainer
 {
   Int_t run,lumi;
   Long64_t event;
@@ -32,67 +27,50 @@ struct DataEvtSummary_t
 
   //muon
   Int_t mn;
-  Float_t mn_px[MAXPARTICLES],mn_py[MAXPARTICLES],mn_pz[MAXPARTICLES],mn_en[MAXPARTICLES];
-  Int_t mn_id[MAXPARTICLES], mn_type[MAXPARTICLES];
-  Float_t mn_d0[MAXPARTICLES],mn_dZ[MAXPARTICLES],mn_ip3d[MAXPARTICLES],mn_ip3dsig[MAXPARTICLES];
-  Bool_t mn_IsLoose[MAXPARTICLES],mn_IsMedium[MAXPARTICLES],mn_IsTight[MAXPARTICLES],mn_IsSoft[MAXPARTICLES],mn_IsHighPt[MAXPARTICLES];
-  Float_t mn_pileupIsoR03[MAXPARTICLES],mn_chargedIsoR03[MAXPARTICLES],mn_photonIsoR03[MAXPARTICLES],mn_neutralHadIsoR03[MAXPARTICLES];
-  Float_t mn_pileupIsoR04[MAXPARTICLES],mn_chargedIsoR04[MAXPARTICLES],mn_photonIsoR04[MAXPARTICLES],mn_neutralHadIsoR04[MAXPARTICLES];
-  Bool_t mn_passId[MAXPARTICLES],mn_passIdLoose[MAXPARTICLES],mn_passSoftMuon[MAXPARTICLES],mn_passIso[MAXPARTICLES];
-  Float_t mn_nMatches[MAXPARTICLES],mn_nMatchedStations[MAXPARTICLES],mn_validMuonHits[MAXPARTICLES],mn_innerTrackChi2[MAXPARTICLES],mn_trkLayersWithMeasurement[MAXPARTICLES],mn_pixelLayersWithMeasurement[MAXPARTICLES];
+  Float_t mn_px[MAXPARTICLES], mn_py[MAXPARTICLES], mn_pz[MAXPARTICLES], mn_en[MAXPARTICLES];
+  Bool_t mn_passId[MAXPARTICLES], mn_passIso[MAXPARTICLES];
+  std::vector<float> mn_px_vec, mn_py_vec, mn_pz_vec, mn_en_vec;
+  std::vector<bool> mn_passId_vec, mn_passIso_vec;
 
   //electron
   Int_t en;
-  Float_t en_px[MAXPARTICLES],en_py[MAXPARTICLES],en_pz[MAXPARTICLES],en_en[MAXPARTICLES];
-  Int_t en_id[MAXPARTICLES];
-  Float_t en_pileupIso[MAXPARTICLES],en_chargedIso[MAXPARTICLES],en_photonIso[MAXPARTICLES],en_neutralHadIso[MAXPARTICLES];
-  Float_t en_relIsoWithEA[MAXPARTICLES],en_relIsoWithDBeta[MAXPARTICLES],en_MissingHits[MAXPARTICLES],en_passConversionVeto[MAXPARTICLES];
-  Bool_t en_passVeto[MAXPARTICLES],en_passLoose[MAXPARTICLES],en_passMedium[MAXPARTICLES],en_passTight[MAXPARTICLES],en_passHEEP[MAXPARTICLES];
-  Bool_t en_passMVATrigMedium[MAXPARTICLES], en_passMVATrigTight[MAXPARTICLES];
-  Float_t en_IDMVATrigValue[MAXPARTICLES];
-  Int_t   en_IDMVATrigCategory[MAXPARTICLES];
-  Int_t en_istrue[MAXPARTICLES];
-  Bool_t en_passId[MAXPARTICLES],en_passIdLoose[MAXPARTICLES],en_passIso[MAXPARTICLES];
+  Float_t en_px[MAXPARTICLES], en_py[MAXPARTICLES], en_pz[MAXPARTICLES], en_en[MAXPARTICLES];
+  Bool_t en_passId[MAXPARTICLES], en_passIso[MAXPARTICLES];
+  std::vector<float> en_px_vec, en_py_vec, en_pz_vec, en_en_vec;
+  std::vector<bool> en_passId_vec, en_passIso_vec;
 
   //jet (ak4PFJetsCHS)
   Int_t jet;
   Float_t jet_px[MAXPARTICLES],jet_py[MAXPARTICLES],jet_pz[MAXPARTICLES],jet_en[MAXPARTICLES];
-  Float_t jet_btag0[MAXPARTICLES]; //,jet_btag1[MAXPARTICLES],jet_btag2[MAXPARTICLES],jet_btag3[MAXPARTICLES];
-  Float_t jet_mass[MAXPARTICLES],jet_area[MAXPARTICLES],jet_pu[MAXPARTICLES],jet_puId[MAXPARTICLES],jet_genpt[MAXPARTICLES];
-  Bool_t jet_PFLoose[MAXPARTICLES], jet_PFTight[MAXPARTICLES];
-  Int_t jet_partonFlavour[MAXPARTICLES], jet_hadronFlavour[MAXPARTICLES], jet_mother_id[MAXPARTICLES];
-  Float_t jet_parton_px[MAXPARTICLES], jet_parton_py[MAXPARTICLES], jet_parton_pz[MAXPARTICLES], jet_parton_en[MAXPARTICLES];
-
+  Float_t jet_btag0[MAXPARTICLES];
+  //Bool_t jet_PFLoose[MAXPARTICLES];
+  std::vector<float> jet_px_vec, jet_py_vec, jet_pz_vec, jet_en_vec;
+  std::vector<float> jet_btag0_vec;
+  //std::vector<bool> jet_PFLoose_vec;
 
   //sv : Inclusive Secondary Vertices from slimmedSecondaryVertices
   Int_t sv ;
-  Float_t sv_px[MAXPARTICLES], sv_py[MAXPARTICLES], sv_pz[MAXPARTICLES], sv_en[MAXPARTICLES] ;
-  Int_t   sv_ntrk[MAXPARTICLES] ;
-  Float_t sv_dxy[MAXPARTICLES], sv_dxyz[MAXPARTICLES], sv_dxyz_signif[MAXPARTICLES] ;
-  Float_t sv_cos_dxyz_p[MAXPARTICLES] ;
-  Float_t sv_chi2[MAXPARTICLES], sv_ndof[MAXPARTICLES] ;
-  Int_t   sv_mc_nbh_moms[MAXPARTICLES] ;
-  Int_t   sv_mc_nbh_daus[MAXPARTICLES] ;
-  Int_t   sv_mc_mcbh_ind[MAXPARTICLES] ;
+  Float_t sv_px[MAXPARTICLES], sv_py[MAXPARTICLES], sv_pz[MAXPARTICLES], sv_en[MAXPARTICLES];
+  Int_t sv_ntrk[MAXPARTICLES];
+  Float_t sv_dxy[MAXPARTICLES], sv_dxyz_signif[MAXPARTICLES], sv_cos_dxyz_p[MAXPARTICLES];
+  std::vector<float> sv_px_vec, sv_py_vec, sv_pz_vec, sv_en_vec;
+  std::vector<int> sv_ntrk_vec;
+  std::vector<float> sv_dxy_vec, sv_dxyz_signif_vec, sv_cos_dxyz_p_vec;
 
   //met
-  Float_t met_pt,met_phi,met_sumMET;
-  Float_t metNoHF_pt,metNoHF_phi,metNoHF_sumMET;
-  Float_t metPuppi_pt,metPuppi_phi,metPuppi_sumMET;
-  Float_t rawpfmet_pt,rawpfmet_phi,rawpfmet_sumMET;
-  Float_t rawcalomet_pt,rawcalomet_phi,rawcalomet_sumMET;
+  Float_t met_pt, met_phi;
 };
 
-class DataEvtSummaryHandler 
+class EvtHandler 
 {
  public:
   //
-  DataEvtSummaryHandler();
-  ~DataEvtSummaryHandler();
+  EvtHandler();
+  ~EvtHandler();
 
   //current event
-  DataEvtSummary_t evSummary_;
-  DataEvtSummary_t &getEvent() 
+  DataEvtContainer evSummary_;
+  DataEvtContainer &getEvent() 
   {
     return evSummary_;
   }
