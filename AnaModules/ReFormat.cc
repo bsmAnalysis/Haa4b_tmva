@@ -43,8 +43,8 @@ int main(int argc, char* argv[])
   TTree* selectedTree = new TTree("data","data");
   Handler_.initTree( selectedTree );
  
-  for ( int iev = 0; iev < 100; iev++)
-  //for ( int iev = 0; iev < nEntries; iev++)
+  //for ( int iev = 0; iev < 1000; iev++)
+  for ( int iev = 0; iev < nEntries; iev++)
   {
     //##############################################   EVENT LOOP STARTS   ##############################################
     //load the event content from tree
@@ -53,11 +53,10 @@ int main(int argc, char* argv[])
     DataEvtContainer &ev = Handler_.getEvent();
     for ( int j = 0; j < ev.mn; j++)
     {
-      std::cout << "mn_px " << ev.mn_px[j] << ", " << ev.mn_px_vec[j] << std::endl;
-
+      //std::cout << "mn_px " << ev.mn_px[j] << ", " << ev.mn_px_vec[j] << std::endl;
     }
     Handler_.fillTree();
-    //std::cout << "NEvent " << iev << ", run " << ev.run << std::endl;
+    std::cout << "NEvent " << iev << ", run " << ev.event << std::endl;
   }
 
   selectedTree->Write();

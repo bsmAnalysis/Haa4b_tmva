@@ -23,6 +23,7 @@ struct DataEvtContainer
   int run,lumi;
   Long64_t event;
   
+  //trigger
   bool hasTrigger;
   int triggerType;
 

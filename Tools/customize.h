@@ -83,11 +83,12 @@ namespace AnaConsts
   
   static std::set<std::string> activatedBranchNames_Common = 
   {
+    "hasTrigger", "triggerType",
     "met_pt", "met_phi", // met vector
-    "mn", "mn_px", "mn_py", "mn_pz", "mn_en", "mn_passId", "mn_passIso", //muon 
-    "en", "en_px", "en_py", "en_pz", "en_en", "en_passId", "en_passIso", //electron 
-    "jet", "jet_px", "jet_py", "jet_pz", "jet_en", "jet_btag0", //jet
-    "sv", "sv_px", "sv_py", "sv_pz", "sv_en", "sv_ntrk", "sv_dxy", "sv_dxyz_signif", "sv_cos_dxyz_p" //sv 
+    "mn", "mn_px_vec", "mn_py_vec", "mn_pz_vec", "mn_en_vec", "mn_passId_vec", "mn_passIso_vec", //muon 
+    "en", "en_px_vec", "en_py_vec", "en_pz_vec", "en_en_vec", "en_passId_vec", "en_passIso_vec", //electron 
+    "jet", "jet_px_vec", "jet_py_vec", "jet_pz_vec", "jet_en_vec", "jet_btag0_vec", //jet
+    "sv", "sv_px_vec", "sv_py_vec", "sv_pz_vec", "sv_en_vec", "sv_ntrk_vec", "sv_dxy_vec", "sv_dxyz_signif_vec", "sv_cos_dxyz_p_vec" //sv 
   };
   /*
   static std::set<std::string> activatedBranchNames_Common =

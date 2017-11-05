@@ -155,46 +155,43 @@ bool EvtHandler::initTree(TTree *t)
   to->Branch("triggerType", &evSummary_.triggerType, "triggerType/I");
 
   //muon
-  to->Branch("mn",         &evSummary_.mn,        "mn/I");
-  to->Branch("mn_px_vec", &evSummary_.mn_px_vec);
-
-  /*
-  to->Branch("mn_px",      evSummary_.mn_px,      "mn_px[mn]/F");
-  to->Branch("mn_py",      evSummary_.mn_py,      "mn_py[mn]/F");
-  to->Branch("mn_pz",      evSummary_.mn_pz,      "mn_pz[mn]/F");
-  to->Branch("mn_en",      evSummary_.mn_en,      "mn_en[mn]/F");
-  to->Branch("mn_passId",  evSummary_.mn_passId,  "mn_passId[mn]/O");
-  to->Branch("mn_passIso", evSummary_.mn_passIso, "mn_passIso[mn]/O");
+  to->Branch("mn",             &evSummary_.mn, "mn/I");
+  to->Branch("mn_px_vec",      &evSummary_.mn_px_vec);
+  to->Branch("mn_py_vec",      &evSummary_.mn_py_vec);
+  to->Branch("mn_pz_vec",      &evSummary_.mn_pz_vec);
+  to->Branch("mn_en_vec",      &evSummary_.mn_en_vec);
+  to->Branch("mn_passId_vec",  &evSummary_.mn_passId_vec);
+  to->Branch("mn_passIso_vec", &evSummary_.mn_passIso_vec);
 
   //electron
-  to->Branch("en",         &evSummary_.en,        "en/I");
-  to->Branch("en_px",      evSummary_.en_px,      "en_px[en]/F");
-  to->Branch("en_py",      evSummary_.en_py,      "en_py[en]/F");
-  to->Branch("en_pz",      evSummary_.en_pz,      "en_pz[en]/F");
-  to->Branch("en_en",      evSummary_.en_en,      "en_en[en]/F");
-  to->Branch("en_passId",  evSummary_.en_passId,  "en_passId[en]/O");
-  to->Branch("en_passIso", evSummary_.en_passIso, "en_passIso[en]/O"); 
+  to->Branch("en",             &evSummary_.en, "en/I");
+  to->Branch("en_px_vec",      &evSummary_.en_px_vec);
+  to->Branch("en_py_vec",      &evSummary_.en_py_vec);
+  to->Branch("en_pz_vec",      &evSummary_.en_pz_vec);
+  to->Branch("en_en_vec",      &evSummary_.en_en_vec);
+  to->Branch("en_passId_vec",  &evSummary_.en_passId_vec);
+  to->Branch("en_passIso_vec", &evSummary_.en_passIso_vec);
 
-  //jet (ak4PFJetsCHS)
-  to->Branch("jet",       &evSummary_.jet,      "jet/I");
-  to->Branch("jet_px",    evSummary_.jet_px,    "jet_px[jet]/F");
-  to->Branch("jet_py",    evSummary_.jet_py,    "jet_py[jet]/F");
-  to->Branch("jet_pz",    evSummary_.jet_pz,    "jet_pz[jet]/F");
-  to->Branch("jet_en",    evSummary_.jet_en,    "jet_en[jet]/F");
-  to->Branch("jet_btag0", evSummary_.jet_btag0, "jet_btag0[jet]/F");
-  //to->Branch("jet_PFLoose", evSummary_.jet_PFLoose,       "jet_PFLoose[jet]/O");
-  
-  //sv : Inclusive Secondary Vertices from slimmedSecondaryVertices
-  to->Branch("sv"            , &evSummary_.sv           , "sv/I" ) ;
-  to->Branch("sv_px"         , evSummary_.sv_px         , "sv_px[sv]/F" ) ;
-  to->Branch("sv_py"         , evSummary_.sv_py         , "sv_py[sv]/F" ) ;
-  to->Branch("sv_pz"         , evSummary_.sv_pz         , "sv_pz[sv]/F" ) ;
-  to->Branch("sv_en"         , evSummary_.sv_en         , "sv_en[sv]/F" ) ;
-  to->Branch("sv_ntrk"       , evSummary_.sv_ntrk       , "sv_ntrk[sv]/I" ) ;
-  to->Branch("sv_dxy"        , evSummary_.sv_dxy        , "sv_dxy[sv]/F" ) ;
-  to->Branch("sv_dxyz_signif", evSummary_.sv_dxyz_signif, "sv_dxyz_signif[sv]/F" ) ;
-  to->Branch("sv_cos_dxyz_p" , evSummary_.sv_cos_dxyz_p , "sv_cos_dxyz_p[sv]/F" ) ;
-  */
+  //jet
+  to->Branch("jet",            &evSummary_.jet, "jet/I");
+  to->Branch("jet_px_vec",     &evSummary_.jet_px_vec);
+  to->Branch("jet_py_vec",     &evSummary_.jet_py_vec);
+  to->Branch("jet_pz_vec",     &evSummary_.jet_pz_vec);
+  to->Branch("jet_en_vec",     &evSummary_.jet_en_vec);
+  to->Branch("jet_btag0_vec",  &evSummary_.jet_btag0_vec);
+  //to->Branch("jet_PFLoose_vec",  &evSummary_.jet_PFLoose_vec);
+
+  //sv
+  to->Branch("sv",                 &evSummary_.sv, "sv/I");
+  to->Branch("sv_px_vec",          &evSummary_.sv_px_vec);
+  to->Branch("sv_py_vec",          &evSummary_.sv_py_vec);
+  to->Branch("sv_pz_vec",          &evSummary_.sv_pz_vec);
+  to->Branch("sv_en_vec",          &evSummary_.sv_en_vec);
+  to->Branch("sv_ntrk_vec",        &evSummary_.sv_ntrk_vec);
+  to->Branch("sv_dxy_vec",         &evSummary_.sv_dxy_vec);
+  to->Branch("sv_dxyz_signif_vec", &evSummary_.sv_dxyz_signif_vec);
+  to->Branch("sv_cos_dxyz_p_vec",  &evSummary_.sv_cos_dxyz_p_vec);
+
   //met
   to->Branch("met_pt",  &evSummary_.met_pt,  "met_pt/F");
   to->Branch("met_phi", &evSummary_.met_phi, "met_phi/F");

@@ -13,8 +13,9 @@ int main()
 {
   //char nBase[] = "../../huaTest/MC13TeV_Wh_amass20_0.root";
   //char nBase[] = "../../../../../MC13TeV_Wh_amass50_0.root";
+  char nBase[] = "../AnaModules/Test.root";
   //char nBase[] = "root://eoscms.cern.ch//eos/cms/store/user/georgia/h-aa-Madgraph5/final/Wh_production_20/HIG-RunIISummer16MiniAODv2-01613_%i.root";
-  char nBase[] = "root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/crab_MC13TeV_TTJets_2016_0/171005_184952/0000/analysis_94.root";
+  //char nBase[] = "root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/crab_MC13TeV_TTJets_2016_0/171005_184952/0000/analysis_94.root";
   //char nBase[] = "root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/crab_MC13TeV_TTJets_2016_0/171005_184952/0000/analysis_49.root";
 
   TChain *ch = new TChain("mainNtuplizer/data");
