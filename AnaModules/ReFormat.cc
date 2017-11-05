@@ -27,24 +27,36 @@ int main(int argc, char* argv[])
   //std::string output_str = OutputFileNameGenerator(input_str,false);
   std::string output_str = "MVATest.root";
 
-  TChain *originalTree = new TChain("mainNtuplizer/data");
-  originalTree->Add(input_str.c_str());
-  //int nEntries = originalTree->GetEntries();
+  TFile *inputFile = TFile::Open( input_str.c_str() );
 
+  //handler
+  EvtHandler Handler_;
+  if( inputFile->IsZombie() ) return -1;
+  Handler_.attachToTree( (TTree *)inputFile->Get("mainNtuplizer/data") );
+  int nEntries = Handler_.getEntries();
+  std::cout << "NTot " << nEntries << std::endl;
+
+
+  //out put files
   TFile* output = new TFile((output_str).c_str(), "RECREATE");
   TDirectory *mydict = output->mkdir("mainNtuplizer"); mydict->cd();
   TTree* selectedTree = new TTree("data","data");
-  
-  while (1)
+ 
+  for ( int iev = 0; iev < nEntries; iev++)
   {
-    //std::cout << "NEvent " << << std::endl;
+    //##############################################   EVENT LOOP STARTS   ##############################################
+    //load the event content from tree
+    Handler_.getEntry(iev);
+    DataEvtContainer &ev = Handler_.getEvent();
+ 
+    std::cout << "NEvent " << iev << ", run " << ev.run << std::endl;
 
   }
   selectedTree->Write();
   output->Write(); 
   output->Close();
 
-  if (originalTree) delete originalTree;
+  inputFile->Close();
 
   //std::string d = "root://cmseos.fnal.gov//store/group/lpcsusyhad/hua/Skimmed_2015Nov15";
   //std::system(("xrdcp " + output_str + " " + d).c_str());

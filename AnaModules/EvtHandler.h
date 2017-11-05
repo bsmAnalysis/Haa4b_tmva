@@ -14,6 +14,7 @@
 #include "TVector3.h"
 #include "TTree.h"
 #include "TLorentzVector.h"
+#include "TChain.h"
 
 #define MAXPARTICLES 50
 

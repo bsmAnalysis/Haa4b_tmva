@@ -22,7 +22,7 @@ LDFLAGS    =
 
 OPENCV_DIRECTORY=$(CMSSW_BASE)/src/opencv
 LIBS       = $(shell root-config --glibs)
-LIBS      += -Lobj -lAnaTools
+#LIBS      += -Lobj -lAnaTools
 LHAPDFLIB  = -L$(LHAPDF_DATA_PATH)/../../lib -lLHAPDF
 FILES = $(wildcard $(SDIR)/*.cc)
 OBJS  := $(FILES:$(SDIR)/%.cc=$(ODIR)/%.o)
