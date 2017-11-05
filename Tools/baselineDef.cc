@@ -258,6 +258,9 @@ void BaselineVessel::prepareWHMVA( const std::vector<TLorentzVector>& selmuLvecV
     WHdR = AnaFunctions::DeltaR(WLvec, HLvec);
   }
 
+  //May be useful
+  int nBJets = mergedBJetsLvecVec.size();
+
   //reg W related only var
   tr->registerDerivedVar("WpT"     + MVATag, WpT);
   //reg H related only var
@@ -268,6 +271,9 @@ void BaselineVessel::prepareWHMVA( const std::vector<TLorentzVector>& selmuLvecV
   tr->registerDerivedVar("HHt"     + MVATag, HHt);
   //reg W and H var
   tr->registerDerivedVar("WHdR"    + MVATag, WHdR);
+  //MVA cat?
+  tr->registerDerivedVar("nBJets"  + MVATag, nBJets);
+
   return ;
 }
 

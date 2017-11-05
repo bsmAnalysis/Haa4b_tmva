@@ -24,8 +24,8 @@ int main(int argc, char* argv[])
     return -1;
   }
   std::string input_str(argv[1]);
-  std::string output_str = OutputFileNameGenerator(input_str,false);
-  //std::string output_str = "MVATest.root";
+  //std::string output_str = OutputFileNameGenerator(input_str,false);
+  std::string output_str = "MVATest.root";
 
   TChain *originalTree = new TChain("mainNtuplizer/data");
   originalTree->Add(input_str.c_str());
@@ -36,6 +36,7 @@ int main(int argc, char* argv[])
   
   //MVA variables
   Float_t WpT, Hmass, HpT, bbdRAve, bbdMMin, HHt, WHdR;
+  Int_t nBJets;
   selectedTree->Branch("WpT",&WpT,"WpT/F");
   selectedTree->Branch("Hmass",&Hmass,"Hmass/F");
   selectedTree->Branch("HpT",&HpT,"HpT/F");
@@ -43,6 +44,8 @@ int main(int argc, char* argv[])
   selectedTree->Branch("bbdMMin",&bbdMMin,"bbdMMin/F");
   selectedTree->Branch("HHt",&HHt,"HHt/F");
   selectedTree->Branch("WHdR",&WHdR,"WHdR/F");
+
+  selectedTree->Branch("nBJets",&nBJets,"nBJets/I");
 
   //Cut flow bit
   /*
@@ -76,7 +79,8 @@ int main(int argc, char* argv[])
       bbdMMin = tr->getVar<float>("bbdMMin_calcMVA");
       HHt     = tr->getVar<float>("HHt_calcMVA");
       WHdR    = tr->getVar<float>("WHdR_calcMVA");
-
+      nBJets = tr->getVar<int>("nBJets_calcMVA");
+      std::cout << "NEvent " << tr->getEvtNum() << std::endl;
       selectedTree->Fill();
     }
     else continue;
