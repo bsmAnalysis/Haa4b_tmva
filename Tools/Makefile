@@ -31,7 +31,7 @@ LHAPDFLIB  = -L$(LHAPDF_DATA_PATH)/../../lib -lLHAPDF
 FILES = $(wildcard $(SDIR)/*.cc)
 OBJS := $(FILES:$(SDIR)/%.cc=$(ODIR)/%.o)
 
-PROGRAMS = tupleTest
+PROGRAMS = tupleTest MVATreeMaker
 
 all: mkobj AnaTools sampPyWrap $(PROGRAMS)
 
@@ -64,6 +64,9 @@ $(ODIR)/%.o : $(SDIR)/%.cpp
 	$(CXX) $(CXXFLAGS) $(CXXDEPFLAGS) -o $@ -c $<
 
 tupleTest: $(ODIR)/baselineDef.o $(ODIR)/NTupleReader.o $(ODIR)/SATException.o $(ODIR)/customize.o $(ODIR)/tupleReadTest.o
+	$(LD) $^ $(LIBS) $(LHAPDFLIB) -o $@
+
+MVATreeMaker: $(ODIR)/baselineDef.o $(ODIR)/NTupleReader.o $(ODIR)/SATException.o $(ODIR)/customize.o $(ODIR)/MVATreeMaker.o
 	$(LD) $^ $(LIBS) $(LHAPDFLIB) -o $@
 
 clean:

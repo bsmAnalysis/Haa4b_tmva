@@ -28,8 +28,6 @@ int main()
   {
     NTupleReader *tr=0;
     tr = new NTupleReader(ch);
-    //BaselineVessel blv(tr);
-    //tr.registerFunction(blv);
     const std::string spec = "test";
     BaselineVessel *myBaselineVessel = 0;
     myBaselineVessel = new BaselineVessel( *tr, spec);
