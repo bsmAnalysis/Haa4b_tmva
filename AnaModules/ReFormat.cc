@@ -25,33 +25,41 @@ int main(int argc, char* argv[])
   }
   std::string input_str(argv[1]);
   //std::string output_str = OutputFileNameGenerator(input_str,false);
-  std::string output_str = "MVATest.root";
-
-  TFile *inputFile = TFile::Open( input_str.c_str() );
+  std::string output_str = "Test.root";
 
   //handler
   EvtHandler Handler_;
+
+  //set input for handler
+  TFile *inputFile = TFile::Open( input_str.c_str() );
   if( inputFile->IsZombie() ) return -1;
   Handler_.attachToTree( (TTree *)inputFile->Get("mainNtuplizer/data") );
   int nEntries = Handler_.getEntries();
   std::cout << "NTot " << nEntries << std::endl;
 
-
-  //out put files
+  //set out put for handler
   TFile* output = new TFile((output_str).c_str(), "RECREATE");
   TDirectory *mydict = output->mkdir("mainNtuplizer"); mydict->cd();
   TTree* selectedTree = new TTree("data","data");
+  Handler_.initTree( selectedTree );
  
-  for ( int iev = 0; iev < nEntries; iev++)
+  for ( int iev = 0; iev < 100; iev++)
+  //for ( int iev = 0; iev < nEntries; iev++)
   {
     //##############################################   EVENT LOOP STARTS   ##############################################
     //load the event content from tree
     Handler_.getEntry(iev);
+    Handler_.VecGenerator();
     DataEvtContainer &ev = Handler_.getEvent();
- 
-    std::cout << "NEvent " << iev << ", run " << ev.run << std::endl;
+    for ( int j = 0; j < ev.mn; j++)
+    {
+      std::cout << "mn_px " << ev.mn_px[j] << ", " << ev.mn_px_vec[j] << std::endl;
 
+    }
+    Handler_.fillTree();
+    //std::cout << "NEvent " << iev << ", run " << ev.run << std::endl;
   }
+
   selectedTree->Write();
   output->Write(); 
   output->Close();
