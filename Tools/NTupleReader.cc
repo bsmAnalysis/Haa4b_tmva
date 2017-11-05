@@ -143,6 +143,7 @@ void NTupleReader::registerBranch(TBranch * const branch) const
 
 bool NTupleReader::goToEvent(int evt)
 {
+  //std::cout << "Evt: " << evt << std::endl;  
   int status = tree_->GetEntry(evt);
   if (status == 0) return false;
   nevt_ = evt + 1;

@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
   {
     std::cerr <<"Please give 1 argument " << "inputFileName " << std::endl;
     std::cerr <<"Valid configurations are: " << std::endl;
-    std::cerr <<"./MVATreeMaker root://cmseos.fnal.gov//store/user/lpcsusyhad/Spring16_80X_Jun_2016_Ntp_v5X/QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/Spring16_80X_Jun_2016_Ntp_v5p0_QCD_HT2000toInf_ext1/160609_112453/0000/stopFlatNtuples_105.root" << std::endl;
+    std::cerr <<"./MVATreeMaker root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/crab_MC13TeV_TTJets_2016_0/171005_184952/0000/analysis_94.root" << std::endl; 
     return -1;
   }
   std::string input_str(argv[1]);
@@ -29,14 +29,14 @@ int main(int argc, char* argv[])
 
   TChain *originalTree = new TChain("mainNtuplizer/data");
   originalTree->Add(input_str.c_str());
-   
+  //int nEntries = originalTree->GetEntries();
+
   TFile* output = new TFile((output_str).c_str(), "RECREATE");
   TDirectory *mydict = output->mkdir("TreeMaker"); mydict->cd();
   TTree* selectedTree = new TTree("MVATree","MVATree");
   
   //MVA variables
   Float_t WpT, Hmass, HpT, bbdRAve, bbdMMin, HHt, WHdR;
-  Int_t nBJets;
   selectedTree->Branch("WpT",&WpT,"WpT/F");
   selectedTree->Branch("Hmass",&Hmass,"Hmass/F");
   selectedTree->Branch("HpT",&HpT,"HpT/F");
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
   selectedTree->Branch("bbdMMin",&bbdMMin,"bbdMMin/F");
   selectedTree->Branch("HHt",&HHt,"HHt/F");
   selectedTree->Branch("WHdR",&WHdR,"WHdR/F");
-
+  Int_t nBJets;
   selectedTree->Branch("nBJets",&nBJets,"nBJets/I");
 
   //Cut flow bit
@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
   selectedTree->Branch("passNoiseEventFilter",&passNoiseEventFilter,"passNoiseEventFilter/O");
   */
   NTupleReader *tr=0;
-  tr = new NTupleReader(originalTree);
+  tr = new NTupleReader(originalTree, AnaConsts::activatedBranchNames_Common);
   //tr = new NTupleReader(originalTree, AnaConsts::activatedBranchNames);
 
   const std::string spec = "Test";
@@ -68,6 +68,8 @@ int main(int argc, char* argv[])
   
   while (tr->getNextEvent())
   {
+    std::cout << "NEvent " << tr->getEvtNum() << std::endl;
+
     bool passSelPreMVA = tr->getVar<bool>("passSelPreMVA");
     if (passSelPreMVA)
     {
@@ -80,10 +82,11 @@ int main(int argc, char* argv[])
       HHt     = tr->getVar<float>("HHt_calcMVA");
       WHdR    = tr->getVar<float>("WHdR_calcMVA");
       nBJets = tr->getVar<int>("nBJets_calcMVA");
-      std::cout << "NEvent " << tr->getEvtNum() << std::endl;
+      std::cout << "NEvent " << tr->getEvtNum() << " " << nBJets <<std::endl;
       selectedTree->Fill();
     }
     else continue;
+    //if ( tr->getEvtNum() == nEntries-1) break;
   }
   selectedTree->Write();
   output->Write(); 

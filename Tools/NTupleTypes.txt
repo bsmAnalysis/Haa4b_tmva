@@ -1,167 +1,117 @@
-                                                        bool passSelPreMVA
-                                                       float WHdR_calcMVA
-                                                        bool passAllBJets
-                                                       float mtw
-                                                        bool passLeptonSel
-                                                         int nels_CUT
-                  std::vector<float, std::allocator<float> > sv_cos_dxyz_p_vec
-                  std::vector<float, std::allocator<float> > sv_en_vec
-                  std::vector<float, std::allocator<float> > sv_pz_vec
-                  std::vector<float, std::allocator<float> > sv_py_vec
-                  std::vector<float, std::allocator<float> > jet_btag0_vec
-                    std::vector<bool, std::allocator<bool> > jet_PFLoose_vec
-                  std::vector<float, std::allocator<float> > jet_pz_vec
-                  std::vector<float, std::allocator<float> > jet_py_vec
-                  std::vector<float, std::allocator<float> > jet_px_vec
-                  std::vector<float, std::allocator<float> > jet_en_vec
-                    std::vector<bool, std::allocator<bool> > en_passIso_vec
-                    std::vector<bool, std::allocator<bool> > en_passId_vec
-std::vector<TLorentzVector, std::allocator<TLorentzVector> > enLVec
-                  std::vector<float, std::allocator<float> > en_en_vec
-                  std::vector<float, std::allocator<float> > en_pz_vec
-                  std::vector<float, std::allocator<float> > en_py_vec
-                                                         int nmus_CUT
-                  std::vector<float, std::allocator<float> > mn_pz_vec
-                  std::vector<float, std::allocator<float> > mn_px_vec
-                    std::vector<bool, std::allocator<bool> > mn_passId_vec
-                                                       float met_pt
-                                                       float fjet_subjets_pz
-                                                       float fjet_subjets_px
-                                                         int fjet_subjet_count
-                                                         int fjet_partonFlavour
-                                                       float bbdRAve_calcMVA
-                  std::vector<float, std::allocator<float> > en_px_vec
-                                                       float fjet_parton_en
-                                                       float fjet_parton_pz
-                                                       float fjet_parton_py
-                                                       float fjet_parton_px
-                                                       float fjet_tau2
-                                                       float fjet_tau1
-                                                       float fjet_softdropM
-                                                       float fjet_prunedM
-                                                         int fjet_mother_id
+                                                             met_pt
+                                                             fjet_subjets_pz
+                                                             fjet_subjets_px
+                                                             fjet_subjet_count
+                                                             fjet_partonFlavour
+                                                             fjet_parton_en
+                                                             fjet_parton_pz
+                                                             fjet_parton_py
+                                                             fjet_parton_px
+                                                             fjet_tau2
+                                                             fjet_tau1
+                                                             fjet_softdropM
+                                                             fjet_prunedM
+                                                             fjet_mother_id
                                                         bool mn_passIso
-                                                         int fjet_hadronFlavour
+                                                             fjet_hadronFlavour
                                                        float mn_pz
-                                                        bool passHardBJets
-                                                       float qscale
-                                                        bool mn_passSoftMuon
-                                                       float HHt_calcMVA
-                                                       float fjet_tau3
+                                                             qscale
+                                                             mn_passSoftMuon
+                                                             fjet_tau3
                                                        float mn_en
                                                          int jet
-std::vector<TLorentzVector, std::allocator<TLorentzVector> > mnLVec
-                                                       float met_sumMET
+                                                             met_sumMET
                                                        float sv_px
-                    std::vector<bool, std::allocator<bool> > mn_passIso_vec
-                                                       float jet_puId
-                                                       float vtx_z
+                                                             jet_puId
+                                                             vtx_z
                                                         bool mn_passId
-                                                       float fjet_subjets_en
+                                                             fjet_subjets_en
                                                        float sv_pz
-                                                         int mc_status
-                                                         int mc_id
-                                                       float met_phi
-                                                       float mc_en
-                                                       float mcbh_pz
-                                                       float vtx_x
-                  std::vector<float, std::allocator<float> > mn_py_vec
-                                                         int ngenTruepu
-                                                        bool passMusSel
-                                                       float sv_chi2
-                                                       float mc_pz
-                                                         int mc_momidx
-                                                         int nSoftBJets
-                                                         int ngenOOTpum1
-                                                       float mc_py
-                                                         int ngenITpu
+                                                             mc_status
+                                                             mc_id
+                                                             met_phi
+                                                             mc_en
+                                                             mcbh_pz
+                                                             vtx_x
+                                                             ngenTruepu
+                                                             sv_chi2
+                                                             mc_pz
+                                                             mc_momidx
+                                                             ngenOOTpum1
+                                                             mc_py
+                                                             ngenITpu
                                                        float en_en
-                                                        bool mn_passIdLoose
-                                                         int mn_type
-                                                       float mcbh_px
-                                                       float fjet_subjets_py
+                                                             mn_passIdLoose
+                                                             mn_type
+                                                             mcbh_px
+                                                             fjet_subjets_py
                                                        float en_px
-                                                        bool hasTrigger
+                                                             hasTrigger
                                                        float sv_en
-                                                       float x1
+                                                             x1
                                                          int mn
-                                                         int mcbh
+                                                             mcbh
                                                          int sv_ntrk
-                                                         int nvtx
-                      std::vector<int, std::allocator<int> > sv_ntrk_vec
-                                                       float fjet_px
-std::vector<TLorentzVector, std::allocator<TLorentzVector> > svLVec
-                                                         int run
-                                                       float WpT_calcMVA
-                                                       float mcbh_py
-                                                         int lumi
-std::vector<TLorentzVector, std::allocator<TLorentzVector> > jetLVec
-                                                         int mn_id
-                                                        bool passElsSel
-                                                         int id2
+                                                             nvtx
+                                                             fjet_px
+                                                             run
+                                                             mcbh_py
+                                                             lumi
+                                                             mn_id
+                                                             id2
                                                        float mn_py
-                                                       float jet_parton_py
-                                                       float fjet_py
-                                                        bool passMET
-                                                         int triggerType
-                                                         int mcbh_id
-                                                       float vtx_y
-                                                       float pthat
-                                                       float genWeight
-                                                       float x2
-                                                       float HpT_calcMVA
-                                                       float Hmass_calcMVA
-                  std::vector<float, std::allocator<float> > sv_dxyz_signif_vec
-                                                         int sv_mc_nbh_daus
-                                                       float bbdMMin_calcMVA
-                                                       float mcbh_en
+                                                             jet_parton_py
+                                                             fjet_py
+                                                             triggerType
+                                                             mcbh_id
+                                                             vtx_y
+                                                             pthat
+                                                             genWeight
+                                                             x2
+                                                             sv_mc_nbh_daus
+                                                             mcbh_en
                                                        float mn_px
-                                                         int jet_hadronFlavour
-                                                       float mc_px
-                  std::vector<float, std::allocator<float> > sv_dxy_vec
-                                                         int id1
-                                                         int mc_mom
-                                                       float jet_area
-                                                         int nmcparticles
-                                                        bool jet_PFTight
+                                                             jet_hadronFlavour
+                                                             mc_px
+                                                             id1
+                                                             mc_mom
+                                                             jet_area
+                                                             nmcparticles
+                                                             jet_PFTight
                                                        float sv_py
                                                         bool en_passIso
                                                          int en
                                                        float en_py
-                                                        bool jet_PFLoose
+                                                             jet_PFLoose
                                                        float en_pz
-                  std::vector<float, std::allocator<float> > sv_px_vec
-                                                         int en_id
+                                                             en_id
                                                         bool en_passId
-                                                         int jet_mother_id
-                                                        bool en_passIdLoose
+                                                             jet_mother_id
+                                                             en_passIdLoose
                                                        float jet_px
                                                        float jet_pz
-                                                       float jet_mass
-                                                       float fjet_genpt
+                                                             jet_mass
+                                                             fjet_genpt
                                                        float jet_en
-                                               unsigned long event
-                                                       float jet_pu
-                  std::vector<float, std::allocator<float> > mn_en_vec
-                                                         int jet_partonFlavour
-                                                       float jet_parton_px
-                                                       float jet_parton_en
+                                                             event
+                                                             jet_pu
+                                                             jet_partonFlavour
+                                                             jet_parton_px
+                                                             jet_parton_en
                                                        float sv_dxy
-                                                       float jet_genpt
-                                                         int fjet
-                                                       float sv_dxyz
+                                                             jet_genpt
+                                                             fjet
+                                                             sv_dxyz
                                                        float sv_dxyz_signif
-                                                       float sv_ndof
+                                                             sv_ndof
                                                        float sv_cos_dxyz_p
-                                                         int sv_mc_nbh_moms
-                                                        bool passMtW
+                                                             sv_mc_nbh_moms
                                                        float jet_py
-                                                       float jet_parton_pz
+                                                             jet_parton_pz
                                                        float jet_btag0
-                                                         int sv_mc_mcbh_ind
-                                                       float fjet_pz
-                                                         int nHardBJets
-                                                       float fjet_en
+                                                             sv_mc_mcbh_ind
+                                                             fjet_pz
+                                                             fjet_en
                                                          int sv
-                                                         int ngenOOTpu
-                                                       float fjet_btag0
+                                                             ngenOOTpu
+                                                             fjet_btag0

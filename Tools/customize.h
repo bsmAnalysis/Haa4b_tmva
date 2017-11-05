@@ -82,8 +82,11 @@ namespace AnaConsts
   const float maxSVPVdxy = 3.0, minSVPVdxyzSignif = 4.0, minSVPVCosdiffAngle = 0.98;
 
   static std::set<std::string> activatedBranchNames_Common = 
-  { 
-    "run", "lumi", "event"
+  {
+    "mn", "mn_px", "mn_py", "mn_pz", "mn_en", "mn_passId", "mn_passIso", //muon 
+    "en", "en_px", "en_py", "en_pz", "en_en", "en_passId", "en_passIso", //electron 
+    "jet", "jet_px", "jet_py", "jet_pz", "jet_en", "jet_btag0", //jet
+    "sv", "sv_px", "sv_py", "sv_pz", "sv_en", "sv_ntrk", "sv_dxy", "sv_dxyz_signif", "sv_cos_dxyz_p" //sv 
   };
 
   static std::set<std::string> activatedBranchNames_MCOnly = 
