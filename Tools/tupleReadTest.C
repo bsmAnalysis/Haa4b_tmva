@@ -27,21 +27,17 @@ int main()
   }
 
   int nTotal = ch->GetEntries();
-
   /*
-  int nTotal = ch->GetEntries();
-
   for (int i = 0; i < nTotal; i++)
   {
-    if( i < 600)
-    {
+    //if( i < 600)
+    //{
       std::cout << "NEvent " << i << std::endl;
       int status = ch->GetEntry(i);
       std::cout << "status: " << status << std::endl;
-    }
+    //}
   }
   */
-  
   try
   {
     NTupleReader *tr=0;
@@ -62,8 +58,10 @@ int main()
         fclose(fout);
       }
       std::cout << "NEvent " << tr->getEvtNum() << "/" << nTotal << std::endl;
-      //int run = tr->getVar<int>("run");
-      //std::cout << "NEvent " << tr->getEvtNum() << " " << run  << std::endl;
+      int sv = tr->getVar<int>("sv");
+      std::cout << "NEvent " << tr->getEvtNum() << " " << sv  << std::endl;
+      int jet = tr->getVar<int>("jet");
+      std::cout << "NEvent " << tr->getEvtNum() << " " << jet  << std::endl;
       //unsigned long event = tr->getVar<unsigned long>("event");
       
       //if ( tr->getEvtNum() < 20 )
@@ -130,7 +128,7 @@ int main()
       //} 
       //std::cout << std::endl;
       //std::cout << "NEvent " << tr->getEvtNum() << std::endl;
-      std::cout << "MET " << tr->getVar<float>("met_pt") << std::endl;
+      //std::cout << "MET " << tr->getVar<float>("met_pt") << std::endl;
       //std::cout << " Njet " << tr->getVar<int>("jet") << std::endl;
     }
   }

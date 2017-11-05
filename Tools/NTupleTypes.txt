@@ -1,4 +1,4 @@
-                                                       float met_pt
+                                                             met_pt
                                                              fjet_subjets_pz
                                                              fjet_subjets_px
                                                              fjet_subjet_count
@@ -12,24 +12,24 @@
                                                              fjet_softdropM
                                                              fjet_prunedM
                                                              fjet_mother_id
-                                                        bool mn_passIso
+                                                             mn_passIso
                                                              fjet_hadronFlavour
-                                                       float mn_pz
+                                                             mn_pz
                                                              qscale
                                                              mn_passSoftMuon
                                                              fjet_tau3
-                                                       float mn_en
-                                                         int jet
+                                                             mn_en
+                                                             jet
                                                              met_sumMET
                                                        float sv_px
                                                              jet_puId
                                                              vtx_z
-                                                        bool mn_passId
+                                                             mn_passId
                                                              fjet_subjets_en
                                                        float sv_pz
                                                              mc_status
                                                              mc_id
-                                                       float met_phi
+                                                             met_phi
                                                              mc_en
                                                              mcbh_pz
                                                              vtx_x
@@ -40,16 +40,16 @@
                                                              ngenOOTpum1
                                                              mc_py
                                                              ngenITpu
-                                                       float en_en
+                                                             en_en
                                                              mn_passIdLoose
                                                              mn_type
                                                              mcbh_px
                                                              fjet_subjets_py
-                                                       float en_px
+                                                             en_px
                                                              hasTrigger
                                                        float sv_en
                                                              x1
-                                                         int mn
+                                                             mn
                                                              mcbh
                                                          int sv_ntrk
                                                              nvtx
@@ -59,7 +59,7 @@
                                                              lumi
                                                              mn_id
                                                              id2
-                                                       float mn_py
+                                                             mn_py
                                                              jet_parton_py
                                                              fjet_py
                                                              triggerType
@@ -70,7 +70,7 @@
                                                              x2
                                                              sv_mc_nbh_daus
                                                              mcbh_en
-                                                       float mn_px
+                                                             mn_px
                                                              jet_hadronFlavour
                                                              mc_px
                                                              id1
@@ -79,20 +79,20 @@
                                                              nmcparticles
                                                              jet_PFTight
                                                        float sv_py
-                                                        bool en_passIso
-                                                         int en
-                                                       float en_py
+                                                             en_passIso
+                                                             en
+                                                             en_py
                                                              jet_PFLoose
-                                                       float en_pz
+                                                             en_pz
                                                              en_id
-                                                        bool en_passId
+                                                             en_passId
                                                              jet_mother_id
                                                              en_passIdLoose
-                                                       float jet_px
-                                                       float jet_pz
+                                                             jet_px
+                                                             jet_pz
                                                              jet_mass
                                                              fjet_genpt
-                                                       float jet_en
+                                                             jet_en
                                                              event
                                                              jet_pu
                                                              jet_partonFlavour
@@ -106,9 +106,9 @@
                                                              sv_ndof
                                                        float sv_cos_dxyz_p
                                                              sv_mc_nbh_moms
-                                                       float jet_py
+                                                             jet_py
                                                              jet_parton_pz
-                                                       float jet_btag0
+                                                             jet_btag0
                                                              sv_mc_mcbh_ind
                                                              fjet_pz
                                                              fjet_en

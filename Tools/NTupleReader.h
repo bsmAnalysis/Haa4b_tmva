@@ -264,7 +264,6 @@ class NTupleReader
     }
   }
  
- 
  private:
   // private variables for internal use
   TTree *tree_;
