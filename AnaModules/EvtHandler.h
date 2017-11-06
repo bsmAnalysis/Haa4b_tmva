@@ -20,7 +20,7 @@
 
 struct DataEvtContainer
 {
-  int run,lumi;
+  int run, lumi;
   Long64_t event;
   
   //trigger

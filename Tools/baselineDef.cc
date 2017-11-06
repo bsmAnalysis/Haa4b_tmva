@@ -31,7 +31,7 @@ BaselineVessel::~BaselineVessel()
 void BaselineVessel::PreProcessing()
 {
   //Muon
-  int mn = tr->getVar<int>("mn");
+  //int mn = tr->getVar<int>("mn");
   //ArrayToVec( mn, "mn_px", & ( tr->getVar<float>("mn_px") ) ); ArrayToVec( mn, "mn_py", & ( tr->getVar<float>("mn_py") ) ); ArrayToVec( mn, "mn_pz", & ( tr->getVar<float>("mn_pz") ) ); ArrayToVec( mn, "mn_en", & ( tr->getVar<float>("mn_en") ) );
   std::vector<TLorentzVector> * mnLVec = new std::vector<TLorentzVector>();
   (* mnLVec) = ConstructVecLVec( tr->getVec<float>("mn_px_vec"), tr->getVec<float>("mn_py_vec"), tr->getVec<float>("mn_pz_vec"), tr->getVec<float>("mn_en_vec") );
@@ -41,7 +41,7 @@ void BaselineVessel::PreProcessing()
   //ArrayToVec( mn, "mn_passId", & ( tr->getVar<bool>("mn_passId") ) ); ArrayToVec( mn, "mn_passIso", & ( tr->getVar<bool>("mn_passIso") ) );
 
   //Electron
-  int en = tr->getVar<int>("en");
+  //int en = tr->getVar<int>("en");
   //ArrayToVec( en, "en_px", & ( tr->getVar<float>("en_px") ) ); ArrayToVec( en, "en_py", & ( tr->getVar<float>("en_py") ) ); ArrayToVec( en, "en_pz", & ( tr->getVar<float>("en_pz") ) ); ArrayToVec( en, "en_en", & ( tr->getVar<float>("en_en") ) );
   std::vector<TLorentzVector> * enLVec = new std::vector<TLorentzVector>();
   (* enLVec) = ConstructVecLVec( tr->getVec<float>("en_px_vec"), tr->getVec<float>("en_py_vec"), tr->getVec<float>("en_pz_vec"), tr->getVec<float>("en_en_vec") );
@@ -51,10 +51,10 @@ void BaselineVessel::PreProcessing()
   //ArrayToVec( en, "en_passId", & ( tr->getVar<bool>("en_passId") ) ); ArrayToVec( en, "en_passIso", & ( tr->getVar<bool>("en_passIso") ) );
   
   //jet
-  int jet = tr->getVar<int>("jet");
+  //int jet = tr->getVar<int>("jet");
   //ArrayToVec( jet, "jet_px", & ( tr->getVar<float>("jet_px") ) ); ArrayToVec( jet, "jet_py", & ( tr->getVar<float>("jet_py") ) ); ArrayToVec( jet, "jet_pz", & ( tr->getVar<float>("jet_pz") ) ); ArrayToVec( jet, "jet_en", & ( tr->getVar<float>("jet_en") ) );
   std::vector<TLorentzVector> * jetLVec = new std::vector<TLorentzVector>();
-  //(* jetLVec) = ConstructVecLVec( tr->getVec<float>("jet_px_vec"), tr->getVec<float>("jet_py_vec"), tr->getVec<float>("jet_pz_vec"), tr->getVec<float>("jet_en_vec") );
+  (* jetLVec) = ConstructVecLVec( tr->getVec<float>("jet_px_vec"), tr->getVec<float>("jet_py_vec"), tr->getVec<float>("jet_pz_vec"), tr->getVec<float>("jet_en_vec") );
   //(* jetLVec) = ConstructVecLVec( jet, &(tr->getVar<float>("jet_px")), &(tr->getVar<float>("jet_py")), &(tr->getVar<float>("jet_pz")), &(tr->getVar<float>("jet_en")) );
   tr->registerDerivedVec("jetLVec", jetLVec);
   //to select a b jet with pt > 20
@@ -62,7 +62,7 @@ void BaselineVessel::PreProcessing()
   //ArrayToVec( jet, "jet_btag0", & ( tr->getVar<float>("jet_btag0") ) );
 
   //sv
-  int sv = tr->getVar<int>("sv");
+  //int sv = tr->getVar<int>("sv");
   //ArrayToVec( sv, "sv_px", & ( tr->getVar<float>("sv_px") ) ); ArrayToVec( sv, "sv_py", & ( tr->getVar<float>("sv_py") ) ); ArrayToVec( sv, "sv_pz", & ( tr->getVar<float>("sv_pz") ) ); ArrayToVec( sv, "sv_en", & ( tr->getVar<float>("sv_en") ) );
   std::vector<TLorentzVector> * svLVec = new std::vector<TLorentzVector>();
   (* svLVec) = ConstructVecLVec( tr->getVec<float>("sv_px_vec"), tr->getVec<float>("sv_py_vec"), tr->getVec<float>("sv_pz_vec"), tr->getVec<float>("sv_en_vec") );
@@ -89,6 +89,12 @@ void BaselineVessel::PassBaseline()
   //Initial value
   passBaseline = true;
   passSelPreMVA = true;
+
+  //trigger go first
+  //https://github.com/bsmAnalysis/BSMHiggs_fwk/blob/master/plugins/mainNtuplizer.cc#L613-L618
+  bool passTriggerSel = TriggerSel( tr->getVar<int>("triggerType") );
+  tr->registerDerivedVar("passTriggerSel", passTriggerSel);
+  //end of trigger sel
 
   //lepton selection
   std::vector<TLorentzVector> selmuLvecVec;
@@ -160,11 +166,13 @@ void BaselineVessel::PassBaseline()
   prepareWHMVA(selmuLvecVec, selelLvecVec, metLvec, selhardbLvecVec, selsoftbLvecVec, "_calcMVA");
 
 
-  passSelPreMVA = passMET
+  passSelPreMVA = passTriggerSel
                && passLeptonSel
+               && passMET
                && passMtW
                && passHardBJets
                && passAllBJets;
+  
   tr->registerDerivedVar("passSelPreMVA", passSelPreMVA);
   /*
   // Calculate number of jets and b-tagged jets
@@ -220,6 +228,12 @@ std::vector<TLorentzVector> BaselineVessel::ConstructVecLVec( int size, const fl
     VecLVec.push_back( thisLVec );
   }
   return VecLVec;
+}
+
+bool BaselineVessel::TriggerSel( int TriggerBit )
+{
+  bool passTrigger = ( (TriggerBit >> 1 ) & 0x1 ) || ( (TriggerBit >> 4 ) & 0x1 );
+  return passTrigger;
 }
 
 void BaselineVessel::prepareWHMVA( const std::vector<TLorentzVector>& selmuLvecVec, const std::vector<TLorentzVector>& selelLvecVec, const TLorentzVector& metLvec, const std::vector<TLorentzVector>& selhardbLvecVec, const std::vector<TLorentzVector>& selsoftbLvecVec, std::string MVATag)

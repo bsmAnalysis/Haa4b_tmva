@@ -27,7 +27,7 @@ LHAPDFLIB  = -L$(LHAPDF_DATA_PATH)/../../lib -lLHAPDF
 FILES = $(wildcard $(SDIR)/*.cc)
 OBJS  := $(FILES:$(SDIR)/%.cc=$(ODIR)/%.o)
 
-PROGRAMS = ReFormat MVATreeMaker
+PROGRAMS = ReFormat CutFlow MVATreeMaker
 
 all: mkobj $(OBJS) AnaTools $(PROGRAMS)
 
@@ -58,6 +58,9 @@ $(ODIR)/%.o : $(IDIR)/%.cpp
 	$(CXX) $(CXXFLAGS) $(CXXDEPFLAGS) -o $@ -c $<
 
 ReFormat: $(ODIR)/ReFormat.o $(ODIR)/EvtHandler.o
+	$(LD) $^ $(LIBS) $(LHAPDFLIB) -o $@
+
+CutFlow: $(ODIR)/CutFlow.o $(ODIR)/baselineDef.o $(ODIR)/NTupleReader.o $(ODIR)/SATException.o $(ODIR)/customize.o
 	$(LD) $^ $(LIBS) $(LHAPDFLIB) -o $@
 
 MVATreeMaker: $(ODIR)/MVATreeMaker.o $(ODIR)/baselineDef.o $(ODIR)/NTupleReader.o $(ODIR)/SATException.o $(ODIR)/customize.o
