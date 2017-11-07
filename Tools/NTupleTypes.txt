@@ -1,36 +1,63 @@
-                  std::vector<float, std::allocator<float> > sv_cos_dxyz_p_vec
-                  std::vector<float, std::allocator<float> > sv_dxy_vec
-                  std::vector<float, std::allocator<float> > sv_en_vec
-                  std::vector<float, std::allocator<float> > sv_pz_vec
-                  std::vector<float, std::allocator<float> > sv_py_vec
-                  std::vector<float, std::allocator<float> > sv_dxyz_signif_vec
-                                                         int sv
-                  std::vector<float, std::allocator<float> > sv_px_vec
-                  std::vector<float, std::allocator<float> > jet_en_vec
-                                                       float met_pt
-                  std::vector<float, std::allocator<float> > jet_pz_vec
-                  std::vector<float, std::allocator<float> > en_py_vec
-                  std::vector<float, std::allocator<float> > mn_pz_vec
-                  std::vector<float, std::allocator<float> > mn_py_vec
-                                                             lumi
-                                                             run
-                  std::vector<float, std::allocator<float> > mn_px_vec
+                                                        bool passSelPreMVA
+                                                         int nBJets_calcMVA
+                                                       float WHdR_calcMVA
+                                                       float HHt_calcMVA
+                                                       float HpT_calcMVA
+                                                       float Hmass_calcMVA
+                                                        bool passQuaBCat
+                                                        bool passAllBJets
+                                                         int nSoftBJets
+                                                        bool passHardBJets
+                                                         int nHardBJets
+                                                        bool passMET
+                  std::vector<float, std::allocator<float> > mn_en_vec
+                                                       float bbdMMin_calcMVA
+                  std::vector<float, std::allocator<float> > en_pz_vec
+                  std::vector<float, std::allocator<float> > jet_btag0_vec
+                    std::vector<bool, std::allocator<bool> > en_passId_vec
+                    std::vector<bool, std::allocator<bool> > mn_passId_vec
+                                                       float met_phi
+                                                         int en
+                                                         int jet
+                                                       float WpT_calcMVA
+                  std::vector<float, std::allocator<float> > en_px_vec
+                    std::vector<bool, std::allocator<bool> > mn_passIso_vec
+                  std::vector<float, std::allocator<float> > jet_py_vec
+                    std::vector<bool, std::allocator<bool> > en_passIso_vec
+                                                        bool hasTrigger
+                                                             event
+                                                         int triggerType
                       std::vector<int, std::allocator<int> > sv_ntrk_vec
                                                          int mn
-                                                         int triggerType
-                                                             event
-                                                        bool hasTrigger
-                    std::vector<bool, std::allocator<bool> > en_passIso_vec
-                  std::vector<float, std::allocator<float> > jet_py_vec
-                    std::vector<bool, std::allocator<bool> > mn_passIso_vec
-                                                         int jet
-                                                         int en
-                                                       float met_phi
-                    std::vector<bool, std::allocator<bool> > mn_passId_vec
-                    std::vector<bool, std::allocator<bool> > en_passId_vec
-                  std::vector<float, std::allocator<float> > jet_btag0_vec
-                  std::vector<float, std::allocator<float> > en_pz_vec
+                                                         int nels_CUT
+                                                       float mtw
+                  std::vector<float, std::allocator<float> > mn_px_vec
+                                                             run
+                                                             lumi
+                  std::vector<float, std::allocator<float> > mn_pz_vec
+                                                        bool passMtW
+                  std::vector<float, std::allocator<float> > en_py_vec
+                  std::vector<float, std::allocator<float> > jet_pz_vec
+                  std::vector<float, std::allocator<float> > jet_en_vec
+                                                         int sv
+                  std::vector<float, std::allocator<float> > sv_dxyz_signif_vec
+                  std::vector<float, std::allocator<float> > sv_pz_vec
+                  std::vector<float, std::allocator<float> > sv_en_vec
+                                                       float bbdRAve_calcMVA
+                  std::vector<float, std::allocator<float> > mn_py_vec
+std::vector<TLorentzVector, std::allocator<TLorentzVector> > enLVec
+                  std::vector<float, std::allocator<float> > sv_px_vec
+                  std::vector<float, std::allocator<float> > sv_dxy_vec
+                  std::vector<float, std::allocator<float> > sv_py_vec
+                  std::vector<float, std::allocator<float> > sv_cos_dxyz_p_vec
                   std::vector<float, std::allocator<float> > jet_px_vec
-                  std::vector<float, std::allocator<float> > mn_en_vec
-                  std::vector<float, std::allocator<float> > en_px_vec
+std::vector<TLorentzVector, std::allocator<TLorentzVector> > mnLVec
                   std::vector<float, std::allocator<float> > en_en_vec
+std::vector<TLorentzVector, std::allocator<TLorentzVector> > jetLVec
+                                                        bool passTriggerSel
+                                                         int nmus_CUT
+                                                        bool passMusSel
+std::vector<TLorentzVector, std::allocator<TLorentzVector> > svLVec
+                                                        bool passElsSel
+                                                       float met_pt
+                                                        bool passLeptonSel

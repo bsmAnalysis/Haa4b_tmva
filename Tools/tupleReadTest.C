@@ -12,8 +12,8 @@
 int main()
 {
   //char nBase[] = "../../huaTest/MC13TeV_Wh_amass20_0.root";
-  //char nBase[] = "../../../../../MC13TeV_Wh_amass50_0.root";
-  char nBase[] = "../AnaModules/Test.root";
+  char nBase[] = "/afs/cern.ch/work/h/hua/Haa4b/signalReFormat/rf_MC13TeV_Wh_amass50_0.root";
+  //char nBase[] = "../AnaModules/Test.root";
   //char nBase[] = "root://eoscms.cern.ch//eos/cms/store/user/georgia/h-aa-Madgraph5/final/Wh_production_20/HIG-RunIISummer16MiniAODv2-01613_%i.root";
   //char nBase[] = "root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/crab_MC13TeV_TTJets_2016_0/171005_184952/0000/analysis_94.root";
   //char nBase[] = "root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/crab_MC13TeV_TTJets_2016_0/171005_184952/0000/analysis_49.root";
@@ -43,10 +43,10 @@ int main()
   {
     NTupleReader *tr=0;
     tr = new NTupleReader(ch, AnaConsts::activatedBranchNames_Common);
-    //const std::string spec = "test";
-    //BaselineVessel *myBaselineVessel = 0;
-    //myBaselineVessel = new BaselineVessel( *tr, spec);
-    //tr->registerFunction(*myBaselineVessel);
+    const std::string spec = "test";
+    BaselineVessel *myBaselineVessel = 0;
+    myBaselineVessel = new BaselineVessel( *tr, spec);
+    tr->registerFunction(*myBaselineVessel);
 
     while (tr->getNextEvent())
     {
@@ -59,10 +59,10 @@ int main()
         fclose(fout);
       }
       std::cout << "NEvent " << tr->getEvtNum() << "/" << nTotal << std::endl;
-      int sv = tr->getVar<int>("sv");
-      std::cout << "NEvent " << tr->getEvtNum() << " " << sv  << std::endl;
-      int jet = tr->getVar<int>("jet");
-      std::cout << "NEvent " << tr->getEvtNum() << " " << jet  << std::endl;
+      //int sv = tr->getVar<int>("sv");
+      //std::cout << "NEvent " << tr->getEvtNum() << " " << sv  << std::endl;
+      //int jet = tr->getVar<int>("jet");
+      //std::cout << "NEvent " << tr->getEvtNum() << " " << jet  << std::endl;
       //unsigned long event = tr->getVar<unsigned long>("event");
       
       //if ( tr->getEvtNum() < 20 )
@@ -84,8 +84,10 @@ int main()
       //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nHardBJets") << "," << tr->getVar<int>("nHardBJets_Test") << std::endl;
       //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nSoftBJets")  << std::endl;
       //if ( tr->getVar<bool>("passSelPreMVA") )
+      if ( tr->getVar<bool>("passQuaBCat") )
       //if ( !tr->getVar<bool>("passLeptonSel") )
-      //{
+      {
+        std::cout << tr->getVar<int>("nBJets_calcMVA")  << std::endl;
         //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("WpT_calcMVA")  << std::endl;
         //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("Hmass_calcMVA")  << std::endl;
         //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("HpT_calcMVA")  << std::endl;
@@ -93,7 +95,7 @@ int main()
         //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("bbdMMin_calcMVA")  << std::endl;
         //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("HHt_calcMVA")  << std::endl;
         //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<float>("WHdR_calcMVA")  << std::endl;
-      //}
+      }
       //if ( tr->getVar<bool>("passHardBJets") )
       //{
         //std::cout << "NEvent " << tr->getEvtNum() << " " << tr->getVar<int>("nSoftBJets")  << std::endl;

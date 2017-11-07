@@ -161,6 +161,9 @@ void BaselineVessel::PassBaseline()
   //end b jets selection
   //done with pre mva selection
 
+  //additional b requirement, greater than 4 b jets
+  tr->registerDerivedVar("passQuaBCat", ((nhardbjets + nsoftbjets) >= 4) );
+
   //prepare for MVA variables, except for mtw
   //W = lepton + MET
   prepareWHMVA(selmuLvecVec, selelLvecVec, metLvec, selhardbLvecVec, selsoftbLvecVec, "_calcMVA");
