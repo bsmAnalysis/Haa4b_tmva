@@ -24,7 +24,7 @@ void CutFlowHistgram::BookHistgram(const char *outFileName)
 int CutFlowHistgram::getUpperBit( const std::vector<bool> &bits )
 {
   int n = bits.size();
-  if ( n >= (TotBit - 1) ){ std::cout << "too many bits! please increase bin" << std::endl; }
+  if ( n > (TotBit - 1) ){ std::cout << "too many bits! please increase bin" << std::endl; }
   for ( int i = 0; i < n; i++ )
   {
     if ( !bits[i] )
@@ -42,11 +42,10 @@ int main(int argc, char* argv[])
   {
     std::cerr <<"Please give 1 argument " << "inputFileName " << std::endl;
     std::cerr <<"Valid configurations are: " << std::endl;
-    std::cerr <<"./CutFlow root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/crab_MC13TeV_TTJets_2016_0/171005_184952/0000/analysis_94.root" << std::endl; 
+    std::cerr <<"./CutFlow root://eosuser.cern.ch//eos/user/h/hua/Haa4b/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/RF_TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8_analysis_1.root" << std::endl; 
     return -1;
   }
-  //root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/crab_MC13TeV_WJets_2016_0/170921_184723/0000/analysis_25.root
-  //root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1/crab_MC13TeV_SingleT_atW_2016_0/170921_184252/0000/analysis_15.root
+  //root://eosuser.cern.ch//eos/user/h/hua/Haa4b/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/RF_TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8_analysis_1.root
   std::string input_str(argv[1]);
   //std::string output_str = OutputFileNameGenerator( input_str, false);
   //std::string output_str = OutputFileNameGenerator( input_str, true);
@@ -79,7 +78,8 @@ int main(int argc, char* argv[])
     thisbits.push_back( tr->getVar<bool>("passMtW") );
     thisbits.push_back( tr->getVar<bool>("passHardBJets") );
     thisbits.push_back( tr->getVar<bool>("passAllBJets") );
-
+    thisbits.push_back( tr->getVar<bool>("passQuaBCat") );
+    thisbits.push_back( false );
     //std::cout << "nBJets: " << tr->getVar<int>("nBJets_calcMVA") << std::endl;
 
     int UpperBit = myCutFlowHistgram.getUpperBit( thisbits );
@@ -92,7 +92,7 @@ int main(int argc, char* argv[])
     bool passSelPreMVA = tr->getVar<bool>("passSelPreMVA");
     if (passSelPreMVA)
     {
-      std::cout << "NEvent " << tr->getEvtNum() << std::endl;
+      //std::cout << "NEvent " << tr->getEvtNum() << std::endl;
       //MVA variables
       float WpT     = tr->getVar<float>("WpT_calcMVA");
       float Hmass   = tr->getVar<float>("Hmass_calcMVA");
@@ -102,6 +102,7 @@ int main(int argc, char* argv[])
       float HHt     = tr->getVar<float>("HHt_calcMVA");
       float WHdR    = tr->getVar<float>("WHdR_calcMVA");
       int nBJets    = tr->getVar<int>("nBJets_calcMVA");
+      if (nBJets >= 4) { std::cout << "NBJets " << nBJets << std::endl; }
     }
     
   }

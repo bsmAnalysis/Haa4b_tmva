@@ -144,7 +144,7 @@ void BaselineVessel::PassBaseline()
   tr->registerDerivedVar("nHardBJets", nhardbjets);
   //int nhardbjets_test = AnaFunctions::countHardBJets(jetLvecVec, passJetPreSel, tr->getVec<bool>("jet_PFLoose_vec"), selhardbLvecVec);
   //tr->registerDerivedVar("nHardBJets_Test", nhardbjets_test);
-  bool passHardBJets = nhardbjets >= AnaConsts::minNHardBJets;
+  bool passHardBJets = (nhardbjets >= AnaConsts::minNHardBJets);
   tr->registerDerivedVar("passHardBJets", passHardBJets);
 
   //soft b jet, jet pre selection, acc and lepton clean
@@ -155,7 +155,7 @@ void BaselineVessel::PassBaseline()
   std::vector<TLorentzVector> selsoftbLvecVec;
   int nsoftbjets = AnaFunctions::countSoftBJets(svLvecVec, passSVPreSel, SoftBTag, selsoftbLvecVec);
   tr->registerDerivedVar("nSoftBJets", nsoftbjets);
-  bool passAllBJets = (nhardbjets + nsoftbjets) >= AnaConsts::minNAllBJets; //no upper limit!
+  bool passAllBJets = ((nhardbjets + nsoftbjets) >= AnaConsts::minNAllBJets); //no upper limit!
   //bool passAllBJets = ( (nhardbjets + nsoftbjets) >= AnaConsts::minNAllBJets ) && ( (nhardbjets + nsoftbjets) <= AnaConsts::maxNAllBJets );
   tr->registerDerivedVar("passAllBJets", passAllBJets);
   //end b jets selection
