@@ -53,9 +53,9 @@ int main(int argc, char* argv[])
     //load the event content from tree
     Handler_.getEntry(iev);
     Handler_.VecGenerator();
-    DataEvtContainer &ev = Handler_.getEvent();
     Handler_.fillTree();
-    std::cout << "NEvent " << iev << ", Event " << ev.event << std::endl;
+    //DataEvtContainer &ev = Handler_.getEvent();
+    //std::cout << "NEvent " << iev << ", Event " << ev.event << std::endl;
   }
 
   selectedTree->Write();
@@ -64,9 +64,11 @@ int main(int argc, char* argv[])
 
   inputFile->Close();
 
-  std::string d = "root://eosuser.cern.ch//eos/user/h/hua/Haa4b/";
-  //std::system(("xrdcp " + output_str + " " + d + getTag( input_str, false) ).c_str());
-  std::system(("xrdcp " + output_str + " " + d + getTag( input_str, true) ).c_str());
-  std::system(("rm " + output_str).c_str());
+  //std::string d = "root://eosuser.cern.ch//eos/user/h/hua/Haa4b/";
+  std::string d = "root://eosuser.cern.ch//eos/user/h/hua/Haa4b/Data";
+  //std::system( ( "xrdcp " + output_str + " " + d + getTag( input_str, false) ).c_str() );
+  //std::system( ( "xrdcp " + output_str + " " + d + getTag( input_str, true) ).c_str() );
+  std::system( ( "xrdcp " + output_str + " " + d ).c_str() );
+  std::system( ( "rm " + output_str ).c_str() );
   return 0;
 }
