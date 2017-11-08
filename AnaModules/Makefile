@@ -24,10 +24,13 @@ OPENCV_DIRECTORY=$(CMSSW_BASE)/src/opencv
 LIBS       = $(shell root-config --glibs)
 #LIBS      += -Lobj -lAnaTools
 LHAPDFLIB  = -L$(LHAPDF_DATA_PATH)/../../lib -lLHAPDF
+TMVALIB = -L$(ROOTSYS)/lib -lTMVA
+TMVALIB += -L$(ROOTSYS)/lib -lTMVAGui
+
 FILES = $(wildcard $(SDIR)/*.cc)
 OBJS  := $(FILES:$(SDIR)/%.cc=$(ODIR)/%.o)
 
-PROGRAMS = ReFormat CutFlow MVATreeMaker
+PROGRAMS = ReFormat CutFlow MVATreeMaker MVAAna
 
 all: mkobj $(OBJS) AnaTools $(PROGRAMS)
 
@@ -65,6 +68,9 @@ CutFlow: $(ODIR)/CutFlow.o $(ODIR)/baselineDef.o $(ODIR)/NTupleReader.o $(ODIR)/
 
 MVATreeMaker: $(ODIR)/MVATreeMaker.o $(ODIR)/baselineDef.o $(ODIR)/NTupleReader.o $(ODIR)/SATException.o $(ODIR)/customize.o
 	$(LD) $^ $(LIBS) $(LHAPDFLIB) -o $@
+
+MVAAna: $(ODIR)/MVAAna.o $(ODIR)/TMVATrainer.o
+	$(LD) $^ $(LIBS) $(LHAPDFLIB) $(TMVALIB) -o $@
 
 clean:
 	rm -f $(IDIR)/*.a $(ODIR)/*.o $(ODIR)/*.d $(ODIR)/*.so $(PROGRAMS) core 
