@@ -27,6 +27,7 @@ class TMVATrainer
 
   void InitTMVAFactory( TString OutFileName, TString JobName );
   void SetupMVAFactory( TString catName );
+  void CrossValidation( std::vector<std::string> parStringVec );
   void TnTstMVAFactory();
   void CloseMVAFactory();
   //void CheckTTree();

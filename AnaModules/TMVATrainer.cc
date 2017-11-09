@@ -69,19 +69,38 @@ void TMVATrainer::SetupMVAFactory( TString catName )
   myfactory->AddVariable( "HHt"   , 'F' );
   myfactory->AddVariable( "WHdR"   , 'F' );
   */
-  return ;
-}
-
-void TMVATrainer::TnTstMVAFactory( )
-{
   // Apply additional cuts on the signal and background samples (can be different)
   //TCut mycuts = "WpT>0.5 && Hmass>0.5 && HpT>0.5 && HHt>0.5 && WHdR>0.001"; // for example: TCut mycuts = "abs(var1)<0.5 && abs(var2-0.5)<1";
   //TCut mycutb = "WpT>0.5 && Hmass>0.5 && HpT>0.5 && HHt>0.5 && WHdR>0.001"; // for example: TCut mycutb = "abs(var1)<0.5";
   TCut mycuts = "";
   TCut mycutb = "";
   //myfactory->PrepareTrainingAndTestTree( mycuts, mycutb,
+  //                                      "SplitMode=Random:NormMode=NumEvents:nTrain_Signal=0:nTest_Signal=0:nTrain_Background=0:nTest_Background=0:V" );
+
   mydataloader->PrepareTrainingAndTestTree( mycuts, mycutb,
-                                        "SplitMode=Random:NormMode=NumEvents:nTrain_Signal=0:nTest_Signal=0:nTrain_Background=0:nTest_Background=0:V" );
+                                          "SplitMode=Random:NormMode=NumEvents:nTrain_Signal=0:nTest_Signal=0:nTrain_Background=0:nTest_Background=0:V" );
+
+  return ;
+}
+
+void TMVATrainer::CrossValidation( std::vector<std::string> parStringVec )
+{
+  int n = parStringVec.size();
+  // Setup cross-validation with Fisher method
+  for ( int i = 0; i < n; i++ )
+  {
+    TMVA::CrossValidation cv(mydataloader);
+    cv.BookMethod(TMVA::Types::kBDT, "BDT", parStringVec.at(i).c_str());
+    // Run cross-validation and print results
+    cv.Evaluate();
+    TMVA::CrossValidationResult results = cv.GetResults();
+    results.Print();
+  }
+  return ;
+}
+
+void TMVATrainer::TnTstMVAFactory( )
+{
   // Boosted Decision Trees
   // Gradient Boost
   //myfactory->BookMethod( TMVA::Types::kBDT, "BDTG",
