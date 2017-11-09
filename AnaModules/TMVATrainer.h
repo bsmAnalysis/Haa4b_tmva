@@ -7,10 +7,10 @@
 #include <utility>      // std::pair, std::make_pair
 
 #include "TMVA/Factory.h"
-//#include "TMVA/DataLoader.h"
+#include "TMVA/DataLoader.h"
 #include "TMVA/Tools.h"
 #include "TMVA/TMVAGui.h"
-//#include "TMVA/CrossValidation.h"
+#include "TMVA/CrossValidation.h"
 
 #include "TString.h"
 #include "TFile.h"
@@ -19,8 +19,10 @@
 class TMVATrainer
 {
  public:
+  TMVA::DataLoader *mydataloader;
   TFile *myMVAout;
   TMVA::Factory *myfactory;
+
   std::vector<TFile*> SGFileVec, BGFileVec;
 
   void InitTMVAFactory( TString OutFileName, TString JobName );

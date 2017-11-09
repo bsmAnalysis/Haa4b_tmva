@@ -2,6 +2,7 @@
 
 void TMVATrainer::InitTMVAFactory( TString OutFileName, TString JobName )
 {
+  mydataloader = new TMVA::DataLoader("dataset");
   myMVAout = TFile::Open( OutFileName, "RECREATE" );
   myfactory = new TMVA::Factory( JobName, myMVAout, "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=Classification" );
   //myfactory = new TMVA::Factory( JobName, myMVAout, "!V:!Silent:Color:DrawProgressBar:Transformations=I:AnalysisType=Classification" );
@@ -22,7 +23,8 @@ void TMVATrainer::SetupMVAFactory( TString catName )
     //TTree *thissgtree = (TTree *)(SGFileVec.at(i))->Get(catName);
     //if ( thissgtree->GetEntries() != 0 )
     //{
-      myfactory->AddSignalTree( (TTree *)(SGFileVec.at(i))->Get(catName), SGfileURLWeightVec.at(i).second );
+      mydataloader->AddSignalTree( (TTree *)(SGFileVec.at(i))->Get(catName), SGfileURLWeightVec.at(i).second );
+      //myfactory->AddSignalTree( (TTree *)(SGFileVec.at(i))->Get(catName), SGfileURLWeightVec.at(i).second );
     //}
     //else
     //{
@@ -42,7 +44,8 @@ void TMVATrainer::SetupMVAFactory( TString catName )
     //TTree *thisbgtree = (TTree *)(BGFileVec.at(i))->Get(catName);
     //if ( thisbgtree->GetEntries() != 0 )
     //{ 
-      myfactory->AddBackgroundTree( (TTree *)(BGFileVec.at(i))->Get(catName), BGfileURLWeightVec.at(i).second );
+      mydataloader->AddBackgroundTree( (TTree *)(BGFileVec.at(i))->Get(catName), BGfileURLWeightVec.at(i).second );
+      //myfactory->AddBackgroundTree( (TTree *)(BGFileVec.at(i))->Get(catName), BGfileURLWeightVec.at(i).second );
     //}
     //else
     //{
@@ -50,6 +53,14 @@ void TMVATrainer::SetupMVAFactory( TString catName )
     //}
   }
 
+  mydataloader->AddVariable( "WpT"    , 'F' );
+  mydataloader->AddVariable( "Hmass"  , 'F' );
+  mydataloader->AddVariable( "HpT"    , 'F' );
+  mydataloader->AddVariable( "bbdRAve", 'F' );
+  //mydataloader->AddVariable( "bbdMMin", 'F' );
+  mydataloader->AddVariable( "HHt"   , 'F' );
+  mydataloader->AddVariable( "WHdR"   , 'F' );
+  /*
   myfactory->AddVariable( "WpT"    , 'F' );
   myfactory->AddVariable( "Hmass"  , 'F' );
   myfactory->AddVariable( "HpT"    , 'F' );
@@ -57,7 +68,7 @@ void TMVATrainer::SetupMVAFactory( TString catName )
   //myfactory->AddVariable( "bbdMMin", 'F' );
   myfactory->AddVariable( "HHt"   , 'F' );
   myfactory->AddVariable( "WHdR"   , 'F' );
-
+  */
   return ;
 }
 
@@ -68,14 +79,16 @@ void TMVATrainer::TnTstMVAFactory( )
   //TCut mycutb = "WpT>0.5 && Hmass>0.5 && HpT>0.5 && HHt>0.5 && WHdR>0.001"; // for example: TCut mycutb = "abs(var1)<0.5";
   TCut mycuts = "";
   TCut mycutb = "";
-  myfactory->PrepareTrainingAndTestTree( mycuts, mycutb,
+  //myfactory->PrepareTrainingAndTestTree( mycuts, mycutb,
+  mydataloader->PrepareTrainingAndTestTree( mycuts, mycutb,
                                         "SplitMode=Random:NormMode=NumEvents:nTrain_Signal=0:nTest_Signal=0:nTrain_Background=0:nTest_Background=0:V" );
   // Boosted Decision Trees
   // Gradient Boost
   //myfactory->BookMethod( TMVA::Types::kBDT, "BDTG",
   //                       "!H:!V:NTrees=1000:MinNodeSize=2.5%:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.5:nCuts=20:MaxDepth=2" );
   // Adaptive Boost
-  myfactory->BookMethod( TMVA::Types::kBDT, "BDT",
+  //myfactory->BookMethod( TMVA::Types::kBDT, "BDT",
+  myfactory->BookMethod( mydataloader, TMVA::Types::kBDT, "BDT",
                          "!H:!V:NTrees=850:MinNodeSize=2.5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20" );
   // Bagging
   //myfactory->BookMethod( TMVA::Types::kBDT, "BDTB",
@@ -112,7 +125,7 @@ void TMVATrainer::TnTstMVAFactory( )
 void TMVATrainer::CloseMVAFactory()
 {
   delete myfactory;
-  
+  delete mydataloader;  
   int nSG = SGFileVec.size();
   for (int i = 0; i < nSG; i++)
   { 
