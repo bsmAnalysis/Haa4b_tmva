@@ -18,7 +18,7 @@
 class TMVAReader
 {
  public:
-  Float_t WpT, Hmass, HpT, bbdRAve, bbdMMin, HHt, WHdR;
+  Float_t WpT = 80.0, Hmass = 100.0, HpT = 80.0, bbdRAve = 1.5, bbdMMin = 10.0, HHt = 150.0, WHdR = 3.0;
   TMVA::Reader *myreader;
 
   void InitTMVAReader();

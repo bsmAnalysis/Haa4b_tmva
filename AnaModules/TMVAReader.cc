@@ -35,6 +35,7 @@ float TMVAReader::GenReMVAReader(
   Hmass= thisHmass; HpT = thisHpT; bbdRAve = thisbbdRAve; bbdMMin = thisbbdMMin; HHt = thisHHt;
   WHdR = thisWHdR;
 
+  //float mvaOut = myreader->GetProba( methodName.c_str(), 0.2);
   float mvaOut = myreader->EvaluateMVA( methodName.c_str() );
   return mvaOut;
 }
