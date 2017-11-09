@@ -12,7 +12,7 @@ int main()
   myTMVATrainer.TnTstMVAFactory();
   myTMVATrainer.CloseMVAFactory();
   */
-
+  
   TMVAReader myTMVAReader;
 
   myTMVAReader.InitTMVAReader();
@@ -50,6 +50,5 @@ int main()
   }
   f->Close();
   myTMVAReader.CloseMVAReader();
-
   return 0;
 }

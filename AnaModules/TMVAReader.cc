@@ -9,8 +9,6 @@ void TMVAReader::InitTMVAReader()
 
 void TMVAReader::SetupMVAReader( std::string methodName, std::string modelPath )
 {
-  Float_t WpT, Hmass, HpT, bbdRAve, bbdMMin, HHt, WHdR;
-
   myreader->AddVariable( "WpT"    , &WpT );
   myreader->AddVariable( "Hmass"  , &Hmass );
   myreader->AddVariable( "HpT"    , &HpT );
