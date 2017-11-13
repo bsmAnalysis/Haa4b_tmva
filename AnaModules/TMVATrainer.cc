@@ -53,6 +53,8 @@ void TMVATrainer::SetupMVAFactory( TString catName )
     //}
   }
 
+  mydataloader->SetWeightExpression("weight");
+
   mydataloader->AddVariable( "WpT"    , 'F' );
   mydataloader->AddVariable( "Hmass"  , 'F' );
   mydataloader->AddVariable( "HpT"    , 'F' );

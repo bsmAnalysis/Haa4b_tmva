@@ -10,6 +10,7 @@
 #include "TMVA/DataLoader.h"
 #include "TMVA/Tools.h"
 #include "TMVA/TMVAGui.h"
+#include "TMVA/HyperParameterOptimisation.h"
 #include "TMVA/CrossValidation.h"
 
 #include "TString.h"
