@@ -91,6 +91,7 @@ void TMVATrainer::CrossValidation( std::vector<std::string> parStringVec )
   // Setup cross-validation with Fisher method
   for ( int i = 0; i < n; i++ )
   {
+    std::cout << parStringVec.at(i) << std::endl;
     TMVA::CrossValidation cv(mydataloader);
     cv.BookMethod(TMVA::Types::kBDT, "BDT", parStringVec.at(i).c_str());
     // Run cross-validation and print results
