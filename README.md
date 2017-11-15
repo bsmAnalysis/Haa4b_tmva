@@ -6,3 +6,7 @@ cmsrel CMSSW_9_2_14_patch1
 
 sh cache_all.sh
 tar --exclude-caches-all -zcf ${CMSSW_VERSION}.tar.gz -C ${CMSSW_BASE}/.. ${CMSSW_VERSION}
+
+./MVAAna RunMode TrainMode
+./MVAAna Train TribMVA
+./MVAAna Train QuabMVA
