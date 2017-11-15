@@ -26,8 +26,8 @@ class TMVATrainer
 
   std::vector<TFile*> SGFileVec, BGFileVec;
 
-  void InitTMVAFactory( TString OutFileName, TString JobName );
-  void SetupMVAFactory( TString catName );
+  void InitTMVAFactory( std::string OutFileName, std::string JobName );
+  void SetupMVAFactory( std::string catName );
   void CrossValidation( std::vector<std::string> parStringVec );
   void TnTstMVAFactory();
   void CloseMVAFactory();
@@ -56,9 +56,9 @@ class TMVATrainer
   //TG, TTG, TTW, TTZ
   std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TGJets_2016.root"                  ), 1.0),
   std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TGJets_ext1_2016.root"             ), 1.0),
-  std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TTGJets_2016.root"                 ), 1.0),
-  //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TTWJetslnu_2016.root"              ), 1.0), //no busket
-  //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TTZJets2l2nu_2016.root"            ), 1.0), //no busket
+  //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TTGJets_2016.root"                 ), 1.0), // co4b
+  //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TTWJetslnu_2016.root"              ), 1.0), //no busket, co3b, co4b
+  //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TTZJets2l2nu_2016.root"            ), 1.0), //no busket, co3b, co4b
   //Di-boson
   std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_WW2l2nu_2016.root"                 ), 1.0),
   std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_WWlnu2q_2016.root"                 ), 1.0),
@@ -73,9 +73,9 @@ class TMVATrainer
   std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_WWZ_2016.root"                     ), 1.0),
   std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_WWW_4F_2016.root"                  ), 1.0),
   //QCD
-  //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_QCD_Pt20To30_EMEnr_2016.root"      ), 1.0), //0 events
-  //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_QCD_Pt30To50_EMEnr_2016.root"      ), 1.0), //0 events
-  //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_QCD_Pt30To50_EMEnr_ext1_2016.root" ), 1.0), //0 events
+  //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_QCD_Pt20To30_EMEnr_2016.root"      ), 1.0), //0 events, co3b, co4b
+  //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_QCD_Pt30To50_EMEnr_2016.root"      ), 1.0), //0 events, co3b, co4b
+  //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_QCD_Pt30To50_EMEnr_ext1_2016.root" ), 1.0), //0 events, co3b, co4b
   std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_QCD_Pt50To80_EMEnr_2016.root"      ), 1.0),
   std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_QCD_Pt80To120_EMEnr_2016.root"     ), 1.0),
   std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_QCD_Pt120To170_EMEnr_2016.root"    ), 1.0),

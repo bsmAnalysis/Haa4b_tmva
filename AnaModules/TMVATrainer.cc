@@ -1,15 +1,15 @@
 #include "TMVATrainer.h"
 
-void TMVATrainer::InitTMVAFactory( TString OutFileName, TString JobName )
+void TMVATrainer::InitTMVAFactory( std::string OutFileName, std::string JobName )
 {
   mydataloader = new TMVA::DataLoader("dataset");
-  myMVAout = TFile::Open( OutFileName, "RECREATE" );
-  myfactory = new TMVA::Factory( JobName, myMVAout, "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=Classification" );
+  myMVAout = TFile::Open( OutFileName.c_str(), "RECREATE" );
+  myfactory = new TMVA::Factory( JobName.c_str(), myMVAout, "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=Classification" );
   //myfactory = new TMVA::Factory( JobName, myMVAout, "!V:!Silent:Color:DrawProgressBar:Transformations=I:AnalysisType=Classification" );
   return ;
 }
 
-void TMVATrainer::SetupMVAFactory( TString catName )
+void TMVATrainer::SetupMVAFactory( std::string catName )
 {
   //load sg file
   int nSG = SGfileURLWeightVec.size();
@@ -20,11 +20,13 @@ void TMVATrainer::SetupMVAFactory( TString catName )
   }
   for (int i = 0; i < nSG; i++)
   {
-    //TTree *thissgtree = (TTree *)(SGFileVec.at(i))->Get(catName);
+    //TTree *thissgtree = (TTree *)(SGFileVec.at(i))->Get(catName.c_str());
     //if ( thissgtree->GetEntries() != 0 )
     //{
-      mydataloader->AddSignalTree( (TTree *)(SGFileVec.at(i))->Get(catName), SGfileURLWeightVec.at(i).second );
-      //myfactory->AddSignalTree( (TTree *)(SGFileVec.at(i))->Get(catName), SGfileURLWeightVec.at(i).second );
+      //if ( (TTree *)(SGFileVec.at(i))->Get(catName.c_str())->GetEntries() <= 0 ) continue;
+      std::cout << SGfileURLWeightVec.at(i).first << std::endl;
+      mydataloader->AddSignalTree( (TTree *)(SGFileVec.at(i))->Get(catName.c_str()), SGfileURLWeightVec.at(i).second );
+      //myfactory->AddSignalTree( (TTree *)(SGFileVec.at(i))->Get(catName.c_str()), SGfileURLWeightVec.at(i).second );
     //}
     //else
     //{
@@ -41,11 +43,12 @@ void TMVATrainer::SetupMVAFactory( TString catName )
   }
   for (int i = 0; i < nBG; i++)
   {
-    //TTree *thisbgtree = (TTree *)(BGFileVec.at(i))->Get(catName);
+    //TTree *thisbgtree = (TTree *)(BGFileVec.at(i))->Get(catName.c_str());
     //if ( thisbgtree->GetEntries() != 0 )
-    //{ 
-      mydataloader->AddBackgroundTree( (TTree *)(BGFileVec.at(i))->Get(catName), BGfileURLWeightVec.at(i).second );
-      //myfactory->AddBackgroundTree( (TTree *)(BGFileVec.at(i))->Get(catName), BGfileURLWeightVec.at(i).second );
+    //{
+      std::cout << BGfileURLWeightVec.at(i).first << std::endl;
+      mydataloader->AddBackgroundTree( (TTree *)(BGFileVec.at(i))->Get(catName.c_str()), BGfileURLWeightVec.at(i).second );
+      //myfactory->AddBackgroundTree( (TTree *)(BGFileVec.at(i))->Get(catName.c_str()), BGfileURLWeightVec.at(i).second );
     //}
     //else
     //{
@@ -55,22 +58,29 @@ void TMVATrainer::SetupMVAFactory( TString catName )
 
   mydataloader->SetWeightExpression("weight");
 
-  mydataloader->AddVariable( "WpT"    , 'F' );
-  mydataloader->AddVariable( "Hmass"  , 'F' );
-  mydataloader->AddVariable( "HpT"    , 'F' );
-  mydataloader->AddVariable( "bbdRAve", 'F' );
-  //mydataloader->AddVariable( "bbdMMin", 'F' );
-  mydataloader->AddVariable( "HHt"   , 'F' );
-  mydataloader->AddVariable( "WHdR"   , 'F' );
-  /*
-  myfactory->AddVariable( "WpT"    , 'F' );
-  myfactory->AddVariable( "Hmass"  , 'F' );
-  myfactory->AddVariable( "HpT"    , 'F' );
-  myfactory->AddVariable( "bbdRAve", 'F' );
-  //myfactory->AddVariable( "bbdMMin", 'F' );
-  myfactory->AddVariable( "HHt"   , 'F' );
-  myfactory->AddVariable( "WHdR"   , 'F' );
-  */
+  if ( catName == "TribMVA" )
+  {
+    mydataloader->AddVariable( "WpT"    , 'F' );
+    mydataloader->AddVariable( "Hmass"  , 'F' );
+    mydataloader->AddVariable( "HpT"    , 'F' );
+    mydataloader->AddVariable( "bbdRAve", 'F' );
+    mydataloader->AddVariable( "HHt"   , 'F' );
+    mydataloader->AddVariable( "WHdR"   , 'F' );
+  }
+  else if ( catName == "QuabMVA" )
+  {
+    mydataloader->AddVariable( "WpT"    , 'F' );
+    mydataloader->AddVariable( "Hmass"  , 'F' );
+    mydataloader->AddVariable( "HpT"    , 'F' );
+    mydataloader->AddVariable( "bbdRAve", 'F' );
+    mydataloader->AddVariable( "bbdMMin", 'F' );
+    mydataloader->AddVariable( "HHt"   , 'F' );
+    mydataloader->AddVariable( "WHdR"   , 'F' );
+  }
+  else
+  {
+    std::cout << "Wrong Train mode!" << std::endl;
+  }
   // Apply additional cuts on the signal and background samples (can be different)
   //TCut mycuts = "WpT>0.5 && Hmass>0.5 && HpT>0.5 && HHt>0.5 && WHdR>0.001"; // for example: TCut mycuts = "abs(var1)<0.5 && abs(var2-0.5)<1";
   //TCut mycutb = "WpT>0.5 && Hmass>0.5 && HpT>0.5 && HHt>0.5 && WHdR>0.001"; // for example: TCut mycutb = "abs(var1)<0.5";

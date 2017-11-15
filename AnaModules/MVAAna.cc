@@ -12,14 +12,14 @@ int main(int argc, char* argv[])
   }
 
   std::string RunMode = argv[1];
- 
+  std::string TrainMode = argv[2]; //TribMVA or QuabMVA
+
   if ( RunMode == "Train" )
   { 
     TMVATrainer myTMVATrainer;
   
-    myTMVATrainer.InitTMVAFactory("MVATrainTestOut.root", "Haa4bSBClassification");
-    myTMVATrainer.SetupMVAFactory("TribMVA");
-    //myTMVATrainer.SetupMVAFactory("QuabMVA");
+    myTMVATrainer.InitTMVAFactory("MVATrainTestOut" + TrainMode + ".root", "Haa4bSBClassification" + TrainMode);
+    myTMVATrainer.SetupMVAFactory(TrainMode);
     myTMVATrainer.TnTstMVAFactory();
     myTMVATrainer.CloseMVAFactory();
   }
@@ -44,8 +44,8 @@ int main(int argc, char* argv[])
     TestBDTparStringVec.push_back("!H:!V:NTrees=350:MinNodeSize=25%:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
 
     TMVATrainer myTMVATrainer;
-    myTMVATrainer.InitTMVAFactory("MVAOutCVTest.root", "Haa4bSBClassification");
-    myTMVATrainer.SetupMVAFactory("TribMVA");
+    myTMVATrainer.InitTMVAFactory("MVACVTestOut" + TrainMode + ".root", "Haa4bSBClassification" + TrainMode);
+    myTMVATrainer.SetupMVAFactory(TrainMode);
     myTMVATrainer.CrossValidation( TestBDTparStringVec );
     //myTMVATrainer.CloseMVAFactory();
   }
@@ -54,11 +54,11 @@ int main(int argc, char* argv[])
     TMVAReader myTMVAReader;
 
     myTMVAReader.InitTMVAReader();
-    myTMVAReader.SetupMVAReader( "Haa4bSBClassification", "weights/Haa4bSBClassification_BDT.weights.xml" );
+    myTMVAReader.SetupMVAReader( "Haa4bSBClassification" + TrainMode, "weights/Haa4bSBClassification_BDT.weights.xml" );
  
     //Test loop macro
     TFile *f = new TFile("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_Data13TeV_SingleElectron2016B_ver2.root");
-    TTree *t = (TTree*)f->Get("TribMVA");
+    TTree *t = (TTree*)f->Get(TrainMode.c_str());
     long long int nTot = t->GetEntries();
     float WpT, Hmass, HpT, bbdRAve, bbdMMin, HHt, WHdR;
     t->SetBranchAddress( "WpT", &WpT );
