@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
     TMVAReader myTMVAReader;
 
     myTMVAReader.InitTMVAReader();
-    myTMVAReader.SetupMVAReader( "Haa4bSBClassification" + TrainMode, "weights/Haa4bSBClassification_BDT.weights.xml" );
+    myTMVAReader.SetupMVAReader( "Haa4bSBClassification" + TrainMode, "dataset/weights/Haa4bSBClassification" + TrainMode + "_BDT.weights.xml" );
  
     //Test loop macro
     TFile *f = new TFile("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_Data13TeV_SingleElectron2016B_ver2.root");
@@ -82,7 +82,7 @@ int main(int argc, char* argv[])
                       WpT,
                       Hmass, HpT, bbdRAve, bbdMMin, HHt,
                       WHdR,
-                      "Haa4bSBClassification"
+                      "Haa4bSBClassification" + TrainMode
                      );
       if ( ievt <= 20 )
       {

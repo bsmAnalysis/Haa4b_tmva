@@ -9,16 +9,31 @@ void TMVAReader::InitTMVAReader()
 
 void TMVAReader::SetupMVAReader( std::string methodName, std::string modelPath )
 {
-  myreader->AddVariable( "WpT"    , &WpT );
-  myreader->AddVariable( "Hmass"  , &Hmass );
-  myreader->AddVariable( "HpT"    , &HpT );
-  myreader->AddVariable( "bbdRAve", &bbdRAve );
-  //myreader->AddVariable( "bbdMMin", &bbdMMin );
-  myreader->AddVariable( "HHt"    , &HHt );
-  myreader->AddVariable( "WHdR"   , &WHdR );
+  if ( methodName.find("TribMVA") != std::string::npos )
+  {
+    myreader->AddVariable( "WpT"    , &WpT );
+    myreader->AddVariable( "Hmass"  , &Hmass );
+    myreader->AddVariable( "HpT"    , &HpT );
+    myreader->AddVariable( "bbdRAve", &bbdRAve );
+    myreader->AddVariable( "HHt"    , &HHt );
+    myreader->AddVariable( "WHdR"   , &WHdR );
+  }
+  else if ( methodName.find("QuabMVA") != std::string::npos )
+  {
+    myreader->AddVariable( "WpT"    , &WpT );
+    myreader->AddVariable( "Hmass"  , &Hmass );
+    myreader->AddVariable( "HpT"    , &HpT );
+    myreader->AddVariable( "bbdRAve", &bbdRAve );
+    myreader->AddVariable( "bbdMMin", &bbdMMin );
+    myreader->AddVariable( "HHt"    , &HHt );
+    myreader->AddVariable( "WHdR"   , &WHdR );
+  }
+  else
+  {
+    return ;
+  }
 
   myreader->BookMVA( methodName.c_str(), modelPath.c_str() );
-
   return ;
 }
 
