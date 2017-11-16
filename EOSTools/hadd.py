@@ -17,6 +17,7 @@ sample_tag_list_Data = [
 "mva_Data13TeV_SingleElectron2016F_",
 "mva_Data13TeV_SingleElectron2016G_",
 "mva_Data13TeV_SingleElectron2016H_ver2_",
+"mva_Data13TeV_SingleElectron2016H_ver3_",
 "mva_Data13TeV_SingleMuon2016B_ver2_",
 "mva_Data13TeV_SingleMuon2016C_",
 "mva_Data13TeV_SingleMuon2016D_",
@@ -24,6 +25,7 @@ sample_tag_list_Data = [
 "mva_Data13TeV_SingleMuon2016F_",
 "mva_Data13TeV_SingleMuon2016G_",
 "mva_Data13TeV_SingleMuon2016H_ver2_",
+"mva_Data13TeV_SingleMuon2016H_ver3_",
                        ]
 
 sample_tag_list_TT = [
