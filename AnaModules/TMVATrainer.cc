@@ -121,7 +121,7 @@ void TMVATrainer::TnTstMVAFactory( )
   // Adaptive Boost
   //myfactory->BookMethod( TMVA::Types::kBDT, "BDT",
   myfactory->BookMethod( mydataloader, TMVA::Types::kBDT, "BDT",
-                         "!H:!V:IgnoreNegWeightsInTraining=True:NTrees=1000:MinNodeSize=5.0%:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20" );
+                         "!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=1000:MinNodeSize=5.0%:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20" );
   // Bagging
   //myfactory->BookMethod( TMVA::Types::kBDT, "BDTB",
   //                       "!H:!V:NTrees=400:BoostType=Bagging:SeparationType=GiniIndex:nCuts=20" );
