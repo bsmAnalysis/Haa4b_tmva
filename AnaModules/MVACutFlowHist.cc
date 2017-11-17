@@ -4,63 +4,59 @@ void MVACutFlowHist::BookHistgram(const char *outFileName)
 {
   oFile = new TFile(outFileName, "recreate");
 
-  for( int i = 0 ; i < BCBin ; i++ )
+  for( int i = 0 ; i < BGBin ; i++ )
   {
     std::string smalltag;
 
-    if (i == 0) smalltag = "LL";
-    else if (i == 1) smalltag = "HadTau";
-    else if (i == 2) smalltag = "Zinv";
-    else if (i == 3) smalltag = "QCD";
-    else if (i == 4) smalltag = "TTZRare";
-    else if (i == 5) smalltag = "AllHadTTJetsWJetsST";
+    if (i == 0) smalltag = "SingleT";
+    else if (i == 1) smalltag = "TTJets";
+    else if (i == 2) smalltag = "WJets";
+    else if (i == 3) smalltag = "DY";
+    else if (i == 4) smalltag = "TTGZW";
+    else if (i == 5) smalltag = "VV";
+    else if (i == 6) smalltag = "VVV";
+    else if (i == 7) smalltag = "QCD";
 
-    h_b_met_MC[i] = new TH1D( ("h_b_met_MC_" + smalltag).c_str(),"",20,200,600);
-    h_b_njets30_MC[i] = new TH1D( ("h_b_njets30_MC_" + smalltag).c_str(),"",10,4,14);
-    h_b_njets50_MC[i] = new TH1D( ("h_b_njets50_MC_" + smalltag).c_str(),"",15,2,17);
-    h_b_mt2_MC[i] = new TH1D( ("h_b_mt2_MC_" + smalltag).c_str(),"",20,200,600);
-    h_b_ht_MC[i] = new TH1D( ("h_b_ht_MC_" + smalltag).c_str(),"",50,300,2800);
-    h_b_mht_MC[i] = new TH1D( ("h_b_mht_MC_" + smalltag).c_str(),"",50,0,1000);
-    h_b_ntopjets_MC[i] = new TH1D( ("h_b_ntopjets_MC_" + smalltag).c_str(),"",5,1,6);
-    h_b_nbjets_MC[i] = new TH1D( ("h_b_nbjets_MC_" + smalltag).c_str(),"",5,1,6);
+    h_b_WpT_BGMC[i] = new TH1F( ("h_b_WpT_BGMC_" + smalltag).c_str(),"",200,0,2000);
+    h_b_Hmass_BGMC[i] = new TH1F( ("h_b_Hmass_BGMC_" + smalltag).c_str(),"",500,0,5000);
+    h_b_HpT_BGMC[i] = new TH1F( ("h_b_HpT_BGMC_" + smalltag).c_str(),"",200,0,2000);
+    h_b_bbdRAve_BGMC[i] = new TH1F( ("h_b_bbdRAve_BGMC_" + smalltag).c_str(),"",500,0,5);
+    h_b_bbdMMin_BGMC[i] = new TH1F( ("h_b_bbdMMin_BGMC_" + smalltag).c_str(),"",200,0,2000);
+    h_b_HHt_BGMC[i] = new TH1F( ("h_b_HHt_BGMC_" + smalltag).c_str(),"",400,0,4000);
+    h_b_WHdR_BGMC[i] = new TH1F( ("h_b_WHdR_BGMC_" + smalltag).c_str(),"",400,0,4);
 
-    h_b_sb_MC[i] = new TH1D( ("h_b_sb_MC_" + smalltag).c_str(),"",60,0,60);
+    h_b_n_BGMC[i] = new TH1F( ("h_b_n_BGMC_" + smalltag).c_str(),"",60,0,60);
 
-    h_b_met_MC[i]->SetFillColor(i+2);
-    h_b_mt2_MC[i]->SetFillColor(i+2);
-    h_b_ntopjets_MC[i]->SetFillColor(i+2);
-    h_b_nbjets_MC[i]->SetFillColor(i+2);
-    h_b_ht_MC[i]->SetFillColor(i+2);
-    h_b_mht_MC[i]->SetFillColor(i+2);
-    h_b_njets30_MC[i]->SetFillColor(i+2);
-    h_b_njets50_MC[i]->SetFillColor(i+2);
+    h_b_WpT_BGMC[i]->SetFillColor(i+2);
+    h_b_Hmass_BGMC[i]->SetFillColor(i+2);
+    h_b_HpT_BGMC[i]->SetFillColor(i+2);
+    h_b_bbdRAve_BGMC[i]->SetFillColor(i+2);
+    h_b_bbdMMin_BGMC[i]->SetFillColor(i+2);
+    h_b_HHt_BGMC[i]->SetFillColor(i+2);
+    h_b_WHdR_BGMC[i]->SetFillColor(i+2);
 
-    h_b_sb_MC[i]->SetFillColor(i+2);
+    h_b_n_BGMC[i]->SetFillColor(i+2);
 
-    h_b_met_MC[i]->SetLineColor(i+2);
-    h_b_mt2_MC[i]->SetLineColor(i+2);
-    h_b_ntopjets_MC[i]->SetLineColor(i+2);
-    h_b_nbjets_MC[i]->SetLineColor(i+2);
-    h_b_ht_MC[i]->SetLineColor(i+2);
-    h_b_mht_MC[i]->SetLineColor(i+2);
-    h_b_njets30_MC[i]->SetLineColor(i+2);
-    h_b_njets50_MC[i]->SetLineColor(i+2);
+    h_b_WpT_BGMC[i]->SetLineColor(i+2);
+    h_b_Hmass_BGMC[i]->SetLineColor(i+2);
+    h_b_HpT_BGMC[i]->SetLineColor(i+2);
+    h_b_bbdRAve_BGMC[i]->SetLineColor(i+2);
+    h_b_bbdMMin_BGMC[i]->SetLineColor(i+2);
+    h_b_HHt_BGMC[i]->SetLineColor(i+2);
+    h_b_WHdR_BGMC[i]->SetLineColor(i+2);
 
-    h_b_sb_MC[i]->SetLineColor(i+2);
+    h_b_n_BGMC[i]->SetLineColor(i+2);
   }
 
-  h_b_met_Data = new TH1D("h_b_met_Data","",20,200,600);
-  h_b_njets30_Data = new TH1D("h_b_njets30_Data","",10,4,14);
-  h_b_njets50_Data = new TH1D("h_b_njets50_Data","",15,2,17);
-  h_b_mt2_Data = new TH1D("h_b_mt2_Data","",20,200,600);
-  h_b_ht_Data = new TH1D("h_b_ht_Data","",50,300,2800);
-  h_b_mht_Data = new TH1D("h_b_mht_Data","",50,0,1000);
-  h_b_ntopjets_Data = new TH1D("h_b_ntopjets_Data","",5,1,6);
-  h_b_nbjets_Data = new TH1D("h_b_nbjets_Data","",5,1,6);
+  h_b_WpT_Data = new TH1F("h_b_WpT_Data","",200,0,2000);
+  h_b_Hmass_Data = new TH1F("h_b_Hmass_Data","",500,0,5000);
+  h_b_HpT_Data = new TH1F("h_b_HpT_Data","",200,0,2000);
+  h_b_bbdRAve_Data = new TH1F("h_b_bbdRAve_Data","",500,0,5);
+  h_b_bbdMMin_Data = new TH1F("h_b_bbdMMin_Data","",200,0,2000);
+  h_b_HHt_Data = new TH1F("h_b_HHt_Data","",400,0,4000);
+  h_b_WHdR_Data = new TH1F("h_b_WHdR_Data","",400,0,4);
 
-  h_b_sb_Data = new TH1D("h_b_sb_Data","",60,0,60);
-
-  //h_b_ttz_weight = new TH1D("h_ttz_weight","",100,-0.5,0.5);
+  h_b_n_Data = new TH1F("h_b_n_Data","",60,0,60);
 
   return ;
 }
