@@ -64,6 +64,8 @@ int main(int argc, char* argv[])
     myTMVAReader.InitTMVAReader();
     myTMVAReader.SetupMVAReader( "Haa4bSBClassification" + TrainMode, "dataset/weights/Haa4bSBClassification" + TrainMode + "_BDT.weights.xml" );
  
+    QCDSampleWeight myQCDSampleWeight;
+    //myQCDSampleWeight.QCDSampleInfo_push_back( "_QCD_HT300to500"  , 366800  , 54479109, LUMI, 1, inputFileList_QCDMC.c_str() );
     //Test loop macro
     //TFile *f = new TFile("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_Data13TeV_SingleElectron2016B_ver2.root");
     TFile *f = new TFile("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass30.root");
