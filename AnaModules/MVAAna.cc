@@ -259,6 +259,72 @@ int main(int argc, char* argv[])
         }
       }
     }
+
+    QCDSampleWeight myDataSampleWeight;
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016B_ver2"  , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016C"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016D"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016E"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016F"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016G"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016H_ver2"  , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016H_ver3"  , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016B_ver2"  , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016C"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016D"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016E"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016F"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016G"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016H_ver2"  , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016H_ver3"  , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
+    std::cout << "Processing data samples..." << std::endl;
+    for(std::vector<QCDSampleInfo>::iterator iter_SampleInfos = myDataSampleWeight.QCDSampleInfos.begin(); iter_SampleInfos != myDataSampleWeight.QCDSampleInfos.end(); iter_SampleInfos++)
+    { 
+      //print out basic information 
+      std::cout <<"Sample Type: "<< (*iter_SampleInfos).QCDTag << "; LUMI: " << (*iter_SampleInfos).weight << std::endl;
+      //Loading chain info
+      long long int nTot = (*iter_SampleInfos).chain->GetEntries();
+      float WpT, Hmass, HpT, bbdRAve, bbdMMin, HHt, WHdR;
+      (*iter_SampleInfos).chain->SetBranchAddress( "WpT", &WpT );
+      (*iter_SampleInfos).chain->SetBranchAddress( "Hmass", &Hmass );
+      (*iter_SampleInfos).chain->SetBranchAddress( "HpT", &HpT );
+      (*iter_SampleInfos).chain->SetBranchAddress( "bbdRAve", &bbdRAve );
+      (*iter_SampleInfos).chain->SetBranchAddress( "bbdMMin", &bbdMMin );
+      (*iter_SampleInfos).chain->SetBranchAddress( "HHt", &HHt );
+      (*iter_SampleInfos).chain->SetBranchAddress( "WHdR", &WHdR );
+      float weight;
+      (*iter_SampleInfos).chain->SetBranchAddress( "weight", &weight );
+
+      for (long long int ievt = 0; ievt < nTot; ievt++) 
+      {
+        (*iter_SampleInfos).chain->GetEvent(ievt);
+        float mvaout = myTMVAReader.GenReMVAReader
+                       (
+                        WpT,
+                        Hmass, HpT, bbdRAve, bbdMMin, HHt,
+                        WHdR,
+                        "Haa4bSBClassification" + TrainMode
+                       );
+        (myMVACutFlowHist.h_b_WpT_Data)->Fill( WpT, weight );
+        (myMVACutFlowHist.h_b_Hmass_Data)->Fill( Hmass, weight );
+        (myMVACutFlowHist.h_b_HpT_Data)->Fill( HpT, weight );
+        (myMVACutFlowHist.h_b_bbdRAve_Data)->Fill( bbdRAve, weight );
+        (myMVACutFlowHist.h_b_bbdMMin_Data)->Fill( bbdMMin, weight );
+        (myMVACutFlowHist.h_b_HHt_Data)->Fill( HHt, weight );
+        (myMVACutFlowHist.h_b_WHdR_Data)->Fill( WHdR, weight );
+
+        (myMVACutFlowHist.h_b_BDT_Data)->Fill( mvaout, weight );
+
+        int lobin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).first, hibin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).second;
+        if ( hibin > 0 )
+        {
+          for ( int j = lobin; j <= hibin ; j++ )
+          {
+            (myMVACutFlowHist.h_b_n_Data)->Fill( j, weight );
+          }
+        }
+      }
+    }
     
     myTMVAReader.CloseMVAReader();
     (myMVACutFlowHist.oFile)->Write();

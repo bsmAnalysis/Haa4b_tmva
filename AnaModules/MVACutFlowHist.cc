@@ -26,29 +26,18 @@ void MVACutFlowHist::BookHistgram(const char *outFileName)
     h_b_WHdR_SGMC[i] = new TH1F( ("h_b_WHdR_SGMC_" + smalltag).c_str(),"",400,0,4);
 
     h_b_BDT_SGMC[i] = new TH1F( ("h_b_BDT_SGMC_" + smalltag).c_str(),"",100,-0.5,0.5);
-    h_b_n_SGMC[i] = new TH1F( ("h_b_n_SGMC_" + smalltag).c_str(),"",60,0,60);
+    h_b_n_SGMC[i] = new TH1F( ("h_b_n_SGMC_" + smalltag).c_str(),"",MVACutFlowBin+1,0,MVACutFlowBin+1);
 
-    /*
-    h_b_WpT_SGMC[i]->SetFillColor(i+2);
-    h_b_Hmass_SGMC[i]->SetFillColor(i+2);
-    h_b_HpT_SGMC[i]->SetFillColor(i+2);
-    h_b_bbdRAve_SGMC[i]->SetFillColor(i+2);
-    h_b_bbdMMin_SGMC[i]->SetFillColor(i+2);
-    h_b_HHt_SGMC[i]->SetFillColor(i+2);
-    h_b_WHdR_SGMC[i]->SetFillColor(i+2);
+    h_b_WpT_SGMC[i]->SetLineStyle(i+1);
+    h_b_Hmass_SGMC[i]->SetLineStyle(i+1);
+    h_b_HpT_SGMC[i]->SetLineStyle(i+1);
+    h_b_bbdRAve_SGMC[i]->SetLineStyle(i+1);
+    h_b_bbdMMin_SGMC[i]->SetLineStyle(i+1);
+    h_b_HHt_SGMC[i]->SetLineStyle(i+1);
+    h_b_WHdR_SGMC[i]->SetLineStyle(i+1);
 
-    h_b_n_SGMC[i]->SetFillColor(i+2);
-
-    h_b_WpT_SGMC[i]->SetLineColor(i+2);
-    h_b_Hmass_SGMC[i]->SetLineColor(i+2);
-    h_b_HpT_SGMC[i]->SetLineColor(i+2);
-    h_b_bbdRAve_SGMC[i]->SetLineColor(i+2);
-    h_b_bbdMMin_SGMC[i]->SetLineColor(i+2);
-    h_b_HHt_SGMC[i]->SetLineColor(i+2);
-    h_b_WHdR_SGMC[i]->SetLineColor(i+2);
-
-    h_b_n_SGMC[i]->SetLineColor(i+2);
-    */
+    h_b_BDT_SGMC[i]->SetLineStyle(i+1);
+    h_b_n_SGMC[i]->SetLineStyle(i+1);
   }
 
   for( int i = 0 ; i < BGBin ; i++ )
@@ -73,7 +62,7 @@ void MVACutFlowHist::BookHistgram(const char *outFileName)
     h_b_WHdR_BGMC[i] = new TH1F( ("h_b_WHdR_BGMC_" + smalltag).c_str(),"",400,0,4);
 
     h_b_BDT_BGMC[i] = new TH1F( ("h_b_BDT_BGMC_" + smalltag).c_str(),"",100,-0.5,0.5);
-    h_b_n_BGMC[i] = new TH1F( ("h_b_n_BGMC_" + smalltag).c_str(),"",60,0,60);
+    h_b_n_BGMC[i] = new TH1F( ("h_b_n_BGMC_" + smalltag).c_str(),"",MVACutFlowBin+1,0,MVACutFlowBin+1);
 
     h_b_WpT_BGMC[i]->SetFillColor(i+2);
     h_b_Hmass_BGMC[i]->SetFillColor(i+2);
@@ -107,7 +96,7 @@ void MVACutFlowHist::BookHistgram(const char *outFileName)
   h_b_WHdR_Data = new TH1F("h_b_WHdR_Data","",400,0,4);
 
   h_b_BDT_Data = new TH1F("h_b_BDT_Data","",100,-0.5,0.5);
-  h_b_n_Data = new TH1F("h_b_n_Data","",60,0,60);
+  h_b_n_Data = new TH1F("h_b_n_Data","",MVACutFlowBin+1,0,MVACutFlowBin+1);
 
   return ;
 }
