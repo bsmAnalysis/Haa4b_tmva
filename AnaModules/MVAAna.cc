@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
   {  
     MVACutFlowHist myMVACutFlowHist;
     std::string dir_out = "OutDir/";
-    myMVACutFlowHist.BookHistgram( (dir_out + "MVACutFlow.root").c_str() );
+    myMVACutFlowHist.BookHistgram( (dir_out + "MVACutFlow" + TrainMode + ".root").c_str() );
     
     TMVAReader myTMVAReader;
     myTMVAReader.InitTMVAReader();
