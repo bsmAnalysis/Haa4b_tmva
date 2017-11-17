@@ -35,17 +35,15 @@ int main(int argc, char* argv[])
   //initialize the closure plots parameter we want to investigate
   std::vector<Plotting_Parameter> myPlotting_Paramete = 
   { 
-    //QCD basic check plots
-    {"_met"     , "MET [GeV]"             ,200 , 600  },
-    {"_njets30" , "Number of 30 GeV jets" ,4   , 14   }, 
-    {"_njets50" , "Number of 50 GeV jets" ,2   , 17   },  
-    {"_mt2"     , "MT2 [GeV]"             ,200 , 600  },                                               
-    {"_ht"      , "HT [GeV]"              ,300 , 2800 },
-    //{"_mht"     , "MHT [GeV]"             ,0   , 1000 },
-    {"_ntopjets", "Number of Top jets"    ,1   , 6    },
-    {"_nbjets"  , "Number of B Jets"      ,1   , 6    },
-    //search bin closure plots
-    {"_sb"      , "Search Bins"           ,0   , 60 },
+    //MVA basic check plots
+    {"_WpT"    , "WpT [GeV]"    ,    0, 2000},
+    {"_Hmass"  , "Hmass [GeV]"  ,    0, 2000}, 
+    {"_HpT"    , "HpT [GeV]"    ,    0, 2000},  
+    {"_bbdRAve", "bbdRAve"      ,    0, 5   },                                               
+    {"_bbdMMin", "bbdMMin [GeV]",    0, 2000},
+    {"_HHt"    , "HHt [GeV]"    ,    0, 2000},
+    {"_WHdR"   , "WHdR"         ,    0, 4   },
+    {"_BDT"    , "BDT"          , -0.5, 0.5 }
   };
 
   std::vector<Plotting_Parameter>::iterator iter_p;

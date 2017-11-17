@@ -70,8 +70,9 @@ void BasicCheckPlots::Initialization(std::string dir)
   target_DIR = dir;
   system( ("mkdir " + dir).c_str() );
 
-  fin = TFile::Open("RootForPlotting/BasicCheckQCD.root");
-  //fin = TFile::Open("RootForPlotting/BasicCheckLL.root");
+  //fin = TFile::Open("OutDir/MVACutFlowTribMVA.root");
+  fin = TFile::Open("OutDir/MVACutFlowQuabMVA.root");
+
   list = fin->GetListOfKeys();
 
   //convert lumi from double pb-1 to string, fb-1
@@ -122,16 +123,18 @@ void BasicCheckPlots::BasicCheckTemplate(
     }
     if( TString(list->At(i)->GetName()).Contains( hist_tag ) )
     {
-      if( TString(list->At(i)->GetName()).Contains( "_MC" ) )
+      if( TString(list->At(i)->GetName()).Contains( "_BGMC" ) )
       {
         hs_MC->Add( (TH1D*)fin->Get(list->At(i)->GetName()) );
-        
-        if( TString(list->At(i)->GetName()).Contains( "LL" ) ) { smalltag = "LL"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
-        if( TString(list->At(i)->GetName()).Contains( "HadTau" ) ) { smalltag = "HadTau"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
-        if( TString(list->At(i)->GetName()).Contains( "Zinv" ) ) { smalltag = "Zinv"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
+
+        if( TString(list->At(i)->GetName()).Contains( "SingleT" ) ) { smalltag = "SingleT"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
+        if( TString(list->At(i)->GetName()).Contains( "TTJets" ) ) { smalltag = "TTJets"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
+        if( TString(list->At(i)->GetName()).Contains( "WJets" ) ) { smalltag = "WJets"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
+        if( TString(list->At(i)->GetName()).Contains( "DY" ) ) { smalltag = "DY"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
+        if( TString(list->At(i)->GetName()).Contains( "TTGZW" ) ) { smalltag = "TTGZW"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
+        if( TString(list->At(i)->GetName()).Contains( "DiBoson" ) ) { smalltag = "DiBoson"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
+        if( TString(list->At(i)->GetName()).Contains( "TriBoson" ) ) { smalltag = "TriBoson"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
         if( TString(list->At(i)->GetName()).Contains( "QCD" ) ) { smalltag = "QCD"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
-        if( TString(list->At(i)->GetName()).Contains( "TTZRare" ) ) { smalltag = "TTZRare"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
-        if( TString(list->At(i)->GetName()).Contains( "AllHadTTJetsWJetsST" ) ) { smalltag = "AllHadTTJetsWJetsST"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
       }
     }
     else

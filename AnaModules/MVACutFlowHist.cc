@@ -49,8 +49,8 @@ void MVACutFlowHist::BookHistgram(const char *outFileName)
     else if (i == 2) smalltag = "WJets";
     else if (i == 3) smalltag = "DY";
     else if (i == 4) smalltag = "TTGZW";
-    else if (i == 5) smalltag = "VV";
-    else if (i == 6) smalltag = "VVV";
+    else if (i == 5) smalltag = "DiBoson";
+    else if (i == 6) smalltag = "TriBoson";
     else if (i == 7) smalltag = "QCD";
 
     h_b_WpT_BGMC[i] = new TH1F( ("h_b_WpT_BGMC_" + smalltag).c_str(),"",200,0,2000);
