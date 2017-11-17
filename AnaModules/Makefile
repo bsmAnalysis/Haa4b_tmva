@@ -69,7 +69,7 @@ CutFlow: $(ODIR)/CutFlow.o $(ODIR)/baselineDef.o $(ODIR)/NTupleReader.o $(ODIR)/
 MVATreeMaker: $(ODIR)/MVATreeMaker.o $(ODIR)/baselineDef.o $(ODIR)/NTupleReader.o $(ODIR)/SATException.o $(ODIR)/customize.o
 	$(LD) $^ $(LIBS) $(LHAPDFLIB) -o $@
 
-MVAAna: $(ODIR)/MVAAna.o $(ODIR)/TMVATrainer.o $(ODIR)/TMVAReader.o
+MVAAna: $(ODIR)/MVAAna.o $(ODIR)/TMVATrainer.o $(ODIR)/TMVAReader.o $(ODIR)/MVACutFlowHist.o
 	$(LD) $^ $(LIBS) $(LHAPDFLIB) $(TMVALIB) -o $@
 
 clean:

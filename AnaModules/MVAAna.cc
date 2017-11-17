@@ -56,13 +56,17 @@ int main(int argc, char* argv[])
   }
   else if ( RunMode == "Application" )
   {  
+    MVACutFlowHist myMVACutFlowHist;
+    std::string dir_out = "OutDir/";
+    myMVACutFlowHist.BookHistgram( (dir_out + "MVACutFlow.root").c_str() );
+    
     TMVAReader myTMVAReader;
-
     myTMVAReader.InitTMVAReader();
     myTMVAReader.SetupMVAReader( "Haa4bSBClassification" + TrainMode, "dataset/weights/Haa4bSBClassification" + TrainMode + "_BDT.weights.xml" );
  
     //Test loop macro
-    TFile *f = new TFile("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_Data13TeV_SingleElectron2016B_ver2.root");
+    //TFile *f = new TFile("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_Data13TeV_SingleElectron2016B_ver2.root");
+    TFile *f = new TFile("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass30.root");
     TTree *t = (TTree*)f->Get(TrainMode.c_str());
     long long int nTot = t->GetEntries();
     float WpT, Hmass, HpT, bbdRAve, bbdMMin, HHt, WHdR;
@@ -84,15 +88,18 @@ int main(int argc, char* argv[])
                       WHdR,
                       "Haa4bSBClassification" + TrainMode
                      );
-      if ( ievt <= 20 )
+      if ( ievt < 200 )
       {
-        std::cout << "MVA output : " << mvaout << std::endl;
-        std::cout << "MVA vars : " << WpT << "," << Hmass << std::endl;
-        std::cout << "MVA vars : " << myTMVAReader.WpT << "," << myTMVAReader.Hmass << std::endl;
+        std::cout << "MVA output : " << mvaout << ", [" << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).first << ","  << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).second << "]" << std::endl;
+        //std::cout << "MVA vars : " << WpT << "," << Hmass << std::endl;
+        //std::cout << "MVA vars : " << myTMVAReader.WpT << "," << myTMVAReader.Hmass << std::endl;
       }
     }
     f->Close();
     myTMVAReader.CloseMVAReader();
+
+    (myMVACutFlowHist.oFile)->Write();
+    (myMVACutFlowHist.oFile)->Close();
     return 0;
   }
   else 
