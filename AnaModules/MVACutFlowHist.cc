@@ -4,6 +4,46 @@ void MVACutFlowHist::BookHistgram(const char *outFileName)
 {
   oFile = new TFile(outFileName, "recreate");
 
+  for( int i = 0 ; i < SGBin ; i++ )
+  {
+    std::string smalltag;
+
+    if (i == 0) smalltag = "Wh20";
+    else if (i == 1) smalltag = "Wh50";
+
+    h_b_WpT_SGMC[i] = new TH1F( ("h_b_WpT_SGMC_" + smalltag).c_str(),"",200,0,2000);
+    h_b_Hmass_SGMC[i] = new TH1F( ("h_b_Hmass_SGMC_" + smalltag).c_str(),"",500,0,5000);
+    h_b_HpT_SGMC[i] = new TH1F( ("h_b_HpT_SGMC_" + smalltag).c_str(),"",200,0,2000);
+    h_b_bbdRAve_SGMC[i] = new TH1F( ("h_b_bbdRAve_SGMC_" + smalltag).c_str(),"",500,0,5);
+    h_b_bbdMMin_SGMC[i] = new TH1F( ("h_b_bbdMMin_SGMC_" + smalltag).c_str(),"",200,0,2000);
+    h_b_HHt_SGMC[i] = new TH1F( ("h_b_HHt_SGMC_" + smalltag).c_str(),"",400,0,4000);
+    h_b_WHdR_SGMC[i] = new TH1F( ("h_b_WHdR_SGMC_" + smalltag).c_str(),"",400,0,4);
+
+    h_b_n_SGMC[i] = new TH1F( ("h_b_n_SGMC_" + smalltag).c_str(),"",60,0,60);
+
+    /*
+    h_b_WpT_SGMC[i]->SetFillColor(i+2);
+    h_b_Hmass_SGMC[i]->SetFillColor(i+2);
+    h_b_HpT_SGMC[i]->SetFillColor(i+2);
+    h_b_bbdRAve_SGMC[i]->SetFillColor(i+2);
+    h_b_bbdMMin_SGMC[i]->SetFillColor(i+2);
+    h_b_HHt_SGMC[i]->SetFillColor(i+2);
+    h_b_WHdR_SGMC[i]->SetFillColor(i+2);
+
+    h_b_n_SGMC[i]->SetFillColor(i+2);
+
+    h_b_WpT_SGMC[i]->SetLineColor(i+2);
+    h_b_Hmass_SGMC[i]->SetLineColor(i+2);
+    h_b_HpT_SGMC[i]->SetLineColor(i+2);
+    h_b_bbdRAve_SGMC[i]->SetLineColor(i+2);
+    h_b_bbdMMin_SGMC[i]->SetLineColor(i+2);
+    h_b_HHt_SGMC[i]->SetLineColor(i+2);
+    h_b_WHdR_SGMC[i]->SetLineColor(i+2);
+
+    h_b_n_SGMC[i]->SetLineColor(i+2);
+    */
+  }
+
   for( int i = 0 ; i < BGBin ; i++ )
   {
     std::string smalltag;
