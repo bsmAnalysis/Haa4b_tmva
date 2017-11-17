@@ -25,7 +25,7 @@ class QCDSampleWeight
 {
  public:
   std::vector<QCDSampleInfo> QCDSampleInfos;
-  void QCDSampleInfo_push_back( std::string tag, double xsec, double nevents, double lumi, double kf, const TString &inputFileList );
+  void QCDSampleInfo_push_back( std::string tag, double xsec, double nevents, double lumi, double kf, const TString &inputFileList, std::string TrainMode );
  private:
   bool FillChain(TChain *chain, const TString &inputFileList, std::string tag);
 };

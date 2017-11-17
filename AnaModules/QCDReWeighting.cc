@@ -1,19 +1,13 @@
 #include "QCDReWeighting.h"
 
-void QCDSampleWeight::QCDSampleInfo_push_back( std::string tag, double xsec, double nevents, double lumi, double kf, const TString &inputFileList)
+void QCDSampleWeight::QCDSampleInfo_push_back( std::string tag, double xsec, double nevents, double lumi, double kf, const TString &inputFileList, std::string TrainMode )
 {
   QCDSampleInfo oneInfo;
 
   oneInfo.QCDTag = tag;
   oneInfo.weight = xsec*lumi*kf/nevents;
-  //weight is one if we are reading data
-  //if( tag.find("HTMHT") != std::string::npos ) oneInfo.weight = 1;
-  //negative weight for the sample other than QCD and HTMHT
-  //if( !(tag.find("QCD") != std::string::npos) ) oneInfo.weight = -xsec*lumi/nevents;
-  //if( tag.find("HTMHT") != std::string::npos ) oneInfo.weight = 1;
- 
-  //oneInfo.chain= new TChain("stopTreeMaker/AUX");
-  oneInfo.chain= new TChain("stopTreeMaker/QCDTFTree");
+  oneInfo.chain= new TChain(TrainMode.c_str());
+  
   if(!FillChain(oneInfo.chain, inputFileList, oneInfo.QCDTag))
   {
     std::cerr << "Cannot get the tree " << std::endl;
