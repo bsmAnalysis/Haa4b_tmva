@@ -169,10 +169,10 @@ int main(int argc, char* argv[])
     myBGSampleWeight.QCDSampleInfo_push_back( "_WZ_ext1_2016"         ,        47.13*0.75, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode ); //ext1, 0.75
     myBGSampleWeight.QCDSampleInfo_push_back( "_ZZ_2016"              ,        16.523*0.5, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode ); //ext1, 0.5
     myBGSampleWeight.QCDSampleInfo_push_back( "_ZZ_ext1_2016"         ,        16.523*0.5, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode ); //ext1, 0.5
-    myBGSampleWeight.QCDSampleInfo_push_back( "_WWW_"                 ,            0.2086, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_WWZ_"                 ,            0.1651, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_WZZ_"                 ,           0.05565, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_ZZZ_"                 ,           0.01398, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WWW_"                 ,            0.2086, 76326 - 4821, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WWZ_"                 ,            0.1651, 72520 - 4243, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WZZ_"                 ,           0.05565, 56533 - 3496, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_ZZZ_"                 ,           0.01398, 42109 - 3274, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
     myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt50To80_EMEnr_"  ,    19800000*0.146, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
     myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt80To120_EMEnr_" ,     2800000*0.125, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
     myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt120To170_EMEnr_",      477000*0.132, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
