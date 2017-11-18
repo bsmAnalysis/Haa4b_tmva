@@ -30,7 +30,7 @@ TMVALIB += -L$(ROOTSYS)/lib -lTMVAGui
 FILES = $(wildcard $(SDIR)/*.cc)
 OBJS  := $(FILES:$(SDIR)/%.cc=$(ODIR)/%.o)
 
-PROGRAMS = ReFormat CutFlow MVATreeMaker MVAAna MVACutFlowPlots
+PROGRAMS = ReFormat CutFlow MVATreeMaker MVAAna MVACutFlowPlots nEvts
 
 all: mkobj $(OBJS) AnaTools $(PROGRAMS)
 
@@ -74,6 +74,9 @@ MVAAna: $(ODIR)/MVAAna.o $(ODIR)/TMVATrainer.o $(ODIR)/TMVAReader.o $(ODIR)/MVAC
 
 MVACutFlowPlots: $(ODIR)/MVACutFlowPlots.o
 	$(LD) $^ $(LIBS) -o $@
+
+nEvts: $(ODIR)/nEvts.o
+	$(LD) $^ $(LIBS) $(LHAPDFLIB) -o $@
 
 clean:
 	rm -f $(IDIR)/*.a $(ODIR)/*.o $(ODIR)/*.d $(ODIR)/*.so $(PROGRAMS) core 

@@ -65,14 +65,14 @@ int main(int argc, char* argv[])
     myTMVAReader.SetupMVAReader( "Haa4bSBClassification" + TrainMode, "dataset/weights/Haa4bSBClassification" + TrainMode + "_BDT.weights.xml" );
  
     QCDSampleWeight mySGSampleWeight;
-    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass12"  , 1.37, 1, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
-    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass15"  , 1.37, 1, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
-    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass20"  , 1.37, 1, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
-    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass25"  , 1.37, 1, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
-    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass30"  , 1.37, 1, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
-    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass40"  , 1.37, 1, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
-    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass50"  , 1.37, 1, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
-    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass60"  , 1.37, 1, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
+    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass12"  , 1.37, 215356, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
+    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass15"  , 1.37, 217237, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
+    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass20"  , 1.37, 208386, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
+    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass25"  , 1.37, 217001, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
+    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass30"  , 1.37, 218267, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
+    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass40"  , 1.37, 216995, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
+    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass50"  , 1.37, 217453, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
+    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass60"  , 1.37, 216175, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
 
     std::cout << "Processing signal MC samples..." << std::endl;
     for(std::vector<QCDSampleInfo>::iterator iter_SampleInfos = mySGSampleWeight.QCDSampleInfos.begin(); iter_SampleInfos != mySGSampleWeight.QCDSampleInfos.end(); iter_SampleInfos++)
