@@ -126,7 +126,7 @@ void BasicCheckPlots::BasicCheckTemplate(
       if( TString(list->At(i)->GetName()).Contains( "_BGMC" ) )
       {
         hs_MC->Add( (TH1D*)fin->Get(list->At(i)->GetName()) );
-
+        //std::cout << TString(list->At(i)->GetName()) << std::endl;
         if( TString(list->At(i)->GetName()).Contains( "SingleT" ) ) { smalltag = "SingleT"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
         if( TString(list->At(i)->GetName()).Contains( "TTJets" ) ) { smalltag = "TTJets"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
         if( TString(list->At(i)->GetName()).Contains( "WJets" ) ) { smalltag = "WJets"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }

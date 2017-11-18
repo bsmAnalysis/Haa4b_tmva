@@ -65,20 +65,21 @@ int main(int argc, char* argv[])
     myTMVAReader.SetupMVAReader( "Haa4bSBClassification" + TrainMode, "dataset/weights/Haa4bSBClassification" + TrainMode + "_BDT.weights.xml" );
  
     QCDSampleWeight mySGSampleWeight;
-    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass12"  , 1  , 1, 35.9, 1, "FileList/MVASGMCFileList.txt", TrainMode );
-    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass15"  , 1  , 1, 35.9, 1, "FileList/MVASGMCFileList.txt", TrainMode );
-    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass20"  , 1  , 1, 35.9, 1, "FileList/MVASGMCFileList.txt", TrainMode );
-    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass25"  , 1  , 1, 35.9, 1, "FileList/MVASGMCFileList.txt", TrainMode );
-    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass30"  , 1  , 1, 35.9, 1, "FileList/MVASGMCFileList.txt", TrainMode );
-    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass40"  , 1  , 1, 35.9, 1, "FileList/MVASGMCFileList.txt", TrainMode );
-    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass50"  , 1  , 1, 35.9, 1, "FileList/MVASGMCFileList.txt", TrainMode );
-    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass60"  , 1  , 1, 35.9, 1, "FileList/MVASGMCFileList.txt", TrainMode );
+    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass12"  , 1  , 1, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
+    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass15"  , 1  , 1, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
+    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass20"  , 1  , 1, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
+    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass25"  , 1  , 1, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
+    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass30"  , 1  , 1, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
+    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass40"  , 1  , 1, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
+    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass50"  , 1  , 1, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
+    mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass60"  , 1  , 1, LumiScale, 1, "FileList/MVASGMCFileList.txt", TrainMode );
 
     std::cout << "Processing signal MC samples..." << std::endl;
     for(std::vector<QCDSampleInfo>::iterator iter_SampleInfos = mySGSampleWeight.QCDSampleInfos.begin(); iter_SampleInfos != mySGSampleWeight.QCDSampleInfos.end(); iter_SampleInfos++)
     { 
       //print out basic information 
-      std::cout <<"Sample Type: "<< (*iter_SampleInfos).QCDTag << "; LUMI: " << (*iter_SampleInfos).weight << std::endl;
+      float ls = (*iter_SampleInfos).weight; 
+      std::cout <<"Sample Type: "<< (*iter_SampleInfos).QCDTag << "; LUMI Scale: " << ls << std::endl;
       //Loading chain info
       long long int nTot = (*iter_SampleInfos).chain->GetEntries();
       float WpT, Hmass, HpT, bbdRAve, bbdMMin, HHt, WHdR;
@@ -115,74 +116,75 @@ int main(int argc, char* argv[])
                        );
         if ( ih >= 0 )
         {
-          (myMVACutFlowHist.h_b_WpT_SGMC[ih])->Fill( WpT, weight );
-          (myMVACutFlowHist.h_b_Hmass_SGMC[ih])->Fill( Hmass, weight );
-          (myMVACutFlowHist.h_b_HpT_SGMC[ih])->Fill( HpT, weight );
-          (myMVACutFlowHist.h_b_bbdRAve_SGMC[ih])->Fill( bbdRAve, weight );
-          (myMVACutFlowHist.h_b_bbdMMin_SGMC[ih])->Fill( bbdMMin, weight );
-          (myMVACutFlowHist.h_b_HHt_SGMC[ih])->Fill( HHt, weight );
-          (myMVACutFlowHist.h_b_WHdR_SGMC[ih])->Fill( WHdR, weight );
+          (myMVACutFlowHist.h_b_WpT_SGMC[ih])->Fill( WpT, weight * ls );
+          (myMVACutFlowHist.h_b_Hmass_SGMC[ih])->Fill( Hmass, weight * ls );
+          (myMVACutFlowHist.h_b_HpT_SGMC[ih])->Fill( HpT, weight * ls );
+          (myMVACutFlowHist.h_b_bbdRAve_SGMC[ih])->Fill( bbdRAve, weight * ls );
+          (myMVACutFlowHist.h_b_bbdMMin_SGMC[ih])->Fill( bbdMMin, weight * ls );
+          (myMVACutFlowHist.h_b_HHt_SGMC[ih])->Fill( HHt, weight * ls );
+          (myMVACutFlowHist.h_b_WHdR_SGMC[ih])->Fill( WHdR, weight * ls );
 
-          (myMVACutFlowHist.h_b_BDT_SGMC[ih])->Fill( mvaout, weight );
+          (myMVACutFlowHist.h_b_BDT_SGMC[ih])->Fill( mvaout, weight * ls );
 
           int lobin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).first, hibin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).second;
           if ( hibin > 0 )
           {
             for ( int j = lobin; j <= hibin ; j++ )
             {
-              (myMVACutFlowHist.h_b_n_SGMC[ih])->Fill( j, weight );
+              (myMVACutFlowHist.h_b_n_SGMC[ih])->Fill( j, weight * ls );
             }
           }
         }
         /*
-        if ( ievt < 200 )
+        if ( ievt < 20 )
         {
           std::cout << "MVA output : " << mvaout << ", [" << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).first << ","  << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).second << "]" << std::endl;
-          //std::cout << "Weight: " << weight << std::endl;
+          std::cout << "Weight: " << weight << std::endl;
           //std::cout << "MVA vars : " << WpT << "," << Hmass << std::endl;
           //std::cout << "MVA vars : " << myTMVAReader.WpT << "," << myTMVAReader.Hmass << std::endl;
         }
-        */ 
+        */
       }
     }
 
     QCDSampleWeight myBGSampleWeight;
-    myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_atW_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_at_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_s_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_tW_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_t_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_TTJets_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_WJets"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_DYJetsToLL_10to50_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_DYJetsToLL_50toInf_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_TGJets_2016"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_TGJets_ext1_2016"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_TTGJets_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_TTWJetslnu_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_TTZJets2l2nu_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_WW2l2nu_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_WWlnu2q_2016"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_WWlnu2q_ext1_2016"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_WZ_2016"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_WZ_ext1_2016"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_ZZ_2016"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_ZZ_ext1_2016"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_WWW_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_WWZ_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_WZZ_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_ZZZ_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt50To80_EMEnr_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt80To120_EMEnr_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt120To170_EMEnr_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt170To300_EMEnr_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt300ToInf_EMEnr_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt20ToInf_MuEnr_"  , 1  , 1, 35.9, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_atW_"         , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_at_"          , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_s_"           , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_tW_"          , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_t_"           , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_TTJets_"              , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WJets"                , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_DYJetsToLL_10to50_"   , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_DYJetsToLL_50toInf_"  , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_TGJets_2016"          , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_TGJets_ext1_2016"     , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_TTGJets_"             , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_TTWJetslnu_"          , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_TTZJets2l2nu_"        , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WW2l2nu_"             , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WWlnu2q_2016"         , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WWlnu2q_ext1_2016"    , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WZ_2016"              , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WZ_ext1_2016"         , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_ZZ_2016"              , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_ZZ_ext1_2016"         , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WWW_"                 , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WWZ_"                 , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WZZ_"                 , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_ZZZ_"                 , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt50To80_EMEnr_"  , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt80To120_EMEnr_" , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt120To170_EMEnr_", 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt170To300_EMEnr_", 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt300ToInf_EMEnr_", 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt20ToInf_MuEnr_" , 1  , 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
     std::cout << "Processing background MC samples..." << std::endl;
     for(std::vector<QCDSampleInfo>::iterator iter_SampleInfos = myBGSampleWeight.QCDSampleInfos.begin(); iter_SampleInfos != myBGSampleWeight.QCDSampleInfos.end(); iter_SampleInfos++)
     { 
       //print out basic information 
-      std::cout <<"Sample Type: "<< (*iter_SampleInfos).QCDTag << "; LUMI: " << (*iter_SampleInfos).weight << std::endl;
+      float ls = (*iter_SampleInfos).weight;
+      std::cout <<"Sample Type: "<< (*iter_SampleInfos).QCDTag << "; LUMI Scale: " << ls << std::endl;
       //Loading chain info
       long long int nTot = (*iter_SampleInfos).chain->GetEntries();
       float WpT, Hmass, HpT, bbdRAve, bbdMMin, HHt, WHdR;
@@ -238,50 +240,59 @@ int main(int argc, char* argv[])
                        );
         if ( ih >= 0 )
         {
-          (myMVACutFlowHist.h_b_WpT_BGMC[ih])->Fill( WpT, weight );
-          (myMVACutFlowHist.h_b_Hmass_BGMC[ih])->Fill( Hmass, weight );
-          (myMVACutFlowHist.h_b_HpT_BGMC[ih])->Fill( HpT, weight );
-          (myMVACutFlowHist.h_b_bbdRAve_BGMC[ih])->Fill( bbdRAve, weight );
-          (myMVACutFlowHist.h_b_bbdMMin_BGMC[ih])->Fill( bbdMMin, weight );
-          (myMVACutFlowHist.h_b_HHt_BGMC[ih])->Fill( HHt, weight );
-          (myMVACutFlowHist.h_b_WHdR_BGMC[ih])->Fill( WHdR, weight );
+          (myMVACutFlowHist.h_b_WpT_BGMC[ih])->Fill( WpT, weight * ls );
+          (myMVACutFlowHist.h_b_Hmass_BGMC[ih])->Fill( Hmass, weight * ls );
+          (myMVACutFlowHist.h_b_HpT_BGMC[ih])->Fill( HpT, weight * ls );
+          (myMVACutFlowHist.h_b_bbdRAve_BGMC[ih])->Fill( bbdRAve, weight * ls );
+          (myMVACutFlowHist.h_b_bbdMMin_BGMC[ih])->Fill( bbdMMin, weight * ls );
+          (myMVACutFlowHist.h_b_HHt_BGMC[ih])->Fill( HHt, weight * ls );
+          (myMVACutFlowHist.h_b_WHdR_BGMC[ih])->Fill( WHdR, weight * ls );
 
-          (myMVACutFlowHist.h_b_BDT_BGMC[ih])->Fill( mvaout, weight );
+          (myMVACutFlowHist.h_b_BDT_BGMC[ih])->Fill( mvaout, weight * ls );
 
           int lobin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).first, hibin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).second;
           if ( hibin > 0 )
           {
             for ( int j = lobin; j <= hibin ; j++ )
             {
-              (myMVACutFlowHist.h_b_n_BGMC[ih])->Fill( j, weight );
+              (myMVACutFlowHist.h_b_n_BGMC[ih])->Fill( j, weight * ls );
             }
           }
         }
+        /* 
+        if ( ievt < 20 )
+        {
+          std::cout << "MVA output : " << mvaout << ", [" << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).first << ","  << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).second << "]" << std::endl;
+          std::cout << "Weight: " << weight << std::endl;
+          //std::cout << "MVA vars : " << WpT << "," << Hmass << std::endl;
+          //std::cout << "MVA vars : " << myTMVAReader.WpT << "," << myTMVAReader.Hmass << std::endl;
+        }
+        */
       }
     }
 
     QCDSampleWeight myDataSampleWeight;
-    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016B_ver2"  , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
-    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016C"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
-    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016D"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
-    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016E"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
-    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016F"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
-    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016G"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
-    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016H_ver2"  , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
-    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016H_ver3"  , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
-    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016B_ver2"  , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
-    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016C"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
-    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016D"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
-    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016E"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
-    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016F"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
-    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016G"       , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
-    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016H_ver2"  , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
-    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016H_ver3"  , 1  , 1, 35.9, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016B_ver2"  , 1  , 1, 1, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016C"       , 1  , 1, 1, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016D"       , 1  , 1, 1, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016E"       , 1  , 1, 1, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016F"       , 1  , 1, 1, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016G"       , 1  , 1, 1, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016H_ver2"  , 1  , 1, 1, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016H_ver3"  , 1  , 1, 1, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016B_ver2"  , 1  , 1, 1, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016C"       , 1  , 1, 1, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016D"       , 1  , 1, 1, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016E"       , 1  , 1, 1, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016F"       , 1  , 1, 1, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016G"       , 1  , 1, 1, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016H_ver2"  , 1  , 1, 1, 1, "FileList/MVADataFileList.txt", TrainMode );
+    myDataSampleWeight.QCDSampleInfo_push_back( "_SingleMuon2016H_ver3"  , 1  , 1, 1, 1, "FileList/MVADataFileList.txt", TrainMode );
     std::cout << "Processing data samples..." << std::endl;
     for(std::vector<QCDSampleInfo>::iterator iter_SampleInfos = myDataSampleWeight.QCDSampleInfos.begin(); iter_SampleInfos != myDataSampleWeight.QCDSampleInfos.end(); iter_SampleInfos++)
     { 
       //print out basic information 
-      std::cout <<"Sample Type: "<< (*iter_SampleInfos).QCDTag << "; LUMI: " << (*iter_SampleInfos).weight << std::endl;
+      std::cout <<"Sample Type: "<< (*iter_SampleInfos).QCDTag << "; Lumi Scale: " << (*iter_SampleInfos).weight << std::endl;
       //Loading chain info
       long long int nTot = (*iter_SampleInfos).chain->GetEntries();
       float WpT, Hmass, HpT, bbdRAve, bbdMMin, HHt, WHdR;
@@ -323,9 +334,18 @@ int main(int argc, char* argv[])
             (myMVACutFlowHist.h_b_n_Data)->Fill( j, weight );
           }
         }
+        /*
+        if ( ievt < 20 )
+        {
+          std::cout << "MVA output : " << mvaout << ", [" << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).first << ","  << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).second << "]" << std::endl;
+          std::cout << "Weight: " << weight << std::endl;
+          //std::cout << "MVA vars : " << WpT << "," << Hmass << std::endl;
+          //std::cout << "MVA vars : " << myTMVAReader.WpT << "," << myTMVAReader.Hmass << std::endl;
+        }
+        */
       }
     }
-    
+
     myTMVAReader.CloseMVAReader();
     (myMVACutFlowHist.oFile)->Write();
     (myMVACutFlowHist.oFile)->Close();
