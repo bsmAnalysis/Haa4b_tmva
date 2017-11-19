@@ -36,12 +36,14 @@ int main(int argc, char* argv[])
   if( inputFile->IsZombie() ) return -1;
   TH1F* posH = (TH1F *) inputFile->Get("mainNtuplizer/n_posevents");
   TH1F* negH = (TH1F *) inputFile->Get("mainNtuplizer/n_negevents");
-  if( posH && negH ) std::cout << posH->GetBinContent(1) << "-" << negH->GetBinContent(1) << std::endl;
+  std::cout << "Read from histo: " << std::endl;
+  if( posH && negH ) std::cout << posH->GetBinContent(1) << " - " << negH->GetBinContent(1) << std::endl;
 
   TTree* thisTree = (TTree *)inputFile->Get("mainNtuplizer/data");  
   float genWeight = 0;
   thisTree->SetBranchAddress("genWeight", &genWeight);
   int nEntries = thisTree->GetEntriesFast();
+  std::cout << "Read from Tree: " << std::endl;
   std::cout << "NTot " << nEntries << std::endl;
 
   long long int nPos = 0, nNeg = 0;
