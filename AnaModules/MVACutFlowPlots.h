@@ -70,8 +70,8 @@ void BasicCheckPlots::Initialization(std::string dir)
   target_DIR = dir;
   system( ("mkdir " + dir).c_str() );
 
-  //fin = TFile::Open("OutDir/MVACutFlowTribMVA.root");
-  fin = TFile::Open("OutDir/MVACutFlowQuabMVA.root");
+  fin = TFile::Open("OutDir/MVACutFlowTribMVA.root");
+  //fin = TFile::Open("OutDir/MVACutFlowQuabMVA.root");
 
   list = fin->GetListOfKeys();
 

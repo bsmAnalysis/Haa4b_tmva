@@ -4,6 +4,7 @@
 #include <locale>
 #include <sstream>
 #include <stdlib.h>
+#include <fstream>
 
 #include "TTree.h"
 #include "TFile.h"
@@ -32,7 +33,9 @@ int main(int argc, char* argv[])
   //root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/crab_MC13TeV_TTJets_2016_0/171005_184952/0000/analysis_1.root
   
   std::string input_str(argv[1]);
-  
+  std::ifstream inputFile( input_str );
+  std::cout << "File list name: " << input_str << std::endl;
+  /* 
   //set input for handler
   TFile *inputFile = TFile::Open( input_str.c_str() );
   if( inputFile->IsZombie() ) return -1;
@@ -42,13 +45,17 @@ int main(int argc, char* argv[])
   std::cout << "Read from histo: " << std::endl;
   std::cout << "nTot: " << nevtH->GetBinContent(1) << std::endl;
   if( posH && negH ) std::cout << posH->GetBinContent(1) << " - " << negH->GetBinContent(1) << std::endl;
-
+  */
   std::vector<std::string> fnames;
-  fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_1.root");
-  fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_2.root");
-  fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_3.root");
-  fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_4.root");
-  fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_5.root");
+  for( std::string line; getline( inputFile, line ); )
+  {
+    fnames.push_back(line);
+  }
+  //fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_1.root");
+  //fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_2.root");
+  //fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_3.root");
+  //fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_4.root");
+  //fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_5.root");
 
 
   TChain *chain = new TChain("mainNtuplizer/data");
@@ -73,7 +80,7 @@ int main(int argc, char* argv[])
   //for ( int iev = 0; iev < 1000; iev++)
   for ( int iev = 0; iev < nEntries; iev++)
   {
-    if ( iev%20000 == 0){ std::cout << iev << " events proceed!"<< std::endl; }
+    //if ( iev%20000 == 0){ std::cout << iev << " events proceed!"<< std::endl; }
     chain->GetEvent(iev);
     //thisTree->GetEntry(iev);
     genWeight > 0 ? nPos++ : nNeg++;
@@ -82,6 +89,6 @@ int main(int argc, char* argv[])
   std::cout << "nPos: " << nPos << ", nNeg: " << nNeg << std::endl;
   std::cout << nPos << " - " << nNeg << std::endl;
 
-  inputFile->Close();
+  //inputFile->Close();
   return 0;
 }
