@@ -127,12 +127,18 @@ int main(int argc, char* argv[])
           (myMVACutFlowHist.h_b_BDT_SGMC[ih])->Fill( mvaout, weight * ls );
 
           int lobin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).first, hibin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).second;
-          if ( hibin > 0 )
+          if ( hibin >= 0 )
           {
             for ( int j = lobin; j <= hibin ; j++ )
             {
               (myMVACutFlowHist.h_b_n_SGMC[ih])->Fill( j, weight * ls );
+              //(myMVACutFlowHist.h_b_n_SGMC[ih])->Fill( j, 1.0 );
             }
+          }
+          else
+          { 
+            (myMVACutFlowHist.h_b_n_SGMC[ih])->Fill( 0.0, weight * ls );
+            //(myMVACutFlowHist.h_b_n_SGMC[ih])->Fill( 0.0, 1.0 );
           }
         }
         /*
@@ -284,12 +290,16 @@ int main(int argc, char* argv[])
           (myMVACutFlowHist.h_b_BDT_BGMC[ih])->Fill( mvaout, weight * ls );
 
           int lobin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).first, hibin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).second;
-          if ( hibin > 0 )
+          if ( hibin >= 0 )
           {
             for ( int j = lobin; j <= hibin ; j++ )
             {
               (myMVACutFlowHist.h_b_n_BGMC[ih])->Fill( j, weight * ls );
             }
+          }
+          else 
+          { 
+            (myMVACutFlowHist.h_b_n_BGMC[ih])->Fill( 0.0, weight * ls );
           }
         }
         /*
@@ -360,12 +370,18 @@ int main(int argc, char* argv[])
         (myMVACutFlowHist.h_b_BDT_Data)->Fill( mvaout, weight );
 
         int lobin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).first, hibin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).second;
-        if ( hibin > 0 )
+        if ( hibin >= 0 )
         {
           for ( int j = lobin; j <= hibin ; j++ )
           {
             (myMVACutFlowHist.h_b_n_Data)->Fill( j, weight );
+            //(myMVACutFlowHist.h_b_n_Data)->Fill( j, 1 );
           }
+        }
+        else 
+        { 
+          (myMVACutFlowHist.h_b_n_Data)->Fill( 0.0, weight );
+          //(myMVACutFlowHist.h_b_n_Data)->Fill( 0.0, 1 );
         }
         /*
         if ( ievt < 20 )
