@@ -46,6 +46,7 @@ TH1D* merge_stack(const THStack& stack)
 class BasicCheckPlots
 {
  public:
+  std::string TrainMode;
   std::string target_DIR;
 
   TFile * fin;
@@ -55,7 +56,7 @@ class BasicCheckPlots
 
   double scale = 1;
 
-  void Initialization(std::string dir); 
+  void Initialization(std::string trainmode, std::string dir); 
   void PrintPlotsName();
   void BasicCheckTemplate(
                           TString hist_tag,
@@ -65,13 +66,16 @@ class BasicCheckPlots
                          );
 };
 
-void BasicCheckPlots::Initialization(std::string dir)
+void BasicCheckPlots::Initialization(std::string trainmode, std::string dir)
 {
+  TrainMode = trainmode;
   target_DIR = dir;
-  system( ("mkdir " + dir).c_str() );
+  system( ("mkdir " + target_DIR).c_str() );
+
+  fin = TFile::Open( ("OutDir/MVACutFlow" + TrainMode + ".root").c_str() );
 
   //fin = TFile::Open("OutDir/MVACutFlowTribMVA.root");
-  fin = TFile::Open("OutDir/MVACutFlowQuabMVA.root");
+  //fin = TFile::Open("OutDir/MVACutFlowQuabMVA.root");
 
   list = fin->GetListOfKeys();
 
@@ -181,11 +185,11 @@ void BasicCheckPlots::BasicCheckTemplate(
   //h_Data->Draw("same e0");
 
   //const std::string titre="CMS Preliminary 2015, "+ lumi_str + " fb^{-1}, #sqrt{s} = 13 TeV";
-  //const std::string titre="CMS Preliminary 2016, 12.9 fb^{-1}, #sqrt{s} = 13 TeV";
-  //TLatex *title = new TLatex(0.09770115,0.9194915,titre.c_str());
-  //title->SetNDC();
-  //title->SetTextSize(0.045);
-  //title->Draw("same");
+  const std::string titre="CMS Preliminary 2017, 35.9 fb^{-1}, #sqrt{s} = 13 TeV";
+  TLatex *title = new TLatex(0.09770115,0.9194915,titre.c_str());
+  title->SetNDC();
+  title->SetTextSize(0.045);
+  title->Draw("same");
   
   leg->Draw("same");
 
@@ -232,9 +236,9 @@ void BasicCheckPlots::BasicCheckTemplate(
   zero->SetLineColor(kRed); zero->SetLineWidth(1);
   zero->DrawCopy("same");
 
-  c->SaveAs( target_DIR + TString("/") + hist_tag + TString("BasicCheck.png") );
-  c->SaveAs( target_DIR + TString("/") + hist_tag + TString("BasicCheck.pdf") );
-  c->SaveAs( target_DIR + TString("/") + hist_tag + TString("BasicCheck.C") );
+  c->SaveAs( target_DIR + TString("/") + hist_tag + TrainMode + TString("_BasicCheck.png") );
+  c->SaveAs( target_DIR + TString("/") + hist_tag + TrainMode + TString("_BasicCheck.pdf") );
+  c->SaveAs( target_DIR + TString("/") + hist_tag + TrainMode + TString("_BasicCheck.C") );
 }
 
 struct Plotting_Parameter

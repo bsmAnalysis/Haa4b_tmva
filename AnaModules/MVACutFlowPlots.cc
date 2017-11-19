@@ -24,14 +24,15 @@ int main(int argc, char* argv[])
   {
     std::cerr <<"Please give at least 1 argument " << "TargetDirName" << std::endl;
     std::cerr <<" Valid configurations are " << std::endl;
-    std::cerr <<" ./MVACutFlowPlots Test" << std::endl;
+    std::cerr <<" ./MVACutFlowPlots TribMVA Test" << std::endl;
     return -1;
   }
 
-  std::string DirName = argv[1];
+  std::string TrainMode = argv[1];
+  std::string DirName = argv[2];
 
   BasicCheckPlots myBasicCheckPlots;
-  myBasicCheckPlots.Initialization(DirName);
+  myBasicCheckPlots.Initialization(TrainMode, DirName);
   //initialize the closure plots parameter we want to investigate
   std::vector<Plotting_Parameter> myPlotting_Paramete = 
   { 
