@@ -51,15 +51,30 @@ int main(int argc, char* argv[])
   {
     fnames.push_back(line);
   }
-  //fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_1.root");
-  //fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_2.root");
-  //fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_3.root");
-  //fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_4.root");
-  //fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_5.root");
+  long long int nTot = 0;
+  long long int nPos = 0, nNeg = 0;
+  for (int i = 0; i < fnames.size(); i++)
+  {
+    TFile *inputFile = TFile::Open( fnames.at(i).c_str() );
+    if( inputFile->IsZombie() ) return -1;
+    TH1F* nevtH = (TH1F *) inputFile->Get("mainNtuplizer/nevents");
+    TH1F* posH = (TH1F *) inputFile->Get("mainNtuplizer/n_posevents");
+    TH1F* negH = (TH1F *) inputFile->Get("mainNtuplizer/n_negevents");
 
+    nTot += nevtH->GetBinContent(1);  
+    nPos += posH->GetBinContent(1);
+    nNeg += negH->GetBinContent(1);
+    //std::cout << "Read from histo: " << std::endl;
+    //std::cout << "nTot: " << nevtH->GetBinContent(1) << std::endl;
+    //if( posH && negH ) std::cout << posH->GetBinContent(1) << " - " << negH->GetBinContent(1) << std::endl;
+    inputFile->Close();
+  }
+  std::cout << "nTot: " << nTot << std::endl;
+  std::cout << "nPos: " << nPos << ", nNeg: " << nNeg << std::endl;
+  std::cout << nPos << " - " << nNeg << std::endl;
 
+  /*
   TChain *chain = new TChain("mainNtuplizer/data");
-  //chain->Add("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/crab_MC13TeV_ZZZ_2016_0/170921_183749/0000/analysis_1.root");
   for (int i = 0; i < fnames.size(); i++)
   {
     chain->Add(fnames.at(i).c_str());
@@ -75,9 +90,7 @@ int main(int argc, char* argv[])
   std::cout << "Read from Tree: " << std::endl;
   std::cout << "NTot " << nEntries << std::endl;
 
-
   long long int nPos = 0, nNeg = 0;
-  //for ( int iev = 0; iev < 1000; iev++)
   for ( int iev = 0; iev < nEntries; iev++)
   {
     //if ( iev%20000 == 0){ std::cout << iev << " events proceed!"<< std::endl; }
@@ -88,7 +101,7 @@ int main(int argc, char* argv[])
 
   std::cout << "nPos: " << nPos << ", nNeg: " << nNeg << std::endl;
   std::cout << nPos << " - " << nNeg << std::endl;
-
+  */
   //inputFile->Close();
   return 0;
 }

@@ -148,6 +148,38 @@ int main(int argc, char* argv[])
     }
 
     QCDSampleWeight myBGSampleWeight;
+    myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_s_"           ,             3.362, 811495 - 188505, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_atW_"         ,              35.6, 6933094 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_tW_"          ,              35.6, 6952830 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_at_"          ,             80.95, 37904304 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_t_"           ,            136.02, 67240808 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_TTJets_"              ,            831.76, 29849450 - 14501083, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WJets"                ,           61526.7, 20308674 - 3811645, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_DYJetsToLL_10to50_"   ,             18610, 26709558 - 4211038, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_DYJetsToLL_50toInf_"  ,            5765.4, 101918226 - 20137162, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_TGJets_"              ,             2.967, 1109033 - 740471, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode ); //
+    //myBGSampleWeight.QCDSampleInfo_push_back( "_TGJets_ext1_2016"     ,        2.967*0.75, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode ); //ext1, 0.75
+    myBGSampleWeight.QCDSampleInfo_push_back( "_TTGJets_"             ,             3.697, 3224372 - 1646539, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_TTWJetslnu_"          ,            0.2043, 2361962 - 758435, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_TTZJets2l2nu_"        ,            0.2529, 1460207 - 532231, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WW2l2nu_"             ,            12.178, 1999000 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WWlnu2q_"             ,            49.997, 8997800 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode ); //
+    //myBGSampleWeight.QCDSampleInfo_push_back( "_WWlnu2q_ext1_2016"    ,        49.997*0.5, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode ); //ext1, 0.5
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WZ_"                  ,             47.13, 3871065 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode ); //
+    //myBGSampleWeight.QCDSampleInfo_push_back( "_WZ_ext1_2016"         ,        47.13*0.75, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode ); //ext1, 0.75
+    myBGSampleWeight.QCDSampleInfo_push_back( "_ZZ_"                  ,            16.523, 1988098 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode ); //
+    //myBGSampleWeight.QCDSampleInfo_push_back( "_ZZ_ext1_2016"         ,        16.523*0.5, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode ); //ext1, 0.5
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WWW_"                 ,            0.2086, 225269 - 14731, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WWZ_"                 ,            0.1651, 235734 - 14266, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WZZ_"                 ,           0.05565, 231583 - 15217, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_ZZZ_"                 ,           0.01398, 231217 - 18020, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt50To80_EMEnr_"  ,    19800000*0.146, 23474171 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt80To120_EMEnr_" ,     2800000*0.125, 35841783 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt120To170_EMEnr_",      477000*0.132, 35817281 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt170To300_EMEnr_",      114000*0.165, 11540163 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt300ToInf_EMEnr_",         9000*0.15,  7373633 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt20ToInf_MuEnr_" , 720648000*0.00042, 22094081 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    /*
     myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_s_"           ,             3.362, 273964 - 63274, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
     myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_atW_"         ,              35.6, 1819852 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
     myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_tW_"          ,              35.6, 1827501 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
@@ -179,6 +211,7 @@ int main(int argc, char* argv[])
     myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt170To300_EMEnr_",      114000*0.165, 73680 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
     myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt300ToInf_EMEnr_",         9000*0.15, 132904 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
     myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt20ToInf_MuEnr_" , 720648000*0.00042, 693443 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    */
     std::cout << "Processing background MC samples..." << std::endl;
     for(std::vector<QCDSampleInfo>::iterator iter_SampleInfos = myBGSampleWeight.QCDSampleInfos.begin(); iter_SampleInfos != myBGSampleWeight.QCDSampleInfos.end(); iter_SampleInfos++)
     { 
@@ -240,7 +273,7 @@ int main(int argc, char* argv[])
                        );
         if ( ih >= 0 )
         {
-          weight > 0 ? weight = 1 : weight = -1;
+          //weight > 0 ? weight = 1 : weight = -1;
           (myMVACutFlowHist.h_b_WpT_BGMC[ih])->Fill( WpT, weight * ls );
           (myMVACutFlowHist.h_b_Hmass_BGMC[ih])->Fill( Hmass, weight * ls );
           (myMVACutFlowHist.h_b_HpT_BGMC[ih])->Fill( HpT, weight * ls );
