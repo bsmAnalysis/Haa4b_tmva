@@ -1,0 +1,8 @@
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8/crab_MC13TeV_TTZJets2l2nu_2016_0/170921_185251/0000/analysis_1.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8/crab_MC13TeV_TTZJets2l2nu_2016_0/170921_185251/0000/analysis_2.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8/crab_MC13TeV_TTZJets2l2nu_2016_0/170921_185251/0000/analysis_3.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8/crab_MC13TeV_TTZJets2l2nu_2016_0/170921_185251/0000/analysis_4.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8/crab_MC13TeV_TTZJets2l2nu_2016_0/170921_185251/0000/analysis_5.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8/crab_MC13TeV_TTZJets2l2nu_2016_0/170921_185251/0000/analysis_6.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8/crab_MC13TeV_TTZJets2l2nu_2016_0/170921_185251/0000/analysis_7.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8/crab_MC13TeV_TTZJets2l2nu_2016_0/170921_185251/0000/analysis_8.root

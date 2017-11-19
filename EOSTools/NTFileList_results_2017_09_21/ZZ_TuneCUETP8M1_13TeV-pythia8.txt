@@ -1,0 +1,17 @@
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZ_TuneCUETP8M1_13TeV-pythia8/crab_MC13TeV_ZZ_2016_0/171007_104647/0000/analysis_1.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZ_TuneCUETP8M1_13TeV-pythia8/crab_MC13TeV_ZZ_2016_0/171007_104647/0000/analysis_2.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZ_TuneCUETP8M1_13TeV-pythia8/crab_MC13TeV_ZZ_2016_0/171007_104647/0000/analysis_3.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZ_TuneCUETP8M1_13TeV-pythia8/crab_MC13TeV_ZZ_ext1_2016_0/171007_105007/0000/analysis_1.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZ_TuneCUETP8M1_13TeV-pythia8/crab_MC13TeV_ZZ_ext1_2016_0/171007_105007/0000/analysis_10.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZ_TuneCUETP8M1_13TeV-pythia8/crab_MC13TeV_ZZ_ext1_2016_0/171007_105007/0000/analysis_11.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZ_TuneCUETP8M1_13TeV-pythia8/crab_MC13TeV_ZZ_ext1_2016_0/171007_105007/0000/analysis_12.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZ_TuneCUETP8M1_13TeV-pythia8/crab_MC13TeV_ZZ_ext1_2016_0/171007_105007/0000/analysis_13.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZ_TuneCUETP8M1_13TeV-pythia8/crab_MC13TeV_ZZ_ext1_2016_0/171007_105007/0000/analysis_14.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZ_TuneCUETP8M1_13TeV-pythia8/crab_MC13TeV_ZZ_ext1_2016_0/171007_105007/0000/analysis_2.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZ_TuneCUETP8M1_13TeV-pythia8/crab_MC13TeV_ZZ_ext1_2016_0/171007_105007/0000/analysis_3.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZ_TuneCUETP8M1_13TeV-pythia8/crab_MC13TeV_ZZ_ext1_2016_0/171007_105007/0000/analysis_4.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZ_TuneCUETP8M1_13TeV-pythia8/crab_MC13TeV_ZZ_ext1_2016_0/171007_105007/0000/analysis_5.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZ_TuneCUETP8M1_13TeV-pythia8/crab_MC13TeV_ZZ_ext1_2016_0/171007_105007/0000/analysis_6.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZ_TuneCUETP8M1_13TeV-pythia8/crab_MC13TeV_ZZ_ext1_2016_0/171007_105007/0000/analysis_7.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZ_TuneCUETP8M1_13TeV-pythia8/crab_MC13TeV_ZZ_ext1_2016_0/171007_105007/0000/analysis_8.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZ_TuneCUETP8M1_13TeV-pythia8/crab_MC13TeV_ZZ_ext1_2016_0/171007_105007/0000/analysis_9.root

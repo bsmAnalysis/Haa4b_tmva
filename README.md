@@ -10,3 +10,6 @@ tar --exclude-caches-all -zcf ${CMSSW_VERSION}.tar.gz -C ${CMSSW_BASE}/.. ${CMSS
 ./MVAAna RunMode TrainMode
 ./MVAAna Train TribMVA
 ./MVAAna Train QuabMVA
+
+
+python genList.py -d /eos/cms/store/user/georgia/results_2017_09_21 -l
