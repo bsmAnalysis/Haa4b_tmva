@@ -273,7 +273,6 @@ int main(int argc, char* argv[])
                        );
         if ( ih >= 0 )
         {
-          //weight > 0 ? weight = 1 : weight = -1;
           (myMVACutFlowHist.h_b_WpT_BGMC[ih])->Fill( WpT, weight * ls );
           (myMVACutFlowHist.h_b_Hmass_BGMC[ih])->Fill( Hmass, weight * ls );
           (myMVACutFlowHist.h_b_HpT_BGMC[ih])->Fill( HpT, weight * ls );
