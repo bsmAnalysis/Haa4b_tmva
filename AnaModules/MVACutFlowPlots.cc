@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
   {
     std::cerr <<"Please give at least 1 argument " << "TargetDirName" << std::endl;
     std::cerr <<" Valid configurations are " << std::endl;
-    std::cerr <<" ./BasicCheckPlots BasicCheckQCD20151209 or ./BasicCheckPlots BasicCheckLL20151211" << std::endl;
+    std::cerr <<" ./MVACutFlowPlots Test" << std::endl;
     return -1;
   }
 
@@ -36,13 +36,13 @@ int main(int argc, char* argv[])
   std::vector<Plotting_Parameter> myPlotting_Paramete = 
   { 
     //MVA basic check plots
-    {"_WpT"    , "WpT [GeV]"    ,    0, 2000},
-    {"_Hmass"  , "Hmass [GeV]"  ,    0, 2000}, 
-    {"_HpT"    , "HpT [GeV]"    ,    0, 2000},  
+    {"_WpT"    , "WpT [GeV]"    ,    0, 400},
+    {"_Hmass"  , "Hmass [GeV]"  ,    0, 800}, 
+    {"_HpT"    , "HpT [GeV]"    ,    0, 400},  
     {"_bbdRAve", "bbdRAve"      ,    0, 5   },                                               
-    {"_bbdMMin", "bbdMMin [GeV]",    0, 2000},
-    {"_HHt"    , "HHt [GeV]"    ,    0, 2000},
-    {"_WHdR"   , "WHdR"         ,    0, 4   },
+    {"_bbdMMin", "bbdMMin [GeV]",    0, 400},
+    {"_HHt"    , "HHt [GeV]"    ,    0, 600},
+    {"_WHdR"   , "WHdPhi"       ,    0, 3.5 },
     {"_BDT"    , "BDT"          , -0.5, 0.5 }
   };
 
