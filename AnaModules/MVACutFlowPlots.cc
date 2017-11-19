@@ -36,15 +36,15 @@ int main(int argc, char* argv[])
   std::vector<Plotting_Parameter> myPlotting_Paramete = 
   { 
     //MVA basic check plots
-    {"_WpT_"    , "p_{T}^{W} [GeV]"            ,    0, 400},
-    {"_Hmass_"  , "m_{h} [GeV]"                ,    0, 800}, 
-    {"_HpT_"    , "p_{T}^{H} [GeV]"            ,    0, 400},  
-    {"_bbdRAve_", "#\Delta R_{b,b}^{ave}"      ,    0,   5},                                               
-    {"_bbdMMin_", "#\Delta m_{b,b}^{min} [GeV]",    0, 400},
-    {"_HHt_"    , "H_{T} [GeV]"                ,    0, 600},
-    {"_WHdR_"   , "#\Delta #\phi (W,h)"        ,    0, 3.2},
-    {"_BDT_"    , "BDT"                        , -0.5, 0.5},
-    {"_n_"      , "Cut"                        ,    0,   9}
+    {"_WpT_"    , "p_{T}^{W} [GeV]"           ,    0, 400},
+    {"_Hmass_"  , "m_{h} [GeV]"               ,    0, 800}, 
+    {"_HpT_"    , "p_{T}^{h} [GeV]"           ,    0, 400},  
+    {"_bbdRAve_", "#Delta R_{b,b}^{ave}"      ,    0,   5},                                               
+    {"_bbdMMin_", "#Delta m_{b,b}^{min} [GeV]",    0, 400},
+    {"_HHt_"    , "H_{T} [GeV]"               ,    0, 600},
+    {"_WHdR_"   , "#Delta #phi (W,h)"         ,    0, 3.2},
+    {"_BDT_"    , "BDT"                       , -0.5, 0.5},
+    {"_n_"      , "Cut"                       ,    0,   9}
   };
 
   std::vector<Plotting_Parameter>::iterator iter_p;
