@@ -29,29 +29,39 @@ int main(int argc, char* argv[])
   //root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/crab_MC13TeV_WZZ_2016_0/170921_183833/0000/analysis_1.root
   //root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/crab_MC13TeV_ZZZ_2016_0/170921_183749/0000/analysis_1.root
 
+  //root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/crab_MC13TeV_TTJets_2016_0/171005_184952/0000/analysis_1.root
+  
   std::string input_str(argv[1]);
   
   //set input for handler
   TFile *inputFile = TFile::Open( input_str.c_str() );
   if( inputFile->IsZombie() ) return -1;
+  TH1F* nevtH = (TH1F *) inputFile->Get("mainNtuplizer/nevents");
   TH1F* posH = (TH1F *) inputFile->Get("mainNtuplizer/n_posevents");
   TH1F* negH = (TH1F *) inputFile->Get("mainNtuplizer/n_negevents");
   std::cout << "Read from histo: " << std::endl;
+  std::cout << "nTot: " << nevtH->GetBinContent(1) << std::endl;
   if( posH && negH ) std::cout << posH->GetBinContent(1) << " - " << negH->GetBinContent(1) << std::endl;
 
-  TTree* thisTree = (TTree *)inputFile->Get("mainNtuplizer/data");  
+  TChain *chain = new TChain("mainNtuplizer/data");
+  chain->Add("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/crab_MC13TeV_ZZZ_2016_0/170921_183749/0000/analysis_1.root");
+
+  //TTree* thisTree = (TTree *)inputFile->Get("mainNtuplizer/data");  
   float genWeight = 0;
-  thisTree->SetBranchAddress("genWeight", &genWeight);
-  int nEntries = thisTree->GetEntriesFast();
+  //thisTree->SetBranchAddress("genWeight", &genWeight);
+  //int nEntries = thisTree->GetEntriesFast();
+  chain->SetBranchAddress("genWeight", &genWeight);
+  int nEntries = chain->GetEntries();
   std::cout << "Read from Tree: " << std::endl;
   std::cout << "NTot " << nEntries << std::endl;
+
 
   long long int nPos = 0, nNeg = 0;
   //for ( int iev = 0; iev < 1000; iev++)
   for ( int iev = 0; iev < nEntries; iev++)
   {
-    //(*iter_SampleInfos).chain->GetEvent(iev);
-    thisTree->GetEntry(iev);
+    chain->GetEvent(iev);
+    //thisTree->GetEntry(iev);
     genWeight > 0 ? nPos++ : nNeg++;
   }
 
