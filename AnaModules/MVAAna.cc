@@ -162,7 +162,7 @@ int main(int argc, char* argv[])
     myBGSampleWeight.QCDSampleInfo_push_back( "_TTGJets_"             ,             3.697, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
     myBGSampleWeight.QCDSampleInfo_push_back( "_TTWJetslnu_"          ,            0.2043, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
     myBGSampleWeight.QCDSampleInfo_push_back( "_TTZJets2l2nu_"        ,            0.2529, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_WW2l2nu_"             ,            12.178, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    myBGSampleWeight.QCDSampleInfo_push_back( "_WW2l2nu_"             ,            12.178, 1136158, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
     myBGSampleWeight.QCDSampleInfo_push_back( "_WWlnu2q_2016"         ,        49.997*0.5, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode ); //ext1, 0.5
     myBGSampleWeight.QCDSampleInfo_push_back( "_WWlnu2q_ext1_2016"    ,        49.997*0.5, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode ); //ext1, 0.5
     myBGSampleWeight.QCDSampleInfo_push_back( "_WZ_2016"              ,        47.13*0.25, 1, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode ); //ext1, 0.25

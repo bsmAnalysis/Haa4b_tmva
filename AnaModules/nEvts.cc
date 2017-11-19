@@ -43,13 +43,26 @@ int main(int argc, char* argv[])
   std::cout << "nTot: " << nevtH->GetBinContent(1) << std::endl;
   if( posH && negH ) std::cout << posH->GetBinContent(1) << " - " << negH->GetBinContent(1) << std::endl;
 
-  TChain *chain = new TChain("mainNtuplizer/data");
-  chain->Add("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/crab_MC13TeV_ZZZ_2016_0/170921_183749/0000/analysis_1.root");
+  std::vector<std::string> fnames;
+  fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_1.root");
+  fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_2.root");
+  fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_3.root");
+  fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_4.root");
+  fnames.push_back("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/170921_183418/0000/analysis_5.root");
 
+
+  TChain *chain = new TChain("mainNtuplizer/data");
+  //chain->Add("root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/crab_MC13TeV_ZZZ_2016_0/170921_183749/0000/analysis_1.root");
+  for (int i = 0; i < fnames.size(); i++)
+  {
+    chain->Add(fnames.at(i).c_str());
+  }
+  chain->SetBranchStatus("*", 0);
   //TTree* thisTree = (TTree *)inputFile->Get("mainNtuplizer/data");  
   float genWeight = 0;
   //thisTree->SetBranchAddress("genWeight", &genWeight);
   //int nEntries = thisTree->GetEntriesFast();
+  chain->SetBranchStatus("genWeight", 1);
   chain->SetBranchAddress("genWeight", &genWeight);
   int nEntries = chain->GetEntries();
   std::cout << "Read from Tree: " << std::endl;
@@ -60,6 +73,7 @@ int main(int argc, char* argv[])
   //for ( int iev = 0; iev < 1000; iev++)
   for ( int iev = 0; iev < nEntries; iev++)
   {
+    if ( iev%20000 == 0){ std::cout << iev << " events proceed!"<< std::endl; }
     chain->GetEvent(iev);
     //thisTree->GetEntry(iev);
     genWeight > 0 ? nPos++ : nNeg++;
