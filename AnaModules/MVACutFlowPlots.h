@@ -103,8 +103,9 @@ void BasicCheckPlots::BasicCheckTemplate(
                                         )
 { 
   TH1D * h_Data;
+  TH1D * h_signal_loMa, * h_signal_hiMa;
   THStack * hs_MC = new THStack("hs_MC","");
-  
+
   TLegend* leg = new TLegend(0.6,0.6,0.85,0.85);
   leg->SetBorderSize(0);
   leg->SetTextFont(42);
@@ -122,6 +123,18 @@ void BasicCheckPlots::BasicCheckTemplate(
       {
         h_Data = (TH1D*)fin->Get(list->At(i)->GetName())->Clone();
         smalltag = "Data"; 
+        leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "l");
+      }
+      else if( TString(list->At(i)->GetName()).Contains( "_SGMC_Wh20" ) )
+      {
+        h_signal_loMa = (TH1D*)fin->Get(list->At(i)->GetName())->Clone();
+        smalltag = "Wh(20)";
+        leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "l");
+      }
+      else if( TString(list->At(i)->GetName()).Contains( "_SGMC_Wh50" ) )
+      {
+        h_signal_hiMa = (TH1D*)fin->Get(list->At(i)->GetName())->Clone();
+        smalltag = "Wh(50)";
         leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "l");
       }
     }
@@ -176,10 +189,14 @@ void BasicCheckPlots::BasicCheckTemplate(
   //hs_MC->SetLineWidth(3);
   //hs_MC->Sumw2();
   //hs_MC->Scale(scale);
-  
+  h_signal_loMa->Scale(100);  
+  h_signal_hiMa->Scale(100);  
+
   h_Data->Draw("e0");
   hs_MC->Draw("same hist");
   h_Data->Draw("same e0");
+  h_signal_loMa->Draw("same e0");
+  h_signal_hiMa->Draw("same e0");
 
   //hs_MC->Draw("hist");
   //h_Data->Draw("same e0");
