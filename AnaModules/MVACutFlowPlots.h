@@ -232,9 +232,9 @@ void BasicCheckPlots::BasicCheckTemplate(
   zero->SetLineColor(kRed); zero->SetLineWidth(1);
   zero->DrawCopy("same");
 
-  c->SaveAs( target_DIR + TString("/") + hist_tag + TString("_BasicCheck.png") );
-  c->SaveAs( target_DIR + TString("/") + hist_tag + TString("_BasicCheck.pdf") );
-  c->SaveAs( target_DIR + TString("/") + hist_tag + TString("_BasicCheck.C") );
+  c->SaveAs( target_DIR + TString("/") + hist_tag + TString("BasicCheck.png") );
+  c->SaveAs( target_DIR + TString("/") + hist_tag + TString("BasicCheck.pdf") );
+  c->SaveAs( target_DIR + TString("/") + hist_tag + TString("BasicCheck.C") );
 }
 
 struct Plotting_Parameter
