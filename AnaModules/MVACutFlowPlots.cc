@@ -59,9 +59,11 @@ int main(int argc, char* argv[])
                                          (*iter_p).max 
                                         );
   }
-
-  myPlotting_Paramete.clear();
   
+  myPlotting_Paramete.clear();
+
+  myBasicCheckPlots.SensitivityMap();
+ 
   return 0;
 }
 

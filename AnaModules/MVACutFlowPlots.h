@@ -4,11 +4,13 @@
 #include <cstring>
 #include <sstream>
 #include <stdlib.h>
+#include <utility>      // std::pair, std::make_pair
 
 #include "TFile.h"
 #include "TList.h"
 #include "TString.h"
 #include "TH1D.h"
+#include "TH2D.h"
 #include "TCanvas.h"
 #include "TPad.h"
 #include "TLegend.h"
@@ -64,6 +66,7 @@ class BasicCheckPlots
                           double min,
                           double max
                          );
+  void SensitivityMap();
 };
 
 void BasicCheckPlots::Initialization(std::string trainmode, std::string dir)
@@ -256,6 +259,117 @@ void BasicCheckPlots::BasicCheckTemplate(
   c->SaveAs( target_DIR + TString("/") + hist_tag + TrainMode + TString("_BasicCheck.png") );
   c->SaveAs( target_DIR + TString("/") + hist_tag + TrainMode + TString("_BasicCheck.pdf") );
   c->SaveAs( target_DIR + TString("/") + hist_tag + TrainMode + TString("_BasicCheck.C") );
+}
+
+void BasicCheckPlots::SensitivityMap()
+{
+  std::vector< std::pair<std::string, TH1D*> > SGHistsVec;
+  THStack * hs_MC = new THStack("hs_MC","");
+
+  std::string smalltag;
+  int NHist = list->GetSize();
+
+  for(int i  = 0 ; i < NHist ; i++)
+  {
+    if( TString(list->At(i)->GetName()).Contains( "_n_" ) )
+    {
+      if     ( TString(list->At(i)->GetName()).Contains( "_SGMC_Wh12" ) )
+      { 
+        SGHistsVec.push_back( std::make_pair( std::string("Wh(12)" ), (TH1D*)fin->Get(list->At(i)->GetName())->Clone() ) );
+      }
+      else if( TString(list->At(i)->GetName()).Contains( "_SGMC_Wh15" ) )
+      { 
+        SGHistsVec.push_back( std::make_pair( std::string("Wh(20)" ), (TH1D*)fin->Get(list->At(i)->GetName())->Clone() ) );
+      }
+      else if( TString(list->At(i)->GetName()).Contains( "_SGMC_Wh20" ) )
+      {
+        SGHistsVec.push_back( std::make_pair( std::string("Wh(20)" ), (TH1D*)fin->Get(list->At(i)->GetName())->Clone() ) );
+      }
+      else if( TString(list->At(i)->GetName()).Contains( "_SGMC_Wh25" ) )
+      {
+        SGHistsVec.push_back( std::make_pair( std::string("Wh(25)" ), (TH1D*)fin->Get(list->At(i)->GetName())->Clone() ) );
+      }
+      else if( TString(list->At(i)->GetName()).Contains( "_SGMC_Wh30" ) )
+      {
+        SGHistsVec.push_back( std::make_pair( std::string("Wh(30)" ), (TH1D*)fin->Get(list->At(i)->GetName())->Clone() ) );
+      }
+      else if( TString(list->At(i)->GetName()).Contains( "_SGMC_Wh40" ) )
+      {
+        SGHistsVec.push_back( std::make_pair( std::string("Wh(40)" ), (TH1D*)fin->Get(list->At(i)->GetName())->Clone() ) );
+      }
+      else if( TString(list->At(i)->GetName()).Contains( "_SGMC_Wh50" ) )
+      {
+        SGHistsVec.push_back( std::make_pair( std::string("Wh(50)" ), (TH1D*)fin->Get(list->At(i)->GetName())->Clone() ) );
+      }
+      else if( TString(list->At(i)->GetName()).Contains( "_SGMC_Wh60" ) )
+      {
+        SGHistsVec.push_back( std::make_pair( std::string("Wh(60)" ), (TH1D*)fin->Get(list->At(i)->GetName())->Clone() ) );
+      }
+    }
+    if( TString(list->At(i)->GetName()).Contains( "_n_" ) )
+    {
+      if( TString(list->At(i)->GetName()).Contains( "_BGMC" ) )
+      {
+        hs_MC->Add( (TH1D*)fin->Get(list->At(i)->GetName()) );
+      }
+    }
+    else
+      continue;
+  }
+
+  TCanvas *c = new TCanvas("c","A Simple Graph Example",200,10,700,500); 
+  gStyle->SetOptStat(0);
+
+  const static int nsigs = 8;
+  const static int ncuts = 8;
+  const char *sigschar[nsigs] = {"Wh12", "Wh15", "Wh20", "Wh25", "Wh30", "Wh40", "Wh50", "Wh60"};
+  const char *cutschar[ncuts] = {"Cut0", "Cut1", "Cut2", "Cut3", "Cut4", "Cut5", "Cut6", "Cut7"};
+  float sensitivity[nsigs][ncuts] = {{0}};
+  TH2D * SSScan = new TH2D("hSSScan", "", nsigs, 0, nsigs, ncuts, 0, ncuts);
+  /*
+  float bg[ncuts] = {0};
+  for ( int j = 1; j <= ncuts; j++ )
+  {
+    bg[j-1] = ((TH1*)(hs_MC->GetStack()->Last()))->GetBinContent(j);
+    //float thisbg = ((TH1*)(hs_MC->GetStack()->Last()))->GetBinContent(j);
+    std::cout << "BG sum: " << bg[j-1] << std::endl;
+  }
+
+  for ( int i = 1; i <= nsigs; i++ )
+  {
+    for ( int j = 1; j <= ncuts; j++ )
+    {
+      float thissg = (SGHistsVec.at(i-1).second)->GetBinContent(j);
+      float thisbg = bg[j-1];
+      //std::cout << SGHistsVec.at(i-1).first << "," << thissg << ", BG, "<< thisbg << ", Sensitivity: " << thissg / std::sqrt(thissg + thisbg) << std::endl;
+      sensitivity[i-1][j-1] = thissg / std::sqrt(thissg + thisbg);
+      std::cout << SGHistsVec.at(i-1).first << "," << thissg << ", BG, "<< thisbg << ", Sensitivity: " << sensitivity[i-1][j-1] << std::endl;
+    }
+  }
+  */
+  for ( int i = 1; i <= nsigs; i++ )
+  {
+    for ( int j = 1; j <= ncuts; j++ )
+    {
+      float thissg = (SGHistsVec.at(i-1).second)->GetBinContent(j);
+      float thisbg = ((TH1*)(hs_MC->GetStack()->Last()))->GetBinContent(j);
+      SSScan->Fill( sigschar[i-1], cutschar[j-1], thissg / std::sqrt(thissg + thisbg) );
+      //SSScan->SetBinContent( i, j, thissg / std::sqrt(thissg + thisbg) );
+      //std::cout << SGHistsVec.at(i-1).first << "," << thissg << ", BG, "<< thisbg << ", Sensitivity: " << thissg / std::sqrt(thissg + thisbg) << std::endl;
+    }
+  }
+
+  SSScan->Draw("colz text");
+  //const std::string titre="CMS Preliminary 2015, "+ lumi_str + " fb^{-1}, #sqrt{s} = 13 TeV";
+  //const std::string titre="CMS Preliminary 2017, 35.9 fb^{-1}, #sqrt{s} = 13 TeV";
+  //TLatex *title = new TLatex(0.09770115,0.9194915,titre.c_str());
+  //title->SetNDC();
+  //title->SetTextSize(0.045);
+  //title->Draw("same");
+  
+  c->SaveAs( target_DIR + TString("/") + TrainMode + TString("_SSScan.png") );
+  c->SaveAs( target_DIR + TString("/") + TrainMode + TString("_SSScan.pdf") );
+  c->SaveAs( target_DIR + TString("/") + TrainMode + TString("_SSScan.C") );
 }
 
 struct Plotting_Parameter
