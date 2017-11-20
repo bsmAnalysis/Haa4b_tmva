@@ -326,6 +326,7 @@ void BasicCheckPlots::SensitivityMap()
   const char *cutschar[ncuts] = {"Cut0", "Cut1", "Cut2", "Cut3", "Cut4", "Cut5", "Cut6", "Cut7"};
   float sensitivity[nsigs][ncuts] = {{0}};
   TH2D * SSScan = new TH2D("hSSScan", "", nsigs, 0, nsigs, ncuts, 0, ncuts);
+  SSScan->SetTitle( (TrainMode + " Sensitivity Scan").c_str() );
   /*
   float bg[ncuts] = {0};
   for ( int j = 1; j <= ncuts; j++ )
