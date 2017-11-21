@@ -66,7 +66,7 @@ class BasicCheckPlots
                           double min,
                           double max
                          );
-  void SensitivityMap();
+  void SensitivityMap( int bit );
 };
 
 void BasicCheckPlots::Initialization(std::string trainmode, std::string dir)
@@ -261,7 +261,7 @@ void BasicCheckPlots::BasicCheckTemplate(
   c->SaveAs( target_DIR + TString("/") + hist_tag + TrainMode + TString("_BasicCheck.C") );
 }
 
-void BasicCheckPlots::SensitivityMap()
+void BasicCheckPlots::SensitivityMap( int bit )
 {
   std::vector< std::pair<std::string, TH1D*> > SGHistsVec;
   THStack * hs_MC = new THStack("hs_MC","");
@@ -317,6 +317,13 @@ void BasicCheckPlots::SensitivityMap()
       continue;
   }
 
+  std::vector<std::string> BitTagMapVec =
+  {
+    "Sensitivity", //bit 0
+    "nSignal", //bit 1
+    "nBackground", //bit 2
+  };
+
   TCanvas *c = new TCanvas("c","A Simple Graph Example",200,10,700,500); 
   gStyle->SetOptStat(0);
 
@@ -324,10 +331,10 @@ void BasicCheckPlots::SensitivityMap()
   const static int ncuts = 8;
   const char *sigschar[nsigs] = {"Wh12", "Wh15", "Wh20", "Wh25", "Wh30", "Wh40", "Wh50", "Wh60"};
   const char *cutschar[ncuts] = {"Cut0", "Cut1", "Cut2", "Cut3", "Cut4", "Cut5", "Cut6", "Cut7"};
-  float sensitivity[nsigs][ncuts] = {{0}};
   TH2D * SSScan = new TH2D("hSSScan", "", nsigs, 0, nsigs, ncuts, 0, ncuts);
-  SSScan->SetTitle( (TrainMode + " Sensitivity Scan").c_str() );
+  SSScan->SetTitle( (TrainMode + " " + BitTagMapVec.at(bit) + " Scan").c_str() );
   /*
+  float sensitivity[nsigs][ncuts] = {{0}};
   float bg[ncuts] = {0};
   for ( int j = 1; j <= ncuts; j++ )
   {
@@ -354,7 +361,9 @@ void BasicCheckPlots::SensitivityMap()
     {
       float thissg = (SGHistsVec.at(i-1).second)->GetBinContent(j);
       float thisbg = ((TH1*)(hs_MC->GetStack()->Last()))->GetBinContent(j);
-      SSScan->Fill( sigschar[i-1], cutschar[j-1], thissg / std::sqrt(thissg + thisbg) );
+      if      ( bit == 0) SSScan->Fill( sigschar[i-1], cutschar[j-1], thissg / std::sqrt(thissg + thisbg) );
+      else if ( bit == 1) SSScan->Fill( sigschar[i-1], cutschar[j-1], thissg );
+      else if ( bit == 2) SSScan->Fill( sigschar[i-1], cutschar[j-1], thisbg );
       //SSScan->SetBinContent( i, j, thissg / std::sqrt(thissg + thisbg) );
       //std::cout << SGHistsVec.at(i-1).first << "," << thissg << ", BG, "<< thisbg << ", Sensitivity: " << thissg / std::sqrt(thissg + thisbg) << std::endl;
     }
@@ -368,9 +377,9 @@ void BasicCheckPlots::SensitivityMap()
   //title->SetTextSize(0.045);
   //title->Draw("same");
   
-  c->SaveAs( target_DIR + TString("/") + TrainMode + TString("_SSScan.png") );
-  c->SaveAs( target_DIR + TString("/") + TrainMode + TString("_SSScan.pdf") );
-  c->SaveAs( target_DIR + TString("/") + TrainMode + TString("_SSScan.C") );
+  c->SaveAs( target_DIR + TString("/") + TrainMode + BitTagMapVec.at(bit) + TString("_SSScan.png") );
+  c->SaveAs( target_DIR + TString("/") + TrainMode + BitTagMapVec.at(bit) + TString("_SSScan.pdf") );
+  c->SaveAs( target_DIR + TString("/") + TrainMode + BitTagMapVec.at(bit) + TString("_SSScan.C") );
 }
 
 struct Plotting_Parameter

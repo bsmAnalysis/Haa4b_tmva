@@ -62,8 +62,9 @@ int main(int argc, char* argv[])
   
   myPlotting_Paramete.clear();
 
-  myBasicCheckPlots.SensitivityMap();
- 
+  myBasicCheckPlots.SensitivityMap(0);
+  myBasicCheckPlots.SensitivityMap(1);
+  myBasicCheckPlots.SensitivityMap(2);
   return 0;
 }
 
