@@ -135,11 +135,11 @@ int main(int argc, char* argv[])
               //(myMVACutFlowHist.h_b_n_SGMC[ih])->Fill( j, 1.0 );
             }
           }
-          else
-          { 
-            (myMVACutFlowHist.h_b_n_SGMC[ih])->Fill( 0.0, weight * ls );
+          //else
+          //{ 
+            //(myMVACutFlowHist.h_b_n_SGMC[ih])->Fill( 0.0, weight * ls );
             //(myMVACutFlowHist.h_b_n_SGMC[ih])->Fill( 0.0, 1.0 );
-          }
+          //}
         }
         /*
         if ( ievt < 20 )
@@ -179,7 +179,7 @@ int main(int argc, char* argv[])
     myBGSampleWeight.QCDSampleInfo_push_back( "_WWZ_"                 ,            0.1651, 235734 - 14266, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
     myBGSampleWeight.QCDSampleInfo_push_back( "_WZZ_"                 ,           0.05565, 231583 - 15217, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
     myBGSampleWeight.QCDSampleInfo_push_back( "_ZZZ_"                 ,           0.01398, 231217 - 18020, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
-    myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt50To80_EMEnr_"  ,    19800000*0.146, 23474171 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
+    //myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt50To80_EMEnr_"  ,    19800000*0.146, 23474171 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
     myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt80To120_EMEnr_" ,     2800000*0.125, 35841783 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
     myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt120To170_EMEnr_",      477000*0.132, 35817281 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
     myBGSampleWeight.QCDSampleInfo_push_back( "_QCD_Pt170To300_EMEnr_",      114000*0.165, 11540163 - 0, LumiScale, 1, "FileList/MVABGMCFileList.txt", TrainMode );
@@ -265,10 +265,10 @@ int main(int argc, char* argv[])
               (myMVACutFlowHist.h_b_n_BGMC[ih])->Fill( j, weight * ls );
             }
           }
-          else 
-          { 
-            (myMVACutFlowHist.h_b_n_BGMC[ih])->Fill( 0.0, weight * ls );
-          }
+          //else 
+          //{ 
+            //(myMVACutFlowHist.h_b_n_BGMC[ih])->Fill( 0.0, weight * ls );
+          //}
         }
         /*
         if ( ievt < 20 )
@@ -349,11 +349,11 @@ int main(int argc, char* argv[])
             //(myMVACutFlowHist.h_b_n_Data)->Fill( j, 1 );
           }
         }
-        else 
-        { 
-          (myMVACutFlowHist.h_b_n_Data)->Fill( 0.0, weight * ls );
+        //else 
+        //{ 
+          //(myMVACutFlowHist.h_b_n_Data)->Fill( 0.0, weight * ls );
           //(myMVACutFlowHist.h_b_n_Data)->Fill( 0.0, 1 );
-        }
+        //}
         /*
         if ( ievt < 20 )
         {

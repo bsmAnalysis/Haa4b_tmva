@@ -82,7 +82,7 @@ class TMVATrainer
   //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_QCD_Pt20To30_EMEnr_2016.root"      ), 1.0), //0 events, co3b, co4b
   //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_QCD_Pt30To50_EMEnr_2016.root"      ), 1.0), //0 events, co3b, co4b
   //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_QCD_Pt30To50_EMEnr_ext1_2016.root" ), 1.0), //0 events, co3b, co4b
-  std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_QCD_Pt50To80_EMEnr_2016.root"      ), 4416.95),
+  //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_QCD_Pt50To80_EMEnr_2016.root"      ), 4416.95),
   std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_QCD_Pt80To120_EMEnr_2016.root"     ), 350.246),
   std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_QCD_Pt120To170_EMEnr_2016.root"    ), 63.0513),
   std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_QCD_Pt170To300_EMEnr_2016.root"    ), 58.4617),
