@@ -35,7 +35,8 @@ int main(int argc, char* argv[])
   myMVAOutPlots.Initialization(TrainMode, DirName);
 
 
-  myMVAOutPlots.CorrPlots();
+  myMVAOutPlots.CorrPlots("S");
+  myMVAOutPlots.CorrPlots("B");
   myMVAOutPlots.ROCPlots();
   myMVAOutPlots.BDTSBComparePlots("MVA_BDT_");
   myMVAOutPlots.BDTSBComparePlots("MVA_BDT_eff");

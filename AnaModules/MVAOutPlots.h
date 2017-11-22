@@ -27,7 +27,7 @@ class MVAOutPlots
   TFile * fin;
 
   void Initialization(std::string trainmode, std::string dir); 
-  void CorrPlots();
+  void CorrPlots( std::string histtag );
   void ROCPlots();
   void BDTSBComparePlots( std::string histtag );
 };
@@ -42,22 +42,28 @@ void MVAOutPlots::Initialization(std::string trainmode, std::string dir)
   fin = TFile::Open( (din + "MVATrainTestOut" + TrainMode + ".root").c_str() );
 }
 
-void MVAOutPlots::CorrPlots()
+void MVAOutPlots::CorrPlots( std::string histtag )
 {
-  //TH2F *corrSG = (TH2F*)fin->Get("dataset/CorrelationMatrixS");
-  //corrSG->Draw("TEXT COLZ");
-
-  //TH2F *corrBG = (TH2F*)fin->Get("dataset/CorrelationMatrixB");
-  //corrBG->Draw("TEXT COLZ");
+  TCanvas *c = new TCanvas("c","A Simple Graph Example",200,10,700,500);
+  gStyle->SetOptStat(0);
+  TH2F *corr = (TH2F*)fin->Get( ("dataset/CorrelationMatrix" + histtag).c_str() );
+  corr->Draw("TEXT COLZ");
+  c->SaveAs( target_DIR + TString("/") + TrainMode + histtag + TString("corr_MVAOut.png") );
+  c->SaveAs( target_DIR + TString("/") + TrainMode + histtag + TString("corr_MVAOut.pdf") );
+  c->SaveAs( target_DIR + TString("/") + TrainMode + histtag + TString("corr_MVAOut.C") );
   return ;
 }
 
 void MVAOutPlots::ROCPlots()
 {
-  //TH1D *ROC = (TH1D*)fin->Get("dataset/Method_BDT/BDT/MVA_BDT_rejBvsS");
-  //ROC->SetTitle("Trib ROC");
-  //ROC->SetTitle("Quab ROC");
-  //ROC->Draw();
+  TCanvas *c = new TCanvas("c","A Simple Graph Example",200,10,700,500);
+  gStyle->SetOptStat(0);
+  TH1D *ROC = (TH1D*)fin->Get("dataset/Method_BDT/BDT/MVA_BDT_rejBvsS");
+  ROC->SetTitle( (TrainMode + " ROC").c_str() );
+  ROC->Draw();
+  c->SaveAs( target_DIR + TString("/") + TrainMode + TString("ROC_MVAOut.png") );
+  c->SaveAs( target_DIR + TString("/") + TrainMode + TString("ROC_MVAOut.pdf") );
+  c->SaveAs( target_DIR + TString("/") + TrainMode + TString("ROC_MVAOut.C") );
   return ;
 }
 
