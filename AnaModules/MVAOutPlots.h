@@ -38,7 +38,8 @@ void MVAOutPlots::Initialization(std::string trainmode, std::string dir)
   target_DIR = dir;
   system( ("mkdir " + target_DIR).c_str() );
 
-  std::string din = "/afs/cern.ch/user/h/hua/workarea/Haa4b/TrainRes/20171116/";
+  //std::string din = "/afs/cern.ch/user/h/hua/workarea/Haa4b/TrainRes/20171116/";
+  std::string din = "/afs/cern.ch/user/h/hua/workarea/Haa4b/TrainRes/20171121/";
   fin = TFile::Open( (din + "MVATrainTestOut" + TrainMode + ".root").c_str() );
 }
 
