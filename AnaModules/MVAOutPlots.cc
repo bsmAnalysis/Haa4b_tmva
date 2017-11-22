@@ -33,9 +33,14 @@ int main(int argc, char* argv[])
 
   MVAOutPlots myMVAOutPlots;
   myMVAOutPlots.Initialization(TrainMode, DirName);
-  myMVAOutPlots.SensitivityMap(0);
-  myMVAOutPlots.SensitivityMap(1);
-  myMVAOutPlots.SensitivityMap(2);
+
+
+  myMVAOutPlots.CorrPlots();
+  myMVAOutPlots.ROCPlots();
+  myMVAOutPlots.BDTSBComparePlots("MVA_BDT_");
+  myMVAOutPlots.BDTSBComparePlots("MVA_BDT_eff");
+  myMVAOutPlots.BDTSBComparePlots("MVA_BDT_Train_");
+  myMVAOutPlots.BDTSBComparePlots("MVA_BDT_trainingEff");
   return 0;
 }
 

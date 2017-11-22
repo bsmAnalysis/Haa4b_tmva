@@ -11,39 +11,12 @@
 #include "TString.h"
 #include "TH1D.h"
 #include "TH2D.h"
+#include "TH2F.h"
 #include "TCanvas.h"
 #include "TPad.h"
 #include "TLegend.h"
 #include "TLatex.h"
 #include "TStyle.h"
-
-
-TH1D* merge_hist_list(const TList& hists)
-{
-  TIter next(hists.MakeIterator());
-  TH1D* hist = NULL;
-  TH1D* res = NULL;
-  int icount = 0;
-  while ((hist = (TH1D*) next()))
-  {
-    if(icount == 0)
-    {
-      res = (TH1D*) hist->Clone("my_all");
-      icount++;
-    }
-    else
-    {
-      res->Add(hist);
-    }
-  }
-  return res;
-}
-
-TH1D* merge_stack(const THStack& stack)
-{
-  TList* hists = stack.GetHists();
-  return merge_hist_list(*hists);
-}
 
 class MVAOutPlots
 {
@@ -52,14 +25,11 @@ class MVAOutPlots
   std::string target_DIR;
 
   TFile * fin;
-  TList * list;
-
-  std::string lumi_str;  
-
-  double scale = 1;
 
   void Initialization(std::string trainmode, std::string dir); 
-  void SensitivityMap( int bit );
+  void CorrPlots();
+  void ROCPlots();
+  void BDTSBComparePlots( std::string histtag );
 };
 
 void MVAOutPlots::Initialization(std::string trainmode, std::string dir)
@@ -70,48 +40,41 @@ void MVAOutPlots::Initialization(std::string trainmode, std::string dir)
 
   std::string din = "/afs/cern.ch/user/h/hua/workarea/Haa4b/TrainRes/20171116/";
   fin = TFile::Open( (din + "MVATrainTestOut" + TrainMode + ".root").c_str() );
-
-  //fin = TFile::Open("OutDir/MVACutFlowTribMVA.root");
-  //fin = TFile::Open("OutDir/MVACutFlowQuabMVA.root");
-
-  list = fin->GetListOfKeys();
 }
 
-void MVAOutPlots::SensitivityMap( int bit )
+void MVAOutPlots::CorrPlots()
 {
-  TCanvas *c = new TCanvas("c","A Simple Graph Example",200,10,700,500);
-  gStyle->SetOptStat(0);
-
   //TH2F *corrSG = (TH2F*)fin->Get("dataset/CorrelationMatrixS");
   //corrSG->Draw("TEXT COLZ");
 
   //TH2F *corrBG = (TH2F*)fin->Get("dataset/CorrelationMatrixB");
   //corrBG->Draw("TEXT COLZ");
+  return ;
+}
 
+void MVAOutPlots::ROCPlots()
+{
   //TH1D *ROC = (TH1D*)fin->Get("dataset/Method_BDT/BDT/MVA_BDT_rejBvsS");
   //ROC->SetTitle("Trib ROC");
   //ROC->SetTitle("Quab ROC");
   //ROC->Draw();
+  return ;
+}
 
-  //TH1D *sgBDT = (TH1D*)fin->Get("dataset/Method_BDT/BDT/MVA_BDT_S");
-  //TH1D *bgBDT = (TH1D*)fin->Get("dataset/Method_BDT/BDT/MVA_BDT_B");
+void MVAOutPlots::BDTSBComparePlots( std::string histtag )
+{
+  TCanvas *c = new TCanvas("c","A Simple Graph Example",200,10,700,500);
+  gStyle->SetOptStat(0);
 
-  TH1D *sgBDT = (TH1D*)fin->Get("dataset/Method_BDT/BDT/MVA_BDT_effS");
-  TH1D *bgBDT = (TH1D*)fin->Get("dataset/Method_BDT/BDT/MVA_BDT_effB");
+  TH1D *sgBDT = (TH1D*)fin->Get( ("dataset/Method_BDT/BDT/" + histtag + "S").c_str() );
+  TH1D *bgBDT = (TH1D*)fin->Get( ("dataset/Method_BDT/BDT/" + histtag + "B").c_str() );
 
   sgBDT->SetLineColor(1); bgBDT->SetLineColor(2);
   sgBDT->SetMarkerColor(1); bgBDT->SetMarkerColor(2);
   sgBDT->SetMarkerStyle(20); bgBDT->SetMarkerStyle(21);
 
-  //sgBDT->SetTitle("Triple b-jets BDT");
-  //bgBDT->SetTitle("Triple b-jets BDT");
-  //sgBDT->SetTitle("Quadruple b-jets BDT");
-  //bgBDT->SetTitle("Quadruple b-jets BDT");
-
-  //sgBDT->SetTitle("Triple b-jets Eff");
-  //bgBDT->SetTitle("Triple b-jets Eff");
-  sgBDT->SetTitle("Quadruple b-jets Eff");
-  bgBDT->SetTitle("Quadruple b-jets Eff");
+  sgBDT->SetTitle( (TrainMode + "_" + histtag).c_str() );
+  bgBDT->SetTitle( (TrainMode + "_" + histtag).c_str() );
   
   sgBDT->Draw();
   bgBDT->Draw("same");
@@ -127,7 +90,8 @@ void MVAOutPlots::SensitivityMap( int bit )
   leg->AddEntry(bgBDT,"Background");
   leg->Draw("same");
 
-  c->SaveAs( target_DIR + TString("/") + TrainMode + TString("_MVAOut.png") );
-  c->SaveAs( target_DIR + TString("/") + TrainMode + TString("_MVAOut.pdf") );
-  c->SaveAs( target_DIR + TString("/") + TrainMode + TString("_MVAOut.C") );
+  c->SaveAs( target_DIR + TString("/") + TrainMode + histtag + TString("_MVAOut.png") );
+  c->SaveAs( target_DIR + TString("/") + TrainMode + histtag + TString("_MVAOut.pdf") );
+  c->SaveAs( target_DIR + TString("/") + TrainMode + histtag + TString("_MVAOut.C") );
+  return ;
 }
