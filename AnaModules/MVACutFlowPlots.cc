@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 
   if (argc < 1)
   {
-    std::cerr <<"Please give at least 1 argument " << "TargetDirName" << std::endl;
+    std::cerr <<"Please give at least 2 arguments " << "TrainMode TargetDirName" << std::endl;
     std::cerr <<" Valid configurations are " << std::endl;
     std::cerr <<" ./MVACutFlowPlots TribMVA Test" << std::endl;
     return -1;
@@ -31,8 +31,8 @@ int main(int argc, char* argv[])
   std::string TrainMode = argv[1];
   std::string DirName = argv[2];
 
-  BasicCheckPlots myBasicCheckPlots;
-  myBasicCheckPlots.Initialization(TrainMode, DirName);
+  MVACutFlowPlots myMVACutFlowPlots;
+  myMVACutFlowPlots.Initialization(TrainMode, DirName);
   //initialize the closure plots parameter we want to investigate
   std::vector<Plotting_Parameter> myPlotting_Paramete = 
   { 
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 
   for( iter_p = myPlotting_Paramete.begin() ; iter_p != myPlotting_Paramete.end() ; iter_p ++)
   {
-    myBasicCheckPlots.BasicCheckTemplate(
+    myMVACutFlowPlots.BasicCheckTemplate(
                                          (*iter_p).hist_tag,
                                          (*iter_p).XTitle,
                                          (*iter_p).min,
@@ -62,9 +62,9 @@ int main(int argc, char* argv[])
   
   myPlotting_Paramete.clear();
 
-  myBasicCheckPlots.SensitivityMap(0);
-  myBasicCheckPlots.SensitivityMap(1);
-  myBasicCheckPlots.SensitivityMap(2);
+  myMVACutFlowPlots.SensitivityMap(0);
+  myMVACutFlowPlots.SensitivityMap(1);
+  myMVACutFlowPlots.SensitivityMap(2);
   return 0;
 }
 

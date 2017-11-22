@@ -45,7 +45,7 @@ TH1D* merge_stack(const THStack& stack)
   return merge_hist_list(*hists);
 }
 
-class BasicCheckPlots
+class MVACutFlowPlots
 {
  public:
   std::string TrainMode;
@@ -69,7 +69,7 @@ class BasicCheckPlots
   void SensitivityMap( int bit );
 };
 
-void BasicCheckPlots::Initialization(std::string trainmode, std::string dir)
+void MVACutFlowPlots::Initialization(std::string trainmode, std::string dir)
 {
   TrainMode = trainmode;
   target_DIR = dir;
@@ -88,7 +88,7 @@ void BasicCheckPlots::Initialization(std::string trainmode, std::string dir)
   lumi_str = strs.str();
 }
 
-void BasicCheckPlots::PrintPlotsName()
+void MVACutFlowPlots::PrintPlotsName()
 {
   for(int i  = 0 ; i < list->GetSize() ; i++)
   {
@@ -98,7 +98,7 @@ void BasicCheckPlots::PrintPlotsName()
   return ;
 }
 
-void BasicCheckPlots::BasicCheckTemplate(
+void MVACutFlowPlots::BasicCheckTemplate(
                                          TString hist_tag,
                                          TString XTitle,
                                          double min,
@@ -261,7 +261,7 @@ void BasicCheckPlots::BasicCheckTemplate(
   c->SaveAs( target_DIR + TString("/") + hist_tag + TrainMode + TString("_BasicCheck.C") );
 }
 
-void BasicCheckPlots::SensitivityMap( int bit )
+void MVACutFlowPlots::SensitivityMap( int bit )
 {
   std::vector< std::pair<std::string, TH1D*> > SGHistsVec;
   THStack * hs_MC = new THStack("hs_MC","");
