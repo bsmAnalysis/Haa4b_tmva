@@ -263,6 +263,7 @@ int main(int argc, char* argv[])
             for ( int j = lobin; j <= hibin ; j++ )
             {
               (myMVACutFlowHist.h_b_n_BGMC[ih])->Fill( j, weight * ls );
+              weight >= 0 ? (myMVACutFlowHist.h_b_posW_BGMC[ih])->Fill( j, weight * ls ) : (myMVACutFlowHist.h_b_negW_BGMC[ih])->Fill( j, -weight * ls );
             }
           }
           //else 

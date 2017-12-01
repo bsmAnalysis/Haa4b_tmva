@@ -63,8 +63,8 @@ class MVACutFlowPlots
   void BasicCheckTemplate(
                           TString hist_tag,
                           TString XTitle,
-                          double min,
-                          double max
+                          double min, double max,
+                          bool sgMC, bool bgMC, bool Data
                          );
   void SensitivityMap( int bit );
 };
@@ -101,8 +101,8 @@ void MVACutFlowPlots::PrintPlotsName()
 void MVACutFlowPlots::BasicCheckTemplate(
                                          TString hist_tag,
                                          TString XTitle,
-                                         double min,
-                                         double max
+                                         double min, double max,
+                                         bool sgMC, bool bgMC, bool Data
                                         )
 { 
   TH1D * h_Data;
@@ -163,6 +163,18 @@ void MVACutFlowPlots::BasicCheckTemplate(
 
   TCanvas *c = new TCanvas("c","A Simple Graph Example",200,10,700,500); 
   gStyle->SetOptStat(0);
+  if ( !sgMC && bgMC && !Data )
+  {
+    //hs_MC->GetXaxis()->SetLimits(min, max);
+    //hs_MC->GetXaxis()->SetRangeUser(min,max);
+    //hs_MC->GetXaxis()->SetTitle(XTitle);
+    hs_MC->Draw("text hist");
+    leg->Draw("same");
+    c->SaveAs( target_DIR + TString("/") + hist_tag + TrainMode + TString("_BasicCheck.png") );
+    c->SaveAs( target_DIR + TString("/") + hist_tag + TrainMode + TString("_BasicCheck.pdf") );
+    c->SaveAs( target_DIR + TString("/") + hist_tag + TrainMode + TString("_BasicCheck.C") );
+    return ;
+  }
 
   TPad *pad = (TPad*) c->GetPad(0); 
   pad->Clear();
@@ -388,4 +400,7 @@ struct Plotting_Parameter
   TString XTitle;
   double min;
   double max;
+  bool sgMC; 
+  bool bgMC; 
+  bool Data;
 };

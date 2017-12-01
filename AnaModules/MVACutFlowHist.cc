@@ -63,6 +63,9 @@ void MVACutFlowHist::BookHistgram(const char *outFileName)
 
     h_b_BDT_BGMC[i] = new TH1F( ("h_b_BDT_BGMC_" + smalltag).c_str(),"",100,-0.5,0.5);
     h_b_n_BGMC[i] = new TH1F( ("h_b_n_BGMC_" + smalltag).c_str(),"",MVACutFlowBin+1,0,MVACutFlowBin+1);
+    //check negative weight
+    h_b_negW_BGMC[i] = new TH1F( ("h_b_negW_BGMC_" + smalltag).c_str(),"",MVACutFlowBin+1,0,MVACutFlowBin+1);
+    h_b_posW_BGMC[i] = new TH1F( ("h_b_posW_BGMC_" + smalltag).c_str(),"",MVACutFlowBin+1,0,MVACutFlowBin+1);
 
     h_b_WpT_BGMC[i]->SetFillColor(i+2);
     h_b_Hmass_BGMC[i]->SetFillColor(i+2);
@@ -74,6 +77,8 @@ void MVACutFlowHist::BookHistgram(const char *outFileName)
 
     h_b_BDT_BGMC[i]->SetFillColor(i+2);
     h_b_n_BGMC[i]->SetFillColor(i+2);
+    h_b_negW_BGMC[i]->SetFillColor(i+2);
+    h_b_posW_BGMC[i]->SetFillColor(i+2);
 
     h_b_WpT_BGMC[i]->SetLineColor(i+2);
     h_b_Hmass_BGMC[i]->SetLineColor(i+2);
@@ -85,6 +90,8 @@ void MVACutFlowHist::BookHistgram(const char *outFileName)
 
     h_b_BDT_BGMC[i]->SetLineColor(i+2);
     h_b_n_BGMC[i]->SetLineColor(i+2);
+    h_b_negW_BGMC[i]->SetLineColor(i+2);
+    h_b_posW_BGMC[i]->SetLineColor(i+2);
   }
 
   h_b_WpT_Data = new TH1F("h_b_WpT_Data","",200,0,2000);

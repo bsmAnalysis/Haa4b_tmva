@@ -14,7 +14,7 @@ class MVACutFlowHist
   const static int SGBin = 8;
   const static int BGBin = 8;
   const static int MVACutFlowBin = 9;
-  const float mvaCutFlow[MVACutFlowBin] = { 0, 0.05, 0.1, 0.15, 0.175, 0.2, 0.225, 0.25, 0.30 };
+  const float mvaCutFlow[MVACutFlowBin] = { 0, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225};
 
   std::pair<int, int> getHistoBinEdgeFromMVA( float thismva )
   {
@@ -42,6 +42,9 @@ class MVACutFlowHist
   TH1F *h_b_WHdR_BGMC[BGBin];
   TH1F *h_b_BDT_BGMC[BGBin];
   TH1F *h_b_n_BGMC[BGBin];
+
+  //check negative weight in MVA, MC bg
+  TH1F *h_b_negW_BGMC[BGBin], *h_b_posW_BGMC[BGBin];
 
   TH1F *h_b_WpT_Data;
   TH1F *h_b_Hmass_Data, *h_b_HpT_Data, *h_b_bbdRAve_Data, *h_b_bbdMMin_Data, *h_b_HHt_Data;

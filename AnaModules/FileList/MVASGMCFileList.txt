@@ -1,8 +1,8 @@
-root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass12.root
-root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass15.root
-root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass20.root
-root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass25.root
-root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass30.root
-root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass40.root
-root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass50.root
-root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass60.root
+/eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass12.root
+/eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass15.root
+/eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass20.root
+/eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass25.root
+/eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass30.root
+/eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass40.root
+/eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass50.root
+/eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_Wh_amass60.root

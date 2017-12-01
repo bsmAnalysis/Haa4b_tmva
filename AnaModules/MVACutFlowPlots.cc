@@ -37,15 +37,17 @@ int main(int argc, char* argv[])
   std::vector<Plotting_Parameter> myPlotting_Paramete = 
   { 
     //MVA basic check plots
-    {"_WpT_"    , "p_{T}^{W} [GeV]"           ,    0, 400},
-    {"_Hmass_"  , "m_{h} [GeV]"               ,    0, 800}, 
-    {"_HpT_"    , "p_{T}^{h} [GeV]"           ,    0, 400},  
-    {"_bbdRAve_", "#Delta R_{b,b}^{ave}"      ,    0,   5},                                               
-    {"_bbdMMin_", "#Delta m_{b,b}^{min} [GeV]",    0, 400},
-    {"_HHt_"    , "H_{T} [GeV]"               ,    0, 600},
-    {"_WHdR_"   , "#Delta #phi (W,h)"         ,    0, 3.2},
-    {"_BDT_"    , "BDT"                       , -0.5, 0.5},
-    {"_n_"      , "Cut"                       ,    0,   9}
+    {"_WpT_"    , "p_{T}^{W} [GeV]"           ,    0, 400,  true, true,  true},
+    {"_Hmass_"  , "m_{h} [GeV]"               ,    0, 800,  true, true,  true}, 
+    {"_HpT_"    , "p_{T}^{h} [GeV]"           ,    0, 400,  true, true,  true},  
+    {"_bbdRAve_", "#Delta R_{b,b}^{ave}"      ,    0,   5,  true, true,  true},
+    {"_bbdMMin_", "#Delta m_{b,b}^{min} [GeV]",    0, 400,  true, true,  true},
+    {"_HHt_"    , "H_{T} [GeV]"               ,    0, 600,  true, true,  true},
+    {"_WHdR_"   , "#Delta #phi (W,h)"         ,    0, 3.2,  true, true,  true},
+    {"_BDT_"    , "BDT"                       , -0.5, 0.5,  true, true,  true},
+    {"_n_"      , "Cut"                       ,    0,   9,  true, true,  true},
+    {"_negW_"   , "Cut"                       ,    0,   9, false, true, false},
+    {"_posW_"   , "Cut"                       ,    0,   9, false, true, false}
   };
 
   std::vector<Plotting_Parameter>::iterator iter_p;
@@ -55,8 +57,8 @@ int main(int argc, char* argv[])
     myMVACutFlowPlots.BasicCheckTemplate(
                                          (*iter_p).hist_tag,
                                          (*iter_p).XTitle,
-                                         (*iter_p).min,
-                                         (*iter_p).max 
+                                         (*iter_p).min, (*iter_p).max,
+                                         (*iter_p).sgMC, (*iter_p).bgMC, (*iter_p).Data 
                                         );
   }
   
