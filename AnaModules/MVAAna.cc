@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
   else if ( RunMode == "Train" )
   { 
     TMVATrainer myTMVATrainer;
-  
+    myTMVATrainer.GenSGReWeight(TrainMode);
     myTMVATrainer.InitTMVAFactory("MVATrainTestOut" + TrainMode + ".root", "Haa4bSBClassification" + TrainMode);
     myTMVATrainer.SetupMVAFactory(TrainMode);
     myTMVATrainer.TnTstMVAFactory();

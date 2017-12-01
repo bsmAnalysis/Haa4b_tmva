@@ -172,3 +172,26 @@ void TMVATrainer::CloseMVAFactory()
 
   return ;
 }
+
+void TMVATrainer::GenSGReWeight( std::string catName )
+{
+  int nSG = SGfileURLWeightVec.size();
+  float nMCSGSum = 0;
+  for (int i = 0; i < nSG; i++)
+  {
+    TFile f( SGfileURLWeightVec.at(i).first.c_str() );
+    TTree *t = (TTree*)f.Get( catName.c_str() );
+    GenSGReWeightArr[i] = t->GetEntries();
+    nMCSGSum += t->GetEntries();
+    f.Close();
+  }
+  std::cout << "nMCSGSum" << ", "<< nMCSGSum << std::endl;
+
+  for (int i = 0; i < nSG; i++)
+  {
+    GenSGReWeightArr[i] = nMCSGSum/GenSGReWeightArr[i];
+    SGfileURLWeightVec.at(i).second = GenSGReWeightArr[i];
+    std::cout << "SG" << i << ", "<< GenSGReWeightArr[i] << std::endl;
+  }
+  return ;
+}
