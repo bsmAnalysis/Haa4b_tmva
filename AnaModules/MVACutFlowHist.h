@@ -14,7 +14,9 @@ class MVACutFlowHist
   const static int SGBin = 8;
   const static int BGBin = 8;
   const static int MVACutFlowBin = 9;
-  const float mvaCutFlow[MVACutFlowBin] = { 0, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225};
+  //const float mvaCutFlow[MVACutFlowBin] = { -0.2, -0.15, -0.1, -0.05, 0.0, 0.05, 0.1, 0.15, 0.2 };
+  //const float mvaCutFlow[MVACutFlowBin] = { 0, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225 };
+  const float mvaCutFlow[MVACutFlowBin] = { 0.1, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.20 };
 
   std::pair<int, int> getHistoBinEdgeFromMVA( float thismva )
   {

@@ -165,10 +165,14 @@ void MVACutFlowPlots::BasicCheckTemplate(
   gStyle->SetOptStat(0);
   if ( !sgMC && bgMC && !Data )
   {
+    c->SetLogy();
     //hs_MC->GetXaxis()->SetLimits(min, max);
     //hs_MC->GetXaxis()->SetRangeUser(min,max);
     //hs_MC->GetXaxis()->SetTitle(XTitle);
-    hs_MC->Draw("text hist");
+    //hs_MC->Draw("text hist");
+    hs_MC->SetMaximum(100000); hs_MC->SetMinimum(0.001);
+    hs_MC->SetTitle( hist_tag + TrainMode );
+    hs_MC->Draw("nostackb hist");
     leg->Draw("same");
     c->SaveAs( target_DIR + TString("/") + hist_tag + TrainMode + TString("_BasicCheck.png") );
     c->SaveAs( target_DIR + TString("/") + hist_tag + TrainMode + TString("_BasicCheck.pdf") );
