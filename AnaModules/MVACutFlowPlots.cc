@@ -67,6 +67,8 @@ int main(int argc, char* argv[])
   myMVACutFlowPlots.SensitivityMap(0);
   myMVACutFlowPlots.SensitivityMap(1);
   myMVACutFlowPlots.SensitivityMap(2);
+  myMVACutFlowPlots.SensitivityMap(3);
+  myMVACutFlowPlots.SensitivityMap(4);
   return 0;
 }
 

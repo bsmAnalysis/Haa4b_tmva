@@ -47,6 +47,9 @@ TH1D* merge_stack(const THStack& stack)
 
 class MVACutFlowPlots
 {
+ private:
+  float GetBGMCStatUnc( const THStack& stack, int bin );
+
  public:
   std::string TrainMode;
   std::string target_DIR;
@@ -68,6 +71,21 @@ class MVACutFlowPlots
                          );
   void SensitivityMap( int bit );
 };
+
+float MVACutFlowPlots::GetBGMCStatUnc( const THStack& stack, int bin )
+{
+  TList* hists = stack.GetHists();
+  TIter next(hists->MakeIterator());
+  TH1F* hist = NULL;
+  float StatUnc = 0;
+  while ((hist = (TH1F*) next()))
+  {
+    float thisStatUnc = hist->GetBinError( bin );
+    //std::cout << thisStatUnc << std::endl;
+    StatUnc += thisStatUnc * thisStatUnc;
+  }
+  return std::sqrt(StatUnc);
+}
 
 void MVACutFlowPlots::Initialization(std::string trainmode, std::string dir)
 {
@@ -335,9 +353,11 @@ void MVACutFlowPlots::SensitivityMap( int bit )
 
   std::vector<std::string> BitTagMapVec =
   {
-    "Sensitivity", //bit 0
-    "nSignal", //bit 1
-    "nBackground", //bit 2
+    "nSignal", //bit 0
+    "nBackground", //bit 1
+    "naiveSS", //bit 2
+    "nMCStatSS", //bit 3
+    "10SG20BGSS", //bit 4
   };
 
   TCanvas *c = new TCanvas("c","A Simple Graph Example",200,10,700,500); 
@@ -377,9 +397,16 @@ void MVACutFlowPlots::SensitivityMap( int bit )
     {
       float thissg = (SGHistsVec.at(i-1).second)->GetBinContent(j);
       float thisbg = ((TH1*)(hs_MC->GetStack()->Last()))->GetBinContent(j);
-      if      ( bit == 0) SSScan->Fill( sigschar[i-1], cutschar[j-1], thissg / std::sqrt(thissg + thisbg) );
-      else if ( bit == 1) SSScan->Fill( sigschar[i-1], cutschar[j-1], thissg );
-      else if ( bit == 2) SSScan->Fill( sigschar[i-1], cutschar[j-1], thisbg );
+      float thisbgStatUnc = GetBGMCStatUnc( *hs_MC, j );
+      //std::cout << "bg: " << thisbg << ", bgStatUnc: " << thisbgStatUnc << std::endl;
+      float thisss_1 = thissg / std::sqrt( thissg + thisbg );
+      float thisss_2 = thissg / std::sqrt( std::pow(thisbgStatUnc, 2) );
+      float thisss_3 = thissg / std::sqrt( thissg + thisbg + std::pow(0.1*thisbg, 2) + std::pow(0.2*thisbg, 2) );
+      if      ( bit == 0) SSScan->Fill( sigschar[i-1], cutschar[j-1], thissg );
+      else if ( bit == 1) SSScan->Fill( sigschar[i-1], cutschar[j-1], thisbg );
+      else if ( bit == 2) SSScan->Fill( sigschar[i-1], cutschar[j-1], thisss_1 );
+      else if ( bit == 3) SSScan->Fill( sigschar[i-1], cutschar[j-1], thisss_2 );
+      else if ( bit == 4) SSScan->Fill( sigschar[i-1], cutschar[j-1], thisss_3 );
       //SSScan->SetBinContent( i, j, thissg / std::sqrt(thissg + thisbg) );
       //std::cout << SGHistsVec.at(i-1).first << "," << thissg << ", BG, "<< thisbg << ", Sensitivity: " << thissg / std::sqrt(thissg + thisbg) << std::endl;
     }
