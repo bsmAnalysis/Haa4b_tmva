@@ -353,11 +353,13 @@ void MVACutFlowPlots::SensitivityMap( int bit )
 
   std::vector<std::string> BitTagMapVec =
   {
-    "nSignal", //bit 0
-    "nBackground", //bit 1
-    "naiveSS", //bit 2
-    "nMCStatSS", //bit 3
-    "10SG20BGSS", //bit 4
+    "nSG", //bit 0
+    "nBG", //bit 1
+    "SGStatUnc", //bit 2
+    "BGStatUnc", //bit 3
+    "naiveSS", //bit 4
+    "nMCStatSS", //bit 5
+    "10SG20BGSS", //bit 6
   };
 
   TCanvas *c = new TCanvas("c","A Simple Graph Example",200,10,700,500); 
@@ -396,17 +398,22 @@ void MVACutFlowPlots::SensitivityMap( int bit )
     for ( int j = 1; j <= ncuts; j++ )
     {
       float thissg = (SGHistsVec.at(i-1).second)->GetBinContent(j);
+      float thissgStatUnc = (SGHistsVec.at(i-1).second)->GetBinError(j);
       float thisbg = ((TH1*)(hs_MC->GetStack()->Last()))->GetBinContent(j);
       float thisbgStatUnc = GetBGMCStatUnc( *hs_MC, j );
       //std::cout << "bg: " << thisbg << ", bgStatUnc: " << thisbgStatUnc << std::endl;
       float thisss_1 = thissg / std::sqrt( thissg + thisbg );
       float thisss_2 = thissg / std::sqrt( std::pow(thisbgStatUnc, 2) );
       float thisss_3 = thissg / std::sqrt( thissg + thisbg + std::pow(0.1*thisbg, 2) + std::pow(0.2*thisbg, 2) );
+      if (thisbg <= 0) { thisss_1 = 0; thisss_2 = 0; thisss_3 = 0; }
+      // plot for different bit
       if      ( bit == 0) SSScan->Fill( sigschar[i-1], cutschar[j-1], thissg );
       else if ( bit == 1) SSScan->Fill( sigschar[i-1], cutschar[j-1], thisbg );
-      else if ( bit == 2) SSScan->Fill( sigschar[i-1], cutschar[j-1], thisss_1 );
-      else if ( bit == 3) SSScan->Fill( sigschar[i-1], cutschar[j-1], thisss_2 );
-      else if ( bit == 4) SSScan->Fill( sigschar[i-1], cutschar[j-1], thisss_3 );
+      else if ( bit == 2) SSScan->Fill( sigschar[i-1], cutschar[j-1], thissgStatUnc/thissg );
+      else if ( bit == 3) SSScan->Fill( sigschar[i-1], cutschar[j-1], thisbgStatUnc/thisbg );
+      else if ( bit == 4) SSScan->Fill( sigschar[i-1], cutschar[j-1], thisss_1 );
+      else if ( bit == 5) SSScan->Fill( sigschar[i-1], cutschar[j-1], thisss_2 );
+      else if ( bit == 6) SSScan->Fill( sigschar[i-1], cutschar[j-1], thisss_3 );
       //SSScan->SetBinContent( i, j, thissg / std::sqrt(thissg + thisbg) );
       //std::cout << SGHistsVec.at(i-1).first << "," << thissg << ", BG, "<< thisbg << ", Sensitivity: " << thissg / std::sqrt(thissg + thisbg) << std::endl;
     }
