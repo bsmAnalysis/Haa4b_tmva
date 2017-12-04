@@ -126,7 +126,7 @@ int main(int argc, char* argv[])
 
           (myMVACutFlowHist.h_b_BDT_SGMC[ih])->Fill( mvaout, weight * ls );
 
-          int lobin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).first, hibin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).second;
+          int lobin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout, TrainMode ).first, hibin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout, TrainMode ).second;
           if ( hibin >= 0 )
           {
             for ( int j = lobin; j <= hibin ; j++ )
@@ -144,7 +144,7 @@ int main(int argc, char* argv[])
         /*
         if ( ievt < 20 )
         {
-          std::cout << "MVA output : " << mvaout << ", [" << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).first << ","  << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).second << "]" << std::endl;
+          std::cout << "MVA output : " << mvaout << ", [" << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout, TrainMode ).first << ","  << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout, TrainMode ).second << "]" << std::endl;
           std::cout << "Weight: " << weight << std::endl;
           //std::cout << "MVA vars : " << WpT << "," << Hmass << std::endl;
           //std::cout << "MVA vars : " << myTMVAReader.WpT << "," << myTMVAReader.Hmass << std::endl;
@@ -257,7 +257,7 @@ int main(int argc, char* argv[])
 
           (myMVACutFlowHist.h_b_BDT_BGMC[ih])->Fill( mvaout, weight * ls );
 
-          int lobin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).first, hibin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).second;
+          int lobin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout, TrainMode ).first, hibin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout, TrainMode ).second;
           if ( hibin >= 0 )
           {
             for ( int j = lobin; j <= hibin ; j++ )
@@ -274,7 +274,7 @@ int main(int argc, char* argv[])
         /*
         if ( ievt < 20 )
         {
-          std::cout << "MVA output : " << mvaout << ", [" << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).first << ","  << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).second << "]" << std::endl;
+          std::cout << "MVA output : " << mvaout << ", [" << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout, TrainMode ).first << ","  << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout, TrainMode ).second << "]" << std::endl;
           std::cout << "Weight: " << weight << std::endl;
           //std::cout << "MVA vars : " << WpT << "," << Hmass << std::endl;
           //std::cout << "MVA vars : " << myTMVAReader.WpT << "," << myTMVAReader.Hmass << std::endl;
@@ -341,7 +341,7 @@ int main(int argc, char* argv[])
 
         (myMVACutFlowHist.h_b_BDT_Data)->Fill( mvaout, weight * ls );
 
-        int lobin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).first, hibin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).second;
+        int lobin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout, TrainMode ).first, hibin = myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout, TrainMode ).second;
         if ( hibin >= 0 )
         {
           for ( int j = lobin; j <= hibin ; j++ )
@@ -358,7 +358,7 @@ int main(int argc, char* argv[])
         /*
         if ( ievt < 20 )
         {
-          std::cout << "MVA output : " << mvaout << ", [" << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).first << ","  << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout ).second << "]" << std::endl;
+          std::cout << "MVA output : " << mvaout << ", [" << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout, TrainMode ).first << ","  << myMVACutFlowHist.getHistoBinEdgeFromMVA( mvaout, TrainMode ).second << "]" << std::endl;
           std::cout << "Weight: " << weight << std::endl;
           //std::cout << "MVA vars : " << WpT << "," << Hmass << std::endl;
           //std::cout << "MVA vars : " << myTMVAReader.WpT << "," << myTMVAReader.Hmass << std::endl;

@@ -404,7 +404,7 @@ void MVACutFlowPlots::SensitivityMap( int bit )
       //std::cout << "bg: " << thisbg << ", bgStatUnc: " << thisbgStatUnc << std::endl;
       float thisss_1 = thissg / std::sqrt( thissg + thisbg );
       float thisss_2 = thissg / std::sqrt( std::pow(thisbgStatUnc, 2) );
-      float thisss_3 = thissg / std::sqrt( thissg + thisbg + std::pow(0.1*thisbg, 2) + std::pow(0.2*thisbg, 2) );
+      float thisss_3 = thissg / std::sqrt( thissg + thisbg + std::pow(0.1*thisbg, 2) + std::pow(0.2*thisbg, 2) ); // 10% syst unc on signal, 20% syst unc on bg
       if (thisbg <= 0) { thisss_1 = 0; thisss_2 = 0; thisss_3 = 0; }
       // plot for different bit
       if      ( bit == 0) SSScan->Fill( sigschar[i-1], cutschar[j-1], thissg );
