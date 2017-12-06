@@ -105,6 +105,7 @@ void TMVATrainer::CrossValidation( std::vector<std::string> parStringVec )
     TMVA::CrossValidation cv(mydataloader);
     cv.BookMethod(TMVA::Types::kBDT, "BDT", parStringVec.at(i).c_str());
     // Run cross-validation and print results
+    cv.SetNumFolds(5);
     cv.Evaluate();
     TMVA::CrossValidationResult results = cv.GetResults();
     results.Print();

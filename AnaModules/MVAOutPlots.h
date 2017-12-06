@@ -5,18 +5,21 @@
 #include <sstream>
 #include <stdlib.h>
 #include <utility>      // std::pair, std::make_pair
+#include <algorithm>    // std::copy
 
 #include "TFile.h"
 #include "TList.h"
 #include "TString.h"
 #include "TH1D.h"
 #include "TH2D.h"
+#include "TH1F.h"
 #include "TH2F.h"
 #include "TCanvas.h"
 #include "TPad.h"
 #include "TLegend.h"
 #include "TLatex.h"
 #include "TStyle.h"
+#include "TGraphErrors.h"
 
 class MVAOutPlots
 {
@@ -30,6 +33,7 @@ class MVAOutPlots
   void CorrPlots( std::string histtag );
   void ROCPlots();
   void BDTSBComparePlots( std::string histtag );
+  void CVPlots();
 };
 
 void MVAOutPlots::Initialization(std::string trainmode, std::string dir)
@@ -102,5 +106,33 @@ void MVAOutPlots::BDTSBComparePlots( std::string histtag )
   c->SaveAs( target_DIR + TString("/") + TrainMode + histtag + TString("_MVAOut.png") );
   c->SaveAs( target_DIR + TString("/") + TrainMode + histtag + TString("_MVAOut.pdf") );
   c->SaveAs( target_DIR + TString("/") + TrainMode + histtag + TString("_MVAOut.C") );
+  return ;
+}
+
+void MVAOutPlots::CVPlots()
+{
+  const int n = 5;
+  float x[n] = {1,2,3,4,5}, y[n] = {0,0,0,0,0};
+  float cv_eval_trib[n] = {0.8937, 0.8909, 0.8905, 0.8913, 0.8905}, cv_eval_quab[n] = {0.8889, 0.8910, 0.8946, 0.8875, 0.8965};
+  float ex[n] = {0,0,0,0,0}, ey[n] = {0,0,0,0,0};
+  float cv_err_trib[n] = {0.0013, 0.0013, 0.0013, 0.0013, 0.0013}, cv_err_quab[n] = {0.0038, 0.0038, 0.0038, 0.0038, 0.0038};
+  if      ( TrainMode == "TribMVA" ){ std::copy(std::begin(cv_eval_trib), std::end(cv_eval_trib), std::begin(y)); std::copy(std::begin(cv_err_trib), std::end(cv_err_trib), std::begin(ey)); }
+  else if ( TrainMode == "QuabMVA" ){ std::copy(std::begin(cv_eval_quab), std::end(cv_eval_quab), std::begin(y)); std::copy(std::begin(cv_err_quab), std::end(cv_err_quab), std::begin(ey)); }
+
+  TCanvas *c = new TCanvas("c","",200,10,700,500);
+  gStyle->SetOptStat(0);
+  TGraphErrors *gr = new TGraphErrors(n,x,y,ex,ey);
+  gr->SetLineColor(2);
+  gr->SetLineWidth(4);
+  gr->SetMarkerColor(4);
+  gr->SetMarkerStyle(21);
+  gr->SetTitle( (TrainMode + " CV").c_str() );
+  gr->GetXaxis()->SetTitle("Cross Validation Fold");
+  gr->GetYaxis()->SetTitle("ROC-Int");
+  gr->GetYaxis()->SetRangeUser(0.85, 0.95);
+  gr->Draw("ACP");
+  c->SaveAs( target_DIR + TString("/") + TrainMode + TString("CV_MVAOut.png") );
+  c->SaveAs( target_DIR + TString("/") + TrainMode + TString("CV_MVAOut.pdf") );
+  c->SaveAs( target_DIR + TString("/") + TrainMode + TString("CV_MVAOut.C") );
   return ;
 }

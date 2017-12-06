@@ -42,6 +42,7 @@ int main(int argc, char* argv[])
   myMVAOutPlots.BDTSBComparePlots("MVA_BDT_eff");
   myMVAOutPlots.BDTSBComparePlots("MVA_BDT_Train_");
   myMVAOutPlots.BDTSBComparePlots("MVA_BDT_trainingEff");
+  myMVAOutPlots.CVPlots();
   return 0;
 }
 
