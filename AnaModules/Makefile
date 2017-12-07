@@ -82,6 +82,6 @@ nEvts: $(ODIR)/nEvts.o
 	$(LD) $^ $(LIBS) $(LHAPDFLIB) -o $@
 
 clean:
-	rm -f $(IDIR)/*.a $(ODIR)/*.o $(ODIR)/*.d $(ODIR)/*.so $(PROGRAMS) core 
+	rm -f $(IDIR)/*.a $(IDIR)/*.log $(IDIR)/*.aux $(ODIR)/*.o $(ODIR)/*.d $(ODIR)/*.so $(PROGRAMS) core 
 
 -include $(ODIR)/*.d

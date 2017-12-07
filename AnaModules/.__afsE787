@@ -1,0 +1,16 @@
+\begin{table}[htbp]
+\fontsize{10 pt}{1.2 em}
+\caption{\label{tab:c24ei} The Fundamentary Interactions.}
+\hspace*{-4ex}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Interaction & Gravity & Weak & Electromagnetic & Strong \\
+\hline
+Source      & Mass-Energy & Flavor & Electric charge & Color charge \\
+\hline
+1234        & $10^{-41}$ & $10^{-4}$ & 1 & 60 \\
+\hline
+Mediator    & Graviton & $W^{+},W^{-}$ and Z & Photon & Gluons \\
+\hline
+\end{tabular}
+\end{table}
