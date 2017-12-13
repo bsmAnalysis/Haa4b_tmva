@@ -2,7 +2,8 @@ import glob, os, sys
 
 #hadd mva_MC13TeV_ZZ_ext1_2016All.root `ls /afs/cern.ch/work/h/hua/Haa4b/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2017_09_21 | grep 'mva_MC13TeV_ZZ_ext1_2016_'`
 #d_hadd_source = "/afs/cern.ch/work/h/hua/Haa4b/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2017_09_20"
-d_hadd_source = "/afs/cern.ch/work/h/hua/Haa4b/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2017_09_21"
+#d_hadd_source = "/afs/cern.ch/work/h/hua/Haa4b/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2017_09_21"
+d_hadd_source = "/afs/cern.ch/work/h/hua/Haa4b/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2017_12_12"
 d_final_target = "/eos/user/h/hua/Haa4b/MVARes"
 
 #MGM = "root://cmseos.fnal.gov/"
