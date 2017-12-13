@@ -33,9 +33,9 @@ void QCDSampleWeight::GenLatexTable()
   of << "\\begin{document}" << std::endl;
   of << "\\begin{table}[htbp]" << std::endl;
   of << "\\caption{Background MC Summary}" << std::endl;
-  of << "\\begin{tabular}{|c|c|c|c|c|}" << std::endl;
+  of << "\\begin{tabular}{|c|c|c|c|c|c|}" << std::endl;
   of << "\\hline" << std::endl;
-  of << "Sample Name & xSec(pb) & NEvt & Lumi($pb^{-1}$) & Weight \\\\" << std::endl;
+  of << "Sample Name & xSec(pb) & NEvt & Lumi($pb^{-1}$) & k Factor & Weight \\\\" << std::endl;
   of << "\\hline" << std::endl;
   char remove[] = "_";
   for (int i = 0; i < QCDSampleInfos.size(); i++)
@@ -44,11 +44,11 @@ void QCDSampleWeight::GenLatexTable()
     removeCharsFromString( tmptag, remove );
     if ( QCDSampleInfos.at(i).weight < 10.0)
     {
-      of << tmptag << " & " << QCDSampleInfos.at(i).xsec_in << " & " << QCDSampleInfos.at(i).nevents_in << " & " << QCDSampleInfos.at(i).lumi_in << " & " << QCDSampleInfos.at(i).weight << " \\\\" << std::endl;
+      of << tmptag << " & " << QCDSampleInfos.at(i).xsec_in << " & " << QCDSampleInfos.at(i).nevents_in << " & " << QCDSampleInfos.at(i).lumi_in << " & " << QCDSampleInfos.at(i).kf_in << " & " << QCDSampleInfos.at(i).weight << " \\\\" << std::endl;
     }
     else
     {
-      of << "\\textbf{" << tmptag << "} & \\textbf{" << QCDSampleInfos.at(i).xsec_in << "} & \\textbf{" << QCDSampleInfos.at(i).nevents_in << "} & \\textbf{" << QCDSampleInfos.at(i).lumi_in << "} & \\textbf{\\textcolor{red}{" << QCDSampleInfos.at(i).weight << "}} \\\\" << std::endl;
+      of << "\\textbf{" << tmptag << "} & \\textbf{" << QCDSampleInfos.at(i).xsec_in << "} & \\textbf{" << QCDSampleInfos.at(i).nevents_in << "} & \\textbf{" << QCDSampleInfos.at(i).lumi_in << "} & \\textbf{" << QCDSampleInfos.at(i).kf_in << "} & \\textbf{\\textcolor{red}{" << QCDSampleInfos.at(i).weight << "}} \\\\" << std::endl;
     }
     of << "\\hline" << std::endl;
 
