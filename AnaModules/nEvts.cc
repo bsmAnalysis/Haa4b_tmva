@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
   {
     std::cerr <<"Please give 1 argument " << "inputFileName " << std::endl;
     std::cerr <<"Valid configurations are: " << std::endl;
-    std::cerr <<"./ReFormat root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2017_09_21/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/crab_MC13TeV_TTJets_2016_0/171005_184952/0000/analysis_94.root" << std::endl; 
+    std::cerr <<"./nEvt FileText.txt" << std::endl; 
     return -1;
   }
   ///uscms_data/d3/hwei/Haa4b/signalNtuple/MC13TeV_Wh_amass12_0.root
