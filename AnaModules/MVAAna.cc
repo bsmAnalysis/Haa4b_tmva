@@ -222,8 +222,12 @@ int main(int argc, char* argv[])
       //Determine histogram indice
       int ih = -1;
       if      ( (*iter_SampleInfos).QCDTag.find("_SingleT_") != std::string::npos ) ih = 0;
-      else if ( (*iter_SampleInfos).QCDTag == "_TTJets_" ) ih = 1;
-      else if ( (*iter_SampleInfos).QCDTag == "_WJets" ) ih = 2;
+      else if (   (*iter_SampleInfos).QCDTag == "_TTJets_" 
+               || (*iter_SampleInfos).QCDTag == "_TTJets_slt_"
+               || (*iter_SampleInfos).QCDTag == "_TTJets_slat_"
+               || (*iter_SampleInfos).QCDTag == "_TTJets_dl_"
+              ) ih = 1;
+      else if ( (*iter_SampleInfos).QCDTag == "_WJets_" ) ih = 2;
       else if ( (*iter_SampleInfos).QCDTag.find("_DYJetsToLL_") != std::string::npos ) ih = 3;
       else if ( 
                   (*iter_SampleInfos).QCDTag == "_TGJets_" 
@@ -248,7 +252,10 @@ int main(int argc, char* argv[])
                || (*iter_SampleInfos).QCDTag == "_ZZZ_" 
               ) ih = 6;
       else if ( (*iter_SampleInfos).QCDTag.find("_QCD_Pt") != std::string::npos ) ih = 7;
-
+      else
+      {
+        std::cout << "Em... Unclassified sample. Tag: " << (*iter_SampleInfos).QCDTag << std::endl;
+      }
       for (long long int ievt = 0; ievt < nTot; ievt++) 
       {
         (*iter_SampleInfos).chain->GetEvent(ievt);

@@ -63,12 +63,19 @@ class TMVATrainer
   std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_SingleT_at_2016.root"              ), 0.0765989),
   std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_SingleT_t_2016.root"               ), 0.0725545),
   //TTJets
-  std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TTJets_2016.root"                  ), 1.9437),
+  //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TTJets_2016.root"                  ), 1.9437),
+  std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TTJets_slt_2016.root"              ), 0.105736*0.1929),
+  std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TTJets_slt_ext1_2016.root"         ), 0.105736*0.8071),
+  std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TTJets_slat_2016.root"             ), 0.108833*0.1984),
+  std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TTJets_slat_ext1_2016.root"        ), 0.109933*0.8016),
+  std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TTJets_dl_2016.root"               ), 0.104012*0.2002),
+  std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TTJets_dl_ext1_2016.root"          ), 0.104012*0.7998),
   //WJets
-  //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_WJets.root"                        ), 133.768),
-  std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_WJets.root"                        ), 30.7868),
+  std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_WJets_2016.root"                   ), 30.7868*0.3425),
+  std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_WJets_ext2_2016.root"              ), 30.7868*0.6575),
   //DY
-  std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_DYJetsToLL_10to50_2016.root"       ), 29.6679),
+  std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_DYJetsToLL_10to50_2016.root"       ), 12.8647*0.434),
+  std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_DYJetsToLL_10to50_ext1_2016.root"  ), 12.8647*0.566),
   std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_DYJetsToLL_50toInf_2016.root"      ), 2.52855),
   //TG, TTG, TTW, TTZ
   std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TGJets_2016.root"                  ), 0.288736*0.25),
