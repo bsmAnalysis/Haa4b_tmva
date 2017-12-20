@@ -16,7 +16,7 @@
 #include "TLegend.h"
 #include "TLatex.h"
 #include "TStyle.h"
-
+#include "TPie.h"
 
 TH1D* merge_hist_list(const TList& hists)
 {
