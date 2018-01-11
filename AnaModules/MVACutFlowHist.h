@@ -19,7 +19,7 @@ class MVACutFlowHist
   //const float mvaCutFlow[MVACutFlowBin] = { 0, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225 };
   //const float mvaCutFlow_Trib[MVACutFlowBin] = { 0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.20 };
   //const float mvaCutFlow_Quab[MVACutFlowBin] = { 0.07, 0.08, 0.09, 0.10, 0.11, 0.12, 0.13, 0.14, 0.15 };
-  const float mvaCutFlow_Trib[MVACutFlowBin] = { 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.19, 0.20, 0.21 };
+  const float mvaCutFlow_Trib[MVACutFlowBin] = { 0.18, 0.19, 0.20, 0.21, 0.22, 0.23, 0.24, 0.25, 0.26 };
   const float mvaCutFlow_Quab[MVACutFlowBin] = { 0.09, 0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17 };
   //const float mvaCutFlow_Trib[MVACutFlowBin] = { 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.19, 0.20 };
   //const float mvaCutFlow_Quab[MVACutFlowBin] = { 0.08, 0.09, 0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16 };
