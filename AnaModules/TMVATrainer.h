@@ -76,7 +76,7 @@ class TMVATrainer
   //WJets
   //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_WJets_2016.root"                   ), 30.7868*0.3425),
   //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_WJets_ext2_2016.root"              ), 30.7868*0.6575),
-  std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/HaddExt/mva_MC13TeV_WJets_all_2016.root"                   ), 30.7868),
+  std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/HaddExt/mva_MC13TeV_WJets_all_2016.root"                   ), 25.4437),
   //DY
   //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_DYJetsToLL_10to50_2016.root"       ), 12.8647*0.434),
   //std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_DYJetsToLL_10to50_ext1_2016.root"  ), 12.8647*0.566),
