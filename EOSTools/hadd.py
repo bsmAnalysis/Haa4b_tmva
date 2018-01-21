@@ -2,8 +2,8 @@ import glob, os, sys
 
 #hadd mva_MC13TeV_ZZ_ext1_2016All.root `ls /afs/cern.ch/work/h/hua/Haa4b/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2017_09_21 | grep 'mva_MC13TeV_ZZ_ext1_2016_'`
 #d_hadd_source = "/afs/cern.ch/work/h/hua/Haa4b/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2017_09_20"
-#d_hadd_source = "/afs/cern.ch/work/h/hua/Haa4b/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2017_09_21"
-d_hadd_source = "/afs/cern.ch/work/h/hua/Haa4b/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2017_12_12"
+d_hadd_source = "/afs/cern.ch/work/h/hua/Haa4b/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2017_09_21"
+#d_hadd_source = "/afs/cern.ch/work/h/hua/Haa4b/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2017_12_12"
 d_final_target = "/eos/user/h/hua/Haa4b/MVARes"
 
 #MGM = "root://cmseos.fnal.gov/"
@@ -30,13 +30,20 @@ sample_tag_list_Data = [
                        ]
 
 sample_tag_list_TT = [
-"mva_MC13TeV_TTJets_2016_",
+#"mva_MC13TeV_TTJets_2016_",
+#"mva_MC13TeV_TTJets_slt_2016_",
+#"mva_MC13TeV_TTJets_slat_2016_",
+#"mva_MC13TeV_TTJets_dl_2016_",
+#"mva_MC13TeV_TTJets_slt_ext1_2016_",
+#"mva_MC13TeV_TTJets_slat_ext1_2016_",
+#"mva_MC13TeV_TTJets_dl_ext1_2016_",
 "mva_MC13TeV_SingleT_atW_2016_",
 "mva_MC13TeV_SingleT_tW_2016_",
 "mva_MC13TeV_SingleT_at_2016_",
 "mva_MC13TeV_SingleT_t_2016_",
 "mva_MC13TeV_SingleT_s_2016_",
-"mva_MC13TeV_WJets_",
+#"mva_MC13TeV_WJets_2016_",
+#"mva_MC13TeV_WJets_ext2_2016_",
 "mva_MC13TeV_TGJets_2016_",
 "mva_MC13TeV_TGJets_ext1_2016_",
 "mva_MC13TeV_TTGJets_2016_",
@@ -46,7 +53,13 @@ sample_tag_list_TT = [
 
 sample_tag_list_DY = [
 "mva_MC13TeV_DYJetsToLL_10to50_2016_",
-"mva_MC13TeV_DYJetsToLL_50toInf_2016_",
+"mva_MC13TeV_DYJetsToLL_10to50_ext1_2016_",
+"mva_MC13TeV_DYJetsToLL_50toInf_ext1_2016_",
+"mva_MC13TeV_DYJetsToLL_50toInf_ext2_2016_",
+"mva_MC13TeV_DYJetsToLL_50toInf_ext3_2016_",
+"mva_MC13TeV_DYJetsToLL_50toInf_ext4_2016_",
+"mva_MC13TeV_DYJetsToLL_50toInf_ext5_2016_",
+"mva_MC13TeV_DYJetsToLL_50toInf_ext6_2016_",
                        ]
 
 sample_tag_list_QCD = [

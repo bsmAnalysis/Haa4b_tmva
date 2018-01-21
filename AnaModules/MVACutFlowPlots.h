@@ -269,8 +269,8 @@ void MVACutFlowPlots::BasicCheckTemplate(
   xHT->SetTickLength(xHT->GetTickLength()*labelRatio);
   xHT->SetLabelSize(xHT->GetLabelSize()*labelRatio);
   xHT->SetLabelOffset(xHT->GetLabelOffset()*labelRatio);
-  ratio->SetMinimum(-1.0);
-  ratio->SetMaximum(1.0);
+  ratio->SetMinimum(-0.3);
+  ratio->SetMaximum(0.3);
 
   TAxis* yHT = ratio->GetYaxis();
   yHT->SetNdivisions(010);

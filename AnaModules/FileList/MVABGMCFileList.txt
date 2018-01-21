@@ -13,7 +13,12 @@
 /eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_WJets_ext2_2016.root
 /eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_DYJetsToLL_10to50_2016.root
 /eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_DYJetsToLL_10to50_ext1_2016.root
-/eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_DYJetsToLL_50toInf_2016.root
+/eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_DYJetsToLL_50toInf_ext1_2016.root
+/eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_DYJetsToLL_50toInf_ext2_2016.root
+/eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_DYJetsToLL_50toInf_ext3_2016.root
+/eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_DYJetsToLL_50toInf_ext4_2016.root
+/eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_DYJetsToLL_50toInf_ext5_2016.root
+/eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_DYJetsToLL_50toInf_ext6_2016.root
 /eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TGJets_2016.root
 /eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TGJets_ext1_2016.root
 /eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_TTGJets_2016.root
