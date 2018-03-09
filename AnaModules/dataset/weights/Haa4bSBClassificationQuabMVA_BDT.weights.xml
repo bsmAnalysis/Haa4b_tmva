@@ -4,11 +4,11 @@
     <Info name="TMVA Release" value="4.2.1 [262657]"/>
     <Info name="ROOT Release" value="6.08/07 [395271]"/>
     <Info name="Creator" value="hua"/>
-    <Info name="Date" value="Sun Jan 21 07:11:17 2018"/>
+    <Info name="Date" value="Sat Mar 10 00:30:59 2018"/>
     <Info name="Host" value="Linux vocms0301.cern.ch 2.6.32-696.6.3.el6.x86_64 #1 SMP Wed Jul 12 07:40:03 CEST 2017 x86_64 x86_64 x86_64 GNU/Linux"/>
     <Info name="Dir" value="/afs/cern.ch/work/h/hua/Haa4b/CMSSW_9_2_14_patch1/src/UserCode/Haa4bTools/AnaModules"/>
     <Info name="Training events" value="786411"/>
-    <Info name="TrainingTime" value="5.67053471e+02"/>
+    <Info name="TrainingTime" value="8.71564036e+02"/>
     <Info name="AnalysisType" value="Classification"/>
   </GeneralInfo>
   <Options>
