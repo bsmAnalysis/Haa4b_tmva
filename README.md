@@ -5,6 +5,7 @@ This tool is based on stop analysis team alpha, where i am working on for 3 year
 ### Set up BDT training framework
 ```bash
 cmsrel CMSSW_9_2_14_patch1
+cd CMSSW_9_2_14_patch1/src
 cmsenv
 mkdir UserCode
 cd $CMSSW_BASE/src/UserCode
@@ -14,9 +15,9 @@ git clone git@github.com:weihuacern/Haa4bTools.git
 ### Compile Code
 Note, make sure make clean before commit. <br />
 ```bash
-cd $CMSSW_BASE/src/Haa4bTools/Tools
+cd $CMSSW_BASE/src/UserCode/Haa4bTools/Tools
 make
-cd $CMSSW_BASE/src/Haa4bTools/AnaModules
+cd $CMSSW_BASE/src/UserCode/Haa4bTools/AnaModules
 make
 ```
 
