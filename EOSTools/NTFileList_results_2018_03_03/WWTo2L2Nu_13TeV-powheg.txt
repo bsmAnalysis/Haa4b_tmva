@@ -1,0 +1,5 @@
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2018_03_03/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/180304_080209/0000/analysis_1.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2018_03_03/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/180304_080209/0000/analysis_2.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2018_03_03/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/180304_080209/0000/analysis_3.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2018_03_03/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/180304_080209/0000/analysis_4.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2018_03_03/WWTo2L2Nu_13TeV-powheg/crab_MC13TeV_WW2l2nu_2016_0/180304_080209/0000/analysis_5.root

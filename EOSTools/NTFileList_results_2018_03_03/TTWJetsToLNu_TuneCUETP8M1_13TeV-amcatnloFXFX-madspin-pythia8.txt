@@ -1,0 +1,10 @@
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2018_03_03/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/crab_MC13TeV_TTWJetslnu_2016_0/180304_081602/0000/analysis_1.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2018_03_03/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/crab_MC13TeV_TTWJetslnu_2016_0/180304_081602/0000/analysis_10.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2018_03_03/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/crab_MC13TeV_TTWJetslnu_2016_0/180304_081602/0000/analysis_2.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2018_03_03/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/crab_MC13TeV_TTWJetslnu_2016_0/180304_081602/0000/analysis_3.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2018_03_03/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/crab_MC13TeV_TTWJetslnu_2016_0/180304_081602/0000/analysis_4.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2018_03_03/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/crab_MC13TeV_TTWJetslnu_2016_0/180304_081602/0000/analysis_5.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2018_03_03/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/crab_MC13TeV_TTWJetslnu_2016_0/180304_081602/0000/analysis_6.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2018_03_03/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/crab_MC13TeV_TTWJetslnu_2016_0/180304_081602/0000/analysis_7.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2018_03_03/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/crab_MC13TeV_TTWJetslnu_2016_0/180304_081602/0000/analysis_8.root
+root://eoscms.cern.ch//eos/cms/store/user/georgia/results_2018_03_03/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/crab_MC13TeV_TTWJetslnu_2016_0/180304_081602/0000/analysis_9.root
