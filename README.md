@@ -23,7 +23,7 @@ make
 
 ## W/b-jets tagger with Machine learning algorithm
 
-### Input root files
+### Input: root files and weights
 ```bash
 ls $CMSSW_BASE/src/UserCode/Haa4bTools/AnaModules/FileList
 ```
@@ -49,7 +49,7 @@ std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes
 ```
 To calculate xSec weight, use MVAAna.cc: <br />
 
-### Train boosted decision tree
+### Train: boosted decision tree
 ```bash
 ./MVAAna Train TribMVA
 ./MVAAna Train QuabMVA
@@ -67,13 +67,13 @@ Run analysis code to generate root for plot: <br />
 ./MVAAna Application TribMVA
 ./MVAAna Application QuabMVA
 ```
-Location of the root for plot: <br />
+Location of the root file for plot: <br />
 ```bash
 ls $CMSSW_BASE/src/UserCode/Haa4bTools/AnaModules/OutDir
 MVACutFlowQuabMVA.root  MVACutFlowTribMVA.root
 ```
 
-### Ploting
+### Plotting
 Plots for BDT training cross section, train vs test: <br />
 ```bash
 ./MVAOutPlots TribMVA Test
