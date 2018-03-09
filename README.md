@@ -43,8 +43,9 @@ myDataSampleWeight.QCDSampleInfo_push_back( "_SingleElectron2016B_ver2" , 1 , 1,
 ```
 Make sure to use correct xSec and weight, in TMVATrainer.h: <br />
 ```cpp
-std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_SingleT_s_2016.root" ), 0.193558)
-std::make_pair( std::string("root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/mva_MC13TeV_SingleT_atW_2016.root" ), 0.184169)
+std::string dir = "root://eosuser.cern.ch//eos/user/h/hua/Haa4b/MVARes/";
+std::make_pair( std::string("mva_MC13TeV_SingleT_s_2016.root" ), 0.193558)
+std::make_pair( std::string("mva_MC13TeV_SingleT_atW_2016.root" ), 0.184169)
 //...
 ```
 To calculate xSec weight, use MVAAna.cc: <br />
