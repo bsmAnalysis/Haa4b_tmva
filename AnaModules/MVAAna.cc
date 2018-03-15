@@ -238,8 +238,11 @@ int main(int argc, char* argv[])
       (*iter_SampleInfos).chain->SetBranchAddress( "WHdR", &WHdR );
       float weight;
       (*iter_SampleInfos).chain->SetBranchAddress( "weight", &weight );
-
+      int lheNJets;
+      (*iter_SampleInfos).chain->SetBranchAddress( "lheNJets", &lheNJets );
       //Determine histogram indice
+      bool isWJets = (*iter_SampleInfos).QCDTag == "_WJets_" || (*iter_SampleInfos).QCDTag == "_W1Jets_" || (*iter_SampleInfos).QCDTag == "_W2Jets_" || (*iter_SampleInfos).QCDTag == "_W3Jets_" || (*iter_SampleInfos).QCDTag == "_W4Jets_";
+      bool isDYJets = (*iter_SampleInfos).QCDTag.find("_DYJetsToLL_") != std::string::npos || (*iter_SampleInfos).QCDTag.find("_DY1JetsToLL_") != std::string::npos || (*iter_SampleInfos).QCDTag.find("_DY2JetsToLL_") != std::string::npos || (*iter_SampleInfos).QCDTag.find("_DY3JetsToLL_") != std::string::npos || (*iter_SampleInfos).QCDTag.find("_DY4JetsToLL_") != std::string::npos;
       int ih = -1;
       if      ( (*iter_SampleInfos).QCDTag.find("_SingleT_") != std::string::npos ) ih = 0;
       else if (   (*iter_SampleInfos).QCDTag == "_TTJets_" 
@@ -247,8 +250,16 @@ int main(int argc, char* argv[])
                || (*iter_SampleInfos).QCDTag == "_TTJets_slat_"
                || (*iter_SampleInfos).QCDTag == "_TTJets_dl_"
               ) ih = 1;
-      else if ( (*iter_SampleInfos).QCDTag == "_WJets_" ) ih = 2;
-      else if ( (*iter_SampleInfos).QCDTag.find("_DYJetsToLL_") != std::string::npos ) ih = 3;
+      else if ( isWJets )
+      {
+        ih = 2;
+        ls = myBGSampleWeight.xsecWeightCalcLHEJets(0, lheNJets);
+      }
+      else if ( isDYJets )
+      {
+        ih = 3;
+        (*iter_SampleInfos).QCDTag.find("_10to50_") != std::string::npos ? ls = myBGSampleWeight.xsecWeightCalcLHEJets(1, lheNJets) : ls = myBGSampleWeight.xsecWeightCalcLHEJets(2, lheNJets);
+      }
       else if ( 
                   (*iter_SampleInfos).QCDTag == "_TGJets_" 
                //|| (*iter_SampleInfos).QCDTag == "_TGJets_ext1_2016"
