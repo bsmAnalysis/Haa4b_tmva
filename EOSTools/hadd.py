@@ -2,7 +2,8 @@ import glob, os, sys
 
 #hadd mva_MC13TeV_ZZ_ext1_2016All.root `ls /afs/cern.ch/work/h/hua/Haa4b/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2017_09_21 | grep 'mva_MC13TeV_ZZ_ext1_2016_'`
 #d_hadd_source = "/afs/cern.ch/work/h/hua/Haa4b/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2017_09_20"
-d_hadd_source = "/afs/cern.ch/work/h/hua/Haa4b/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2017_09_21"
+#d_hadd_source = "/afs/cern.ch/work/h/hua/Haa4b/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2017_09_21"
+d_hadd_source = "/afs/cern.ch/work/h/hua/Haa4b/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2018_03_03"
 #d_hadd_source = "/afs/cern.ch/work/h/hua/Haa4b/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2017_12_12"
 d_final_target = "/eos/user/h/hua/Haa4b/MVARes"
 
@@ -30,7 +31,7 @@ sample_tag_list_Data = [
                        ]
 
 sample_tag_list_TT = [
-#"mva_MC13TeV_TTJets_2016_",
+#"mva_MC13TeV_TTJets_powheg_2016_",
 #"mva_MC13TeV_TTJets_slt_2016_",
 #"mva_MC13TeV_TTJets_slat_2016_",
 #"mva_MC13TeV_TTJets_dl_2016_",
@@ -42,24 +43,40 @@ sample_tag_list_TT = [
 "mva_MC13TeV_SingleT_at_2016_",
 "mva_MC13TeV_SingleT_t_2016_",
 "mva_MC13TeV_SingleT_s_2016_",
-#"mva_MC13TeV_WJets_2016_",
-#"mva_MC13TeV_WJets_ext2_2016_",
+"mva_MC13TeV_WJets_2016_",
+"mva_MC13TeV_WJets_ext2_2016_",
+"mva_MC13TeV_W1Jets_2016_",
+"mva_MC13TeV_W2Jets_2016_",
+"mva_MC13TeV_W2Jets_ext1_2016_",
+"mva_MC13TeV_W3Jets_2016_",
+"mva_MC13TeV_W3Jets_ext1_2016_",
+"mva_MC13TeV_W4Jets_2016_",
+"mva_MC13TeV_W4Jets_ext1_2016_",
+"mva_MC13TeV_W4Jets_ext2_2016_",
 "mva_MC13TeV_TGJets_2016_",
 "mva_MC13TeV_TGJets_ext1_2016_",
 "mva_MC13TeV_TTGJets_2016_",
 "mva_MC13TeV_TTWJetslnu_2016_",
 "mva_MC13TeV_TTZJets2l2nu_2016_",
-                           ]
+]
 
 sample_tag_list_DY = [
 "mva_MC13TeV_DYJetsToLL_10to50_2016_",
-"mva_MC13TeV_DYJetsToLL_10to50_ext1_2016_",
+#"mva_MC13TeV_DYJetsToLL_10to50_ext1_2016_",
+"mva_MC13TeV_DY1JetsToLL_10to50_2016_",
+"mva_MC13TeV_DY2JetsToLL_10to50_2016_",
+"mva_MC13TeV_DY3JetsToLL_10to50_2016_",
+"mva_MC13TeV_DY4JetsToLL_10to50_2016_",
 "mva_MC13TeV_DYJetsToLL_50toInf_ext1_2016_",
 "mva_MC13TeV_DYJetsToLL_50toInf_ext2_2016_",
-"mva_MC13TeV_DYJetsToLL_50toInf_ext3_2016_",
-"mva_MC13TeV_DYJetsToLL_50toInf_ext4_2016_",
-"mva_MC13TeV_DYJetsToLL_50toInf_ext5_2016_",
-"mva_MC13TeV_DYJetsToLL_50toInf_ext6_2016_",
+#"mva_MC13TeV_DYJetsToLL_50toInf_ext3_2016_",
+#"mva_MC13TeV_DYJetsToLL_50toInf_ext4_2016_",
+#"mva_MC13TeV_DYJetsToLL_50toInf_ext5_2016_",
+#"mva_MC13TeV_DYJetsToLL_50toInf_ext6_2016_",
+"mva_MC13TeV_DY1JetsToLL_50toInf_2016_",
+"mva_MC13TeV_DY2JetsToLL_50toInf_2016_",
+"mva_MC13TeV_DY3JetsToLL_50toInf_2016_",
+"mva_MC13TeV_DY4JetsToLL_50toInf_2016_",
                        ]
 
 sample_tag_list_QCD = [
@@ -90,6 +107,19 @@ sample_tag_list_VV = [
 "mva_MC13TeV_ZZZ_2016_",
                       ]
 
+
+sample_tag_list_SG = [
+"mva_MC13TeV_Wh_amass12_",
+"mva_MC13TeV_Wh_amass15_",
+"mva_MC13TeV_Wh_amass20_",
+"mva_MC13TeV_Wh_amass25_",
+"mva_MC13TeV_Wh_amass30_",
+"mva_MC13TeV_Wh_amass40_",
+"mva_MC13TeV_Wh_amass50_",
+"mva_MC13TeV_Wh_amass60_",
+                      ]
+
+
 #example of sample tag: SSTrimmed_SMS-T2tt_mStop-850_mLSP-100_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_stopFlatNtuples_, always end with "_"
 sample_tag = sys.argv[1]
 
@@ -105,6 +135,8 @@ elif(sample_tag == 'QCD') :
   sample_tag_list = sample_tag_list_QCD
 elif(sample_tag == 'VV') :
   sample_tag_list = sample_tag_list_VV
+elif(sample_tag == 'SG') :
+  sample_tag_list = sample_tag_list_SG
 else:
   print "wrong run type!"
 

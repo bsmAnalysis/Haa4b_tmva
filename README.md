@@ -98,5 +98,6 @@ Make sure delete Test directory before commit. <br />
 
 ### Others
 ```
-python genList.py -d /eos/cms/store/user/georgia/results_2017_09_21 -l
+python genList.py -d /eos/cms/store/user/georgia/results_2018_03_03 -l
+python genList.py -d /eos/cms/store/user/georgia/results_2018_03_03/MinBias -l
 ```
