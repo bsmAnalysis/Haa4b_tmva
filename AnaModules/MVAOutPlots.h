@@ -44,7 +44,8 @@ void MVAOutPlots::Initialization(std::string trainmode, std::string dir)
 
   //std::string din = "/afs/cern.ch/user/h/hua/workarea/Haa4b/TrainRes/20171116/"; //first version with negative weight and correct weight for BG
   //std::string din = "/afs/cern.ch/user/h/hua/workarea/Haa4b/TrainRes/20171121/"; // drop QCD 50To80, for both Train and Application
-  std::string din = "/afs/cern.ch/user/h/hua/workarea/Haa4b/TrainRes/20171130/"; // balanced weight in signal samples
+  //std::string din = "/afs/cern.ch/user/h/hua/workarea/Haa4b/TrainRes/20171130/"; // balanced weight in signal samples
+  std::string din = "/afs/cern.ch/user/h/hua/workarea/Haa4b/TrainRes/20180315/"; // train with WXJets and DYXJets, Ntuple 20180303
   std::cout << "Input Directory: " << din << std::endl;
   fin = TFile::Open( (din + "MVATrainTestOut" + TrainMode + ".root").c_str() );
 }
