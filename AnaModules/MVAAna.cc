@@ -253,12 +253,31 @@ int main(int argc, char* argv[])
       else if ( isWJets )
       {
         ih = 2;
-        ls = myBGSampleWeight.xsecWeightCalcLHEJets(0, lheNJets);
+        std::cout << "W0Jets: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, 0) << std::endl;
+        std::cout << "W1Jets: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, 1) << std::endl;
+        std::cout << "W2Jets: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, 2) << std::endl;
+        std::cout << "W3Jets: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, 3) << std::endl;
+        std::cout << "W4Jets: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, 4) << std::endl;
       }
       else if ( isDYJets )
       {
         ih = 3;
-        (*iter_SampleInfos).QCDTag.find("_10to50_") != std::string::npos ? ls = myBGSampleWeight.xsecWeightCalcLHEJets(1, lheNJets) : ls = myBGSampleWeight.xsecWeightCalcLHEJets(2, lheNJets);
+        if( (*iter_SampleInfos).QCDTag.find("_10to50_") != std::string::npos )
+        {
+          std::cout << "DY0Jets_10to50: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(1, 0) << std::endl;
+          std::cout << "DY1Jets_10to50: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(1, 1) << std::endl;
+          std::cout << "DY2Jets_10to50: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(1, 2) << std::endl;
+          std::cout << "DY3Jets_10to50: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(1, 3) << std::endl;
+          std::cout << "DY4Jets_10to50: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(1, 4) << std::endl;
+        }
+        else
+        {
+          std::cout << "DY0Jets_50toInf: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(2, 0) << std::endl;
+          std::cout << "DY1Jets_50toInf: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(2, 1) << std::endl;
+          std::cout << "DY2Jets_50toInf: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(2, 2) << std::endl;
+          std::cout << "DY3Jets_50toInf: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(2, 3) << std::endl;
+          std::cout << "DY4Jets_50toInf: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(2, 4) << std::endl;
+        }
       }
       else if ( 
                   (*iter_SampleInfos).QCDTag == "_TGJets_" 
@@ -289,6 +308,9 @@ int main(int argc, char* argv[])
       }
       for (long long int ievt = 0; ievt < nTot; ievt++) 
       {
+        if ( isWJets ){ ls = LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, lheNJets); }
+        if ( isDYJets ){ (*iter_SampleInfos).QCDTag.find("_10to50_") != std::string::npos ? ls = LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(1, lheNJets) : ls = LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(2, lheNJets); }
+
         (*iter_SampleInfos).chain->GetEvent(ievt);
         float mvaout = myTMVAReader.GenReMVAReader
                        (
