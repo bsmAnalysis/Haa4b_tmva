@@ -97,7 +97,7 @@ float QCDSampleWeight::xsecWeightCalcLHEJets(int bit, int lheNJets)
   }
   else
   {
-    std::cout << "### There is a problem here!" << std::endl;
+    std::cout << "### There is a problem here! Bit: " << bit << std::endl;
     return 0;
   }
 
@@ -106,7 +106,7 @@ float QCDSampleWeight::xsecWeightCalcLHEJets(int bit, int lheNJets)
   else if (lheNJets == 2) return this_kf / (this_events[2] / this_xsec[2] + this_events[0] / this_xsec[0]);
   else if (lheNJets == 3) return this_kf / (this_events[3] / this_xsec[3] + this_events[0] / this_xsec[0]);
   else if (lheNJets == 4) return this_kf / (this_events[4] / this_xsec[4] + this_events[0] / this_xsec[0]);
-  else { std::cout << "### There is a problem here!" << std::endl; return 0; }
+  else { std::cout << "### There is a problem here! lheNJets: " << lheNJets << std::endl; return 0; }
   return 0;
 }
 

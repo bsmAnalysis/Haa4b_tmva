@@ -61,23 +61,24 @@ class TMVATrainer
   std::make_pair( dir + std::string("mva_MC13TeV_SingleT_s_2016.root"               ), 0.193558),
   std::make_pair( dir + std::string("mva_MC13TeV_SingleT_atW_2016.root"             ), 0.184169),
   std::make_pair( dir + std::string("mva_MC13TeV_SingleT_tW_2016.root"              ), 0.183646),
-  std::make_pair( dir + std::string("mva_MC13TeV_SingleT_at_2016.root"              ), 0.0765989),
-  std::make_pair( dir + std::string("mva_MC13TeV_SingleT_t_2016.root"               ), 0.0725545),
+  std::make_pair( dir + std::string("mva_MC13TeV_SingleT_at_2016.root"              ), 0.0758015),
+  std::make_pair( dir + std::string("mva_MC13TeV_SingleT_t_2016.root"               ), 0.0736499),
   //TTJets
   //std::make_pair( dir + std::string("mva_MC13TeV_TTJets_2016.root"                  ), 1.9437),
   //std::make_pair( dir + std::string("mva_MC13TeV_TTJets_slt_2016.root"              ), 0.105736*0.1929),
   //std::make_pair( dir + std::string("mva_MC13TeV_TTJets_slt_ext1_2016.root"         ), 0.105736*0.8071),
-  std::make_pair( dir + std::string("HaddExt/mva_MC13TeV_TTJets_slt_all_2016.root"    ), 0.105736),
+  //std::make_pair( dir + std::string("HaddExt/mva_MC13TeV_TTJets_slt_all_2016.root"    ), 0.105736),
   //std::make_pair( dir + std::string("mva_MC13TeV_TTJets_slat_2016.root"             ), 0.108833*0.1984),
   //std::make_pair( dir + std::string("mva_MC13TeV_TTJets_slat_ext1_2016.root"        ), 0.109933*0.8016),
-  std::make_pair( dir + std::string("HaddExt/mva_MC13TeV_TTJets_slat_all_2016.root"    ), 0.109933),
+  //std::make_pair( dir + std::string("HaddExt/mva_MC13TeV_TTJets_slat_all_2016.root"    ), 0.109933),
   //std::make_pair( dir + std::string("mva_MC13TeV_TTJets_dl_2016.root"               ), 0.104012*0.2002),
   //std::make_pair( dir + std::string("mva_MC13TeV_TTJets_dl_ext1_2016.root"          ), 0.104012*0.7998),
-  std::make_pair( dir + std::string("HaddExt/mva_MC13TeV_TTJets_dl_all_2016.root"    ), 0.104012),
+  //std::make_pair( dir + std::string("HaddExt/mva_MC13TeV_TTJets_dl_all_2016.root"    ), 0.104012),
+  std::make_pair( dir + std::string("mva_MC13TeV_TTJets_powheg_2016.root"          ), 0.387029),
   //WJets
   //std::make_pair( dir + std::string("mva_MC13TeV_WJets_2016.root"                   ), 30.7868*0.3425),
   //std::make_pair( dir + std::string("mva_MC13TeV_WJets_ext2_2016.root"              ), 30.7868*0.6575),
-  std::make_pair( dir + std::string("HaddExt/mva_MC13TeV_WJets_all_2016.root"                   ), 25.4437),
+  std::make_pair( dir + std::string("HaddExt/mva_MC13TeV_WJets_all_2016.root"         ), 25.4437),
   //DY
   //std::make_pair( dir + std::string("mva_MC13TeV_DYJetsToLL_10to50_2016.root"       ), 12.8647*0.434),
   //std::make_pair( dir + std::string("mva_MC13TeV_DYJetsToLL_10to50_ext1_2016.root"  ), 12.8647*0.566),
@@ -89,7 +90,7 @@ class TMVATrainer
   std::make_pair( dir + std::string("HaddExt/mva_MC13TeV_TGJets_all_2016.root"                   ), 0.288736),
   std::make_pair( dir + std::string("mva_MC13TeV_TTGJets_2016.root"                 ), 0.0840393), //
   std::make_pair( dir + std::string("mva_MC13TeV_TTWJetslnu_2016.root"              ), 0.00456969), //
-  std::make_pair( dir + std::string("mva_MC13TeV_TTZJets2l2nu_2016.root"            ), 0.00977476), //
+  std::make_pair( dir + std::string("mva_MC13TeV_TTZJets2l2nu_2016.root"            ), 0.0133538), //
   //Di-boson
   std::make_pair( dir + std::string("mva_MC13TeV_WW2l2nu_2016.root"                 ), 0.218503),
   //std::make_pair( dir + std::string("mva_MC13TeV_WWlnu2q_2016.root"                 ), 0.199298*0.5),
@@ -97,7 +98,7 @@ class TMVATrainer
   std::make_pair( dir + std::string("HaddExt/mva_MC13TeV_WWlnu2q_all_2016.root"                   ), 0.199298),
   //std::make_pair( dir + std::string("mva_MC13TeV_WZ_2016.root"                      ), 0.436678*0.25),
   //std::make_pair( dir + std::string("mva_MC13TeV_WZ_ext1_2016.root"                 ), 0.436678*0.75), //ext1
-  std::make_pair( dir + std::string("HaddExt/mva_MC13TeV_WZ_all_2016.root"                   ), 0.436678),
+  std::make_pair( dir + std::string("HaddExt/mva_MC13TeV_WZ_all_2016.root"                   ), 0.423043),
   //std::make_pair( dir + std::string("mva_MC13TeV_ZZ_2016.root"                      ), 0.298089*0.5),
   //std::make_pair( dir + std::string("mva_MC13TeV_ZZ_ext1_2016.root"                 ), 0.298089*0.5), //ext1
   std::make_pair( dir + std::string("HaddExt/mva_MC13TeV_ZZ_all_2016.root"                   ), 0.298089),
