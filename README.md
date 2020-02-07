@@ -7,15 +7,15 @@ cd CMSSW_9_2_14_patch1/src
 cmsenv
 mkdir UserCode
 cd $CMSSW_BASE/src/UserCode
-git clone git@github.com:bsmAnalysis/Haa4bTools.git
+git clone git@github.com:bsmAnalysis/Haa4b_tmva.git
 ```
 
 ## Compile Code
 Note, make sure make clean before commit. <br />
 ```bash
-cd $CMSSW_BASE/src/UserCode/Haa4bTools/Tools
+cd $CMSSW_BASE/src/UserCode/Haa4b_tmva/Tools
 make
-cd $CMSSW_BASE/src/UserCode/Haa4bTools/AnaModules
+cd $CMSSW_BASE/src/UserCode/Haa4b_tmva/AnaModules
 make
 ```
 
