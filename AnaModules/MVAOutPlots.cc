@@ -38,10 +38,10 @@ int main(int argc, char* argv[])
   myMVAOutPlots.CorrPlots("S");
   myMVAOutPlots.CorrPlots("B");
   myMVAOutPlots.ROCPlots();
-  myMVAOutPlots.BDTSBComparePlots("MVA_BDT_");
-  myMVAOutPlots.BDTSBComparePlots("MVA_BDT_eff");
-  myMVAOutPlots.BDTSBComparePlots("MVA_BDT_Train_");
-  myMVAOutPlots.BDTSBComparePlots("MVA_BDT_trainingEff");
+  myMVAOutPlots.BDTSBComparePlots("MVA_BDT_", "MVA_BDT_Train_");
+  myMVAOutPlots.BDTSBComparePlots("MVA_BDT_eff", "MVA_BDT_trainingEff");
+  //  myMVAOutPlots.BDTSBComparePlots("MVA_BDT_Train_");
+  // myMVAOutPlots.BDTSBComparePlots("MVA_BDT_trainingEff");
   myMVAOutPlots.CVPlots();
   return 0;
 }

@@ -127,14 +127,16 @@ void MVACutFlowPlots::BasicCheckTemplate(
   TH1D * h_signal_loMa, * h_signal_hiMa;
   THStack * hs_MC = new THStack("hs_MC","");
 
-  TLegend* leg = new TLegend(0.6,0.6,0.85,0.85);
+  TH1D * h_sumBKG;
+
+  TLegend* leg = new TLegend(0.55,0.65,0.75,0.85);
   leg->SetBorderSize(0);
   leg->SetTextFont(42);
   leg->SetTextSize(0.03);
   leg->SetFillColor(0);
 
   std::string smalltag;
-  int NHist = list->GetSize();
+  int NHist = list->GetSize(); // -1 to remove the last hist in the list which is the SumBKG...
 
   for(int i  = 0 ; i < NHist ; i++)
   {
@@ -144,43 +146,57 @@ void MVACutFlowPlots::BasicCheckTemplate(
       {
         h_Data = (TH1D*)fin->Get(list->At(i)->GetName())->Clone();
         smalltag = "Data"; 
-        leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "l");
+	//        leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "l");
       }
       else if( TString(list->At(i)->GetName()).Contains( "_SGMC_Wh20" ) )
       {
         h_signal_loMa = (TH1D*)fin->Get(list->At(i)->GetName())->Clone();
         smalltag = "Wh(20)";
-        leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "l");
+	//        leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "l");
       }
-      else if( TString(list->At(i)->GetName()).Contains( "_SGMC_Wh50" ) )
+      else if( TString(list->At(i)->GetName()).Contains( "_SGMC_Wh60" ) )
       {
         h_signal_hiMa = (TH1D*)fin->Get(list->At(i)->GetName())->Clone();
-        smalltag = "Wh(50)";
-        leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "l");
+        smalltag = "Wh(60)";
+	h_signal_hiMa->SetLineColor(2);
+	//        leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "l");
       }
+      else if( TString(list->At(i)->GetName()).Contains( "SumBKG" ))
+	{
+	  std::cout << "Now using Sum of BKG histogram " << std::endl;
+	  
+	  h_sumBKG = (TH1D*)fin->Get(list->At(i)->GetName())->Clone();   
+	  smalltag = "SumBKG";
+	  //	  leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "lf");              
+	}
+
+
     }
     if( TString(list->At(i)->GetName()).Contains( hist_tag ) )
     {
-      if( TString(list->At(i)->GetName()).Contains( "_BGMC" ) )
+      if( TString(list->At(i)->GetName()).Contains( "_BGMC" ) &&
+	  !(TString(list->At(i)->GetName()).Contains( "SumBKG" ))
+	  )
       {
         hs_MC->Add( (TH1D*)fin->Get(list->At(i)->GetName()) );
         //std::cout << TString(list->At(i)->GetName()) << std::endl;
-        if( TString(list->At(i)->GetName()).Contains( "SingleT" ) ) { smalltag = "SingleT"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
-        if( TString(list->At(i)->GetName()).Contains( "TTJets" ) ) { smalltag = "TTJets"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
-        if( TString(list->At(i)->GetName()).Contains( "WJets" ) ) { smalltag = "WJets"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
-        if( TString(list->At(i)->GetName()).Contains( "DY" ) ) { smalltag = "DY"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
-        if( TString(list->At(i)->GetName()).Contains( "TTGZW" ) ) { smalltag = "TTGZW"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
-        if( TString(list->At(i)->GetName()).Contains( "DiBoson" ) ) { smalltag = "DiBoson"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
-        if( TString(list->At(i)->GetName()).Contains( "TriBoson" ) ) { smalltag = "TriBoson"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
-        if( TString(list->At(i)->GetName()).Contains( "QCD" ) ) { smalltag = "QCD"; leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
+        if( TString(list->At(i)->GetName()).Contains( "SingleT" ) ) { smalltag = "SingleT";}// leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
+	if( TString(list->At(i)->GetName()).Contains( "TTJets" ) ) { smalltag = "TTJets";}// leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
+	if( TString(list->At(i)->GetName()).Contains( "WJets" ) ) { smalltag = "WJets";} //leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
+	if( TString(list->At(i)->GetName()).Contains( "DY" ) ) { smalltag = "DY";}// leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
+	if( TString(list->At(i)->GetName()).Contains( "TTGZW" ) ) { smalltag = "TTGZW"; }//leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
+	if( TString(list->At(i)->GetName()).Contains( "DiBoson" ) ) { smalltag = "DiBoson"; }//leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
+	if( TString(list->At(i)->GetName()).Contains( "TriBoson" ) ) { smalltag = "TriBoson";} //leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
+	if( TString(list->At(i)->GetName()).Contains( "QCD" ) ) { smalltag = "QCD";} //leg->AddEntry( (TH1D*)fin->Get(list->At(i)->GetName()), smalltag.c_str(), "f"); }
       }
     }
     else
       continue;
   }
 
-  TCanvas *c = new TCanvas("c","A Simple Graph Example",200,10,700,500); 
+  TCanvas *c = new TCanvas(hist_tag+"_c","A Simple Graph Example",200,10,700,500); 
   gStyle->SetOptStat(0);
+  /*
   if ( !sgMC && bgMC && !Data )
   {
     c->SetLogy();
@@ -188,7 +204,7 @@ void MVACutFlowPlots::BasicCheckTemplate(
     //hs_MC->GetXaxis()->SetRangeUser(min,max);
     //hs_MC->GetXaxis()->SetTitle(XTitle);
     //hs_MC->Draw("text hist");
-    hs_MC->SetMaximum(100000); hs_MC->SetMinimum(0.001);
+    //    hs_MC->SetMaximum(100000); hs_MC->SetMinimum(0.001);
     hs_MC->SetTitle( hist_tag + TrainMode );
     hs_MC->Draw("nostackb hist");
     leg->Draw("same");
@@ -197,10 +213,11 @@ void MVACutFlowPlots::BasicCheckTemplate(
     c->SaveAs( target_DIR + TString("/") + hist_tag + TrainMode + TString("_BasicCheck.C") );
     return ;
   }
-
+  */
+  /*
   TPad *pad = (TPad*) c->GetPad(0); 
   pad->Clear();
-  pad->Divide(2, 1);
+  pad->Divide(1, 1);
 
   double divRatio = 0.20;
   double labelRatio = (1-divRatio)/divRatio;
@@ -211,13 +228,22 @@ void MVACutFlowPlots::BasicCheckTemplate(
   pad1->SetPad("", "", 0, divRatio, 1.0, 1.0, kWhite);
   pad1->SetBottomMargin(0.005);
   pad1->SetBorderMode(0);
+  */
+  
 
-  h_Data->GetXaxis()->SetRangeUser(min,max);
-  h_Data->GetXaxis()->SetTitle(XTitle);
-  h_Data->SetLineColor(1);
-  h_Data->SetLineWidth(3);
-  h_Data->Sumw2();
-  h_Data->Scale(scale);
+  if(hist_tag.Contains("lepPt")) {
+    h_sumBKG->Rebin(4); h_signal_hiMa->Rebin(4);
+  }
+
+  h_sumBKG->GetXaxis()->SetRangeUser(min,max);
+  h_sumBKG->GetXaxis()->SetTitle(XTitle);
+  h_sumBKG->GetYaxis()->SetTitle("Normalised");
+  h_sumBKG->SetLineColor(1);
+  h_sumBKG->SetLineWidth(3);
+  h_sumBKG->SetFillStyle(3004);
+  
+  h_sumBKG->Sumw2();
+  //  h_sumBKG->Scale(scale);
 
   //hs_MC->GetXaxis()->SetLimits(min, max);
   //hs_MC->GetXaxis()->SetRangeUser(min,max);
@@ -226,17 +252,30 @@ void MVACutFlowPlots::BasicCheckTemplate(
   //hs_MC->SetLineWidth(3);
   //hs_MC->Sumw2();
   //hs_MC->Scale(scale);
-  h_signal_loMa->Scale(100);  
-  h_signal_hiMa->Scale(100);  
 
-  h_Data->Draw("e0");
-  hs_MC->Draw("same hist");
-  h_Data->Draw("same e0");
-  h_signal_loMa->Draw("same e0");
-  h_signal_hiMa->Draw("same e0");
+  //  h_signal_loMa->Scale(100);  
+  //  h_signal_hiMa->Scale(100);  
+  h_signal_loMa->Scale(1./h_signal_loMa->Integral());
+  h_signal_hiMa->Scale(1./h_signal_hiMa->Integral());
 
-  //hs_MC->Draw("hist");
-  //h_Data->Draw("same e0");
+  h_sumBKG->Scale(1./h_sumBKG->Integral());
+
+  double ymax=( (h_sumBKG->GetMaximum()>h_signal_hiMa->GetMaximum()) ? h_sumBKG->GetMaximum() : h_signal_hiMa->GetMaximum() );           
+  h_sumBKG->GetYaxis()->SetRangeUser(0.,1.2*ymax);
+
+  h_signal_loMa->SetLineWidth(2);  h_signal_hiMa->SetLineColor(4);   h_signal_loMa->SetFillStyle(3002);   
+  h_signal_hiMa->SetLineWidth(2); h_signal_hiMa->SetFillColor(4);
+  h_signal_hiMa->SetFillStyle(3003); h_signal_hiMa->SetLineStyle(1);
+
+  h_sumBKG->SetFillColor(1);         
+
+  h_sumBKG->Draw("ehist");
+
+  //  h_signal_loMa->Draw("same ehist");
+  h_signal_hiMa->Draw("ehist same");
+
+  h_sumBKG->SetFillStyle(3004);     
+  h_sumBKG->Draw("ehist same");
 
   //const std::string titre="CMS Preliminary 2015, "+ lumi_str + " fb^{-1}, #sqrt{s} = 13 TeV";
   const std::string titre="CMS Preliminary 2017, 35.9 fb^{-1}, #sqrt{s} = 13 TeV";
@@ -244,11 +283,15 @@ void MVACutFlowPlots::BasicCheckTemplate(
   title->SetNDC();
   title->SetTextSize(0.045);
   title->Draw("same");
+
+  //leg->AddEntry(h_signal_loMa,"Signal Wh(20)","LF");      
+  leg->AddEntry(h_signal_hiMa,"Signal Vh(60)","LF");
+  leg->AddEntry(h_sumBKG,"Sum of Backgrounds","LF");
   
   leg->Draw("same");
 
   c->Update(); 
- 
+  /*
   pad->cd(2); 
   TPad *pad2 = (TPad*) pad->GetPad(2);
   pad2->SetPad("ratio", "", 0, 0, 1.0, divRatio, kWhite);
@@ -289,6 +332,7 @@ void MVACutFlowPlots::BasicCheckTemplate(
   for(int ib=0; ib<ratio->GetNbinsX(); ib++){ zero->SetBinContent(ib+1, 0); }
   zero->SetLineColor(kRed); zero->SetLineWidth(1);
   zero->DrawCopy("same");
+  */
 
   c->SaveAs( target_DIR + TString("/") + hist_tag + TrainMode + TString("_BasicCheck.png") );
   c->SaveAs( target_DIR + TString("/") + hist_tag + TrainMode + TString("_BasicCheck.pdf") );

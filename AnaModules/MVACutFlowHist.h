@@ -13,7 +13,7 @@ class MVACutFlowHist
   TFile *oFile;
 
   const static int SGBin = 8;
-  const static int BGBin = 8;
+  const static int BGBin = 9; // 8+ 1added to account for the sum of backgrounds MC
   const static int MVACutFlowBin = 9;
   //const float mvaCutFlow[MVACutFlowBin] = { -0.2, -0.15, -0.1, -0.05, 0.0, 0.05, 0.1, 0.15, 0.2 };
   //const float mvaCutFlow[MVACutFlowBin] = { 0, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225 };
@@ -46,12 +46,16 @@ class MVACutFlowHist
   TH1F *h_b_WpT_SGMC[SGBin];
   TH1F *h_b_Hmass_SGMC[SGBin], *h_b_HpT_SGMC[SGBin], *h_b_bbdRAve_SGMC[SGBin], *h_b_bbdMMin_SGMC[SGBin], *h_b_HHt_SGMC[SGBin];
   TH1F *h_b_WHdR_SGMC[SGBin];
+  TH1F *h_b_lepPt_SGMC[SGBin];  TH1F *h_b_pfMET_SGMC[SGBin];  TH1F *h_b_MTw_SGMC[SGBin]; TH1F *h_b_ljDR_SGMC[SGBin];     
+
   TH1F *h_b_BDT_SGMC[SGBin];
   TH1F *h_b_n_SGMC[SGBin];
 
   TH1F *h_b_WpT_BGMC[BGBin];
   TH1F *h_b_Hmass_BGMC[BGBin], *h_b_HpT_BGMC[BGBin], *h_b_bbdRAve_BGMC[BGBin], *h_b_bbdMMin_BGMC[BGBin], *h_b_HHt_BGMC[BGBin];
   TH1F *h_b_WHdR_BGMC[BGBin];
+  TH1F *h_b_lepPt_BGMC[BGBin];  TH1F *h_b_pfMET_BGMC[BGBin];  TH1F *h_b_MTw_BGMC[BGBin]; TH1F *h_b_ljDR_BGMC[BGBin];    
+
   TH1F *h_b_BDT_BGMC[BGBin];
   TH1F *h_b_n_BGMC[BGBin];
 
@@ -61,6 +65,7 @@ class MVACutFlowHist
   TH1F *h_b_WpT_Data;
   TH1F *h_b_Hmass_Data, *h_b_HpT_Data, *h_b_bbdRAve_Data, *h_b_bbdMMin_Data, *h_b_HHt_Data;
   TH1F *h_b_WHdR_Data;
+  TH1F *h_b_lepPt_Data; TH1F *h_b_pfMET_Data; TH1F *h_b_MTw_Data; TH1F *h_b_ljDR_Data;
   TH1F *h_b_BDT_Data;
   TH1F *h_b_n_Data;
 };

@@ -66,6 +66,11 @@ void TMVATrainer::SetupMVAFactory( std::string catName )
     mydataloader->AddVariable( "bbdRAve", 'F' );
     mydataloader->AddVariable( "HHt"   , 'F' );
     mydataloader->AddVariable( "WHdR"   , 'F' );
+    //mydataloader->AddVariable( "bbdMMin", 'F' );   
+    mydataloader->AddVariable( "lepPt"   , 'F' );     
+    mydataloader->AddVariable( "pfMET"   , 'F' );     
+    mydataloader->AddVariable( "MTw"   , 'F' );     
+    mydataloader->AddVariable( "ljDR"   , 'F' );     
   }
   else if ( catName == "QuabMVA" )
   {
@@ -76,6 +81,10 @@ void TMVATrainer::SetupMVAFactory( std::string catName )
     mydataloader->AddVariable( "bbdMMin", 'F' );
     mydataloader->AddVariable( "HHt"   , 'F' );
     mydataloader->AddVariable( "WHdR"   , 'F' );
+    mydataloader->AddVariable( "lepPt"   , 'F' );          
+    mydataloader->AddVariable( "pfMET"   , 'F' );   
+    mydataloader->AddVariable( "MTw"   , 'F' );     
+    mydataloader->AddVariable( "ljDR"   , 'F' ); 
   }
   else
   {
