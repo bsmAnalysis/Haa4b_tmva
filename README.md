@@ -7,7 +7,7 @@ cd CMSSW_9_2_14_patch1/src
 cmsenv
 mkdir UserCode
 cd $CMSSW_BASE/src/UserCode
-git clone git@github.com:weihuacern/Haa4bTools.git
+git clone git@github.com:bsmAnalysis/Haa4bTools.git
 ```
 
 ## Compile Code
