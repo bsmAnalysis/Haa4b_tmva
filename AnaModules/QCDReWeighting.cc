@@ -61,40 +61,118 @@ void QCDSampleWeight::GenLatexTable()
   return ;
 }
 
-float QCDSampleWeight::xsecWeightCalcLHEJets(int bit, int lheNJets)
+float QCDSampleWeight::xsecWeightCalcLHEJets(int bit, int lheNJets, unsigned short int yearBits)
 {
   //bit == 0 for WJets/WXJets, bit == 1 for low mass DY, bit == 2 for high mass DY
+  bool is2016 = yearBits & 0x01;
+  bool is2017 = (yearBits >> 1) & 0x01;
+  bool is2018 = (yearBits >> 2) & 0x01;
   float this_kf = 1;
   int this_events[5] = {1, 1, 1, 1, 1};
   float this_xsec[5] = {1, 1, 1, 1, 1};
 
-  if (bit == 0)//WJets
-  {
-    this_kf = 1.233848684;
-    this_events[0] = (mStat.find("MC13TeV_WJets")->second).first; this_xsec[0] = (mStat.find("MC13TeV_WJets")->second).second/this_kf;
-    this_events[1] = (mStat.find("MC13TeV_W1Jets")->second).first; this_xsec[1] = (mStat.find("MC13TeV_W1Jets")->second).second;
-    this_events[2] = (mStat.find("MC13TeV_W2Jets")->second).first; this_xsec[2] = (mStat.find("MC13TeV_W2Jets")->second).second;
-    this_events[3] = (mStat.find("MC13TeV_W3Jets")->second).first; this_xsec[3] = (mStat.find("MC13TeV_W3Jets")->second).second;
-    this_events[4] = (mStat.find("MC13TeV_W4Jets")->second).first; this_xsec[4] = (mStat.find("MC13TeV_W4Jets")->second).second;
+  if(is2018){
+      if (bit == 0)//WJets
+      {
+          this_kf = 1.21;
+          this_events[0] = (mStat.find("MC13TeV_WJets_2018")->second).first; this_xsec[0] = (mStat.find("MC13TeV_WJets_2018")->second).second;
+          this_events[1] = (mStat.find("MC13TeV_W1Jets_2018")->second).first; this_xsec[1] = (mStat.find("MC13TeV_W1Jets_2018")->second).second;
+          this_events[2] = (mStat.find("MC13TeV_W2Jets_2018")->second).first; this_xsec[2] = (mStat.find("MC13TeV_W2Jets_2018")->second).second;
+          this_events[3] = (mStat.find("MC13TeV_W3Jets_2018")->second).first; this_xsec[3] = (mStat.find("MC13TeV_W3Jets_2018")->second).second;
+          this_events[4] = (mStat.find("MC13TeV_W4Jets_2018")->second).first; this_xsec[4] = (mStat.find("MC13TeV_W4Jets_2018")->second).second;
+      }    
+      else if( bit == 1)//low mass DY
+      {
+          this_kf = 1.21;
+          this_events[0] = (mStat.find("MC13TeV_DYJetsToLL_10to50_2018")->second).first; this_xsec[0] = (mStat.find("MC13TeV_DYJetsToLL_10to50_2018")->second).second;
+          //this_events[1] = (mStat.find("MC13TeV_DY1JetsToLL_10to50_2018")->second).first; this_xsec[1] = (mStat.find("MC13TeV_DY1JetsToLL_10to50_2018")->second).second;
+          //this_events[2] = (mStat.find("MC13TeV_DY2JetsToLL_10to50_2018")->second).first; this_xsec[2] = (mStat.find("MC13TeV_DY2JetsToLL_10to50_2018")->second).second;
+          //this_events[3] = (mStat.find("MC13TeV_DY3JetsToLL_10to50_2018")->second).first; this_xsec[3] = (mStat.find("MC13TeV_DY3JetsToLL_10to50_2018")->second).second;
+          //this_events[4] = (mStat.find("MC13TeV_DY4JetsToLL_10to50_2018")->second).first; this_xsec[4] = (mStat.find("MC13TeV_DY4JetsToLL_10to50_2018")->second).second;
+          this_events[1] = 0; this_events[2] = 0; this_events[3] = 0; this_events[4] = 0;
+      }
+      else if( bit == 2)//high mass DY
+      {
+          this_kf = 1.18;
+          this_events[0] = (mStat.find("MC13TeV_DYJetsToLL_M50_2018")->second).first; this_xsec[0] = (mStat.find("MC13TeV_DYJetsToLL_M50_2018")->second).second;
+          this_events[1] = (mStat.find("MC13TeV_DY1JetsToLL_M50_2018")->second).first; this_xsec[1] = (mStat.find("MC13TeV_DY1JetsToLL_M50_2018")->second).second;
+          this_events[2] = (mStat.find("MC13TeV_DY2JetsToLL_M50_2018")->second).first; this_xsec[2] = (mStat.find("MC13TeV_DY2JetsToLL_M50_2018")->second).second;
+          this_events[3] = (mStat.find("MC13TeV_DY3JetsToLL_M50_2018")->second).first; this_xsec[3] = (mStat.find("MC13TeV_DY3JetsToLL_M50_2018")->second).second;
+          this_events[4] = (mStat.find("MC13TeV_DY4JetsToLL_M50_2018")->second).first; this_xsec[4] = (mStat.find("MC13TeV_DY4JetsToLL_M50_2018")->second).second;
+      } 
+      else
+      {
+          std::cout << "### There is a problem here!" << std::endl;
+          return 0;
+      }
   }
-  else if( bit == 1)//low mass DY
-  {
-    this_kf = 1.21; //1.33;
-    this_events[0] = (mStat.find("MC13TeV_DYJetsToLL_10to50")->second).first; this_xsec[0] = (mStat.find("MC13TeV_DYJetsToLL_10to50")->second).second/this_kf;
-    this_events[1] = (mStat.find("MC13TeV_DY1JetsToLL_10to50")->second).first; this_xsec[1] = (mStat.find("MC13TeV_DY1JetsToLL_10to50")->second).second;
-    this_events[2] = (mStat.find("MC13TeV_DY2JetsToLL_10to50")->second).first; this_xsec[2] = (mStat.find("MC13TeV_DY2JetsToLL_10to50")->second).second;
-    this_events[3] = (mStat.find("MC13TeV_DY3JetsToLL_10to50")->second).first; this_xsec[3] = (mStat.find("MC13TeV_DY3JetsToLL_10to50")->second).second;
-    this_events[4] = (mStat.find("MC13TeV_DY4JetsToLL_10to50")->second).first; this_xsec[4] = (mStat.find("MC13TeV_DY4JetsToLL_10to50")->second).second;
+  else if(is2017){
+      if (bit == 0)//WJets
+      {
+          this_kf = 1.21;
+          this_events[0] = (mStat.find("MC13TeV_WJets_2017")->second).first; this_xsec[0] = (mStat.find("MC13TeV_WJets_2017")->second).second;
+          this_events[1] = (mStat.find("MC13TeV_W1Jets_2017")->second).first; this_xsec[1] = (mStat.find("MC13TeV_W1Jets_2017")->second).second;
+          this_events[2] = (mStat.find("MC13TeV_W2Jets_2017")->second).first; this_xsec[2] = (mStat.find("MC13TeV_W2Jets_2017")->second).second;
+          this_events[3] = (mStat.find("MC13TeV_W3Jets_2017")->second).first; this_xsec[3] = (mStat.find("MC13TeV_W3Jets_2017")->second).second;
+          this_events[4] = (mStat.find("MC13TeV_W4Jets_2017")->second).first; this_xsec[4] = (mStat.find("MC13TeV_W4Jets_2017")->second).second;
+      }    
+      else if( bit == 1)//low mass DY
+      {
+          this_kf = 1.21;
+          this_events[0] = (mStat.find("MC13TeV_DYJetsToLL_10to50_2017")->second).first; this_xsec[0] = (mStat.find("MC13TeV_DYJetsToLL_10to50_2017")->second).second;
+          //this_events[1] = (mStat.find("MC13TeV_DY1JetsToLL_10to50_2017")->second).first; this_xsec[1] = (mStat.find("MC13TeV_DY1JetsToLL_10to50_2017")->second).second;
+          //this_events[2] = (mStat.find("MC13TeV_DY2JetsToLL_10to50_2017")->second).first; this_xsec[2] = (mStat.find("MC13TeV_DY2JetsToLL_10to50_2017")->second).second;
+          //this_events[3] = (mStat.find("MC13TeV_DY3JetsToLL_10to50_2017")->second).first; this_xsec[3] = (mStat.find("MC13TeV_DY3JetsToLL_10to50_2017")->second).second;
+          //this_events[4] = (mStat.find("MC13TeV_DY4JetsToLL_10to50_2017")->second).first; this_xsec[4] = (mStat.find("MC13TeV_DY4JetsToLL_10to50_2017")->second).second;
+          this_events[1] = 0; this_events[2] = 0; this_events[3] = 0; this_events[4] = 0;
+      }
+      else if( bit == 2)//high mass DY
+      {
+          this_kf = 1.18;
+          this_events[0] = (mStat.find("MC13TeV_DYJetsToLL_M50_2017")->second).first; this_xsec[0] = (mStat.find("MC13TeV_DYJetsToLL_M50_2017")->second).second;
+          this_events[1] = (mStat.find("MC13TeV_DY1JetsToLL_M50_2017")->second).first; this_xsec[1] = (mStat.find("MC13TeV_DY1JetsToLL_M50_2017")->second).second;
+          this_events[2] = (mStat.find("MC13TeV_DY2JetsToLL_M50_ext1_2017")->second).first; this_xsec[2] = (mStat.find("MC13TeV_DY2JetsToLL_M50_ext1_2017")->second).second;
+          this_events[3] = (mStat.find("MC13TeV_DY3JetsToLL_M50_2017")->second).first; this_xsec[3] = (mStat.find("MC13TeV_DY3JetsToLL_M50_2017")->second).second;
+          this_events[4] = (mStat.find("MC13TeV_DY4JetsToLL_M50_2017")->second).first; this_xsec[4] = (mStat.find("MC13TeV_DY4JetsToLL_M50_2017")->second).second;
+      } 
+      else
+      {
+          std::cout << "### There is a problem here!" << std::endl;
+          return 0;
+      }
   }
-  else if( bit == 2)//high mass DY
-  {
-    this_kf = 1.187694915;
-    this_events[0] = (mStat.find("MC13TeV_DYJetsToLL_50toInf_ext1")->second).first; this_xsec[0] = (mStat.find("MC13TeV_DYJetsToLL_50toInf_ext1")->second).second/this_kf;
-    this_events[1] = (mStat.find("MC13TeV_DY1JetsToLL_50toInf")->second).first; this_xsec[1] = (mStat.find("MC13TeV_DY1JetsToLL_50toInf")->second).second;
-    this_events[2] = (mStat.find("MC13TeV_DY2JetsToLL_50toInf")->second).first; this_xsec[2] = (mStat.find("MC13TeV_DY2JetsToLL_50toInf")->second).second;
-    this_events[3] = (mStat.find("MC13TeV_DY3JetsToLL_50toInf")->second).first; this_xsec[3] = (mStat.find("MC13TeV_DY3JetsToLL_50toInf")->second).second;
-    this_events[4] = (mStat.find("MC13TeV_DY4JetsToLL_50toInf")->second).first; this_xsec[4] = (mStat.find("MC13TeV_DY4JetsToLL_50toInf")->second).second;
-  }
+  else if(is2016){
+    if (bit == 0)//WJets
+    {
+      //this_kf = 1.233848684;
+      this_kf = 1.21;
+      this_events[0] = (mStat.find("MC13TeV_WJets_2016")->second).first; this_xsec[0] = (mStat.find("MC13TeV_WJets_2016")->second).second;
+      this_events[1] = (mStat.find("MC13TeV_W1Jets_2016")->second).first; this_xsec[1] = (mStat.find("MC13TeV_W1Jets_2016")->second).second;
+      this_events[2] = (mStat.find("MC13TeV_W2Jets_2016")->second).first; this_xsec[2] = (mStat.find("MC13TeV_W2Jets_2016")->second).second;
+      this_events[3] = (mStat.find("MC13TeV_W3Jets_2016")->second).first; this_xsec[3] = (mStat.find("MC13TeV_W3Jets_2016")->second).second;
+      this_events[4] = (mStat.find("MC13TeV_W4Jets_2016")->second).first; this_xsec[4] = (mStat.find("MC13TeV_W4Jets_2016")->second).second;
+    }
+    else if( bit == 1)//low mass DY
+    {
+      //this_kf = 1.33;
+      this_kf = 1.21;
+      this_events[0] = (mStat.find("MC13TeV_DYJetsToLL_10to50_2016")->second).first; this_xsec[0] = (mStat.find("MC13TeV_DYJetsToLL_10to50_2016")->second).second;
+      this_events[1] = (mStat.find("MC13TeV_DY1JetsToLL_10to50_2016")->second).first; this_xsec[1] = (mStat.find("MC13TeV_DY1JetsToLL_10to50_2016")->second).second;
+      this_events[2] = (mStat.find("MC13TeV_DY2JetsToLL_10to50_2016")->second).first; this_xsec[2] = (mStat.find("MC13TeV_DY2JetsToLL_10to50_2016")->second).second;
+      this_events[3] = (mStat.find("MC13TeV_DY3JetsToLL_10to50_2016")->second).first; this_xsec[3] = (mStat.find("MC13TeV_DY3JetsToLL_10to50_2016")->second).second;
+      this_events[4] = (mStat.find("MC13TeV_DY4JetsToLL_10to50_2016")->second).first; this_xsec[4] = (mStat.find("MC13TeV_DY4JetsToLL_10to50_2016")->second).second;
+    }
+    else if( bit == 2)//high mass DY
+    {
+      //this_kf = 1.187694915;
+      this_kf = 1.18;
+      this_events[0] = (mStat.find("MC13TeV_DYJetsToLL_50toInf_ext1_2016")->second).first; this_xsec[0] = (mStat.find("MC13TeV_DYJetsToLL_50toInf_ext1_2016")->second).second;
+      this_events[1] = (mStat.find("MC13TeV_DY1JetsToLL_50toInf_2016")->second).first; this_xsec[1] = (mStat.find("MC13TeV_DY1JetsToLL_50toInf_2016")->second).second;
+      this_events[2] = (mStat.find("MC13TeV_DY2JetsToLL_50toInf_2016")->second).first; this_xsec[2] = (mStat.find("MC13TeV_DY2JetsToLL_50toInf_2016")->second).second;
+      this_events[3] = (mStat.find("MC13TeV_DY3JetsToLL_50toInf_2016")->second).first; this_xsec[3] = (mStat.find("MC13TeV_DY3JetsToLL_50toInf_2016")->second).second;
+      this_events[4] = (mStat.find("MC13TeV_DY4JetsToLL_50toInf_2016")->second).first; this_xsec[4] = (mStat.find("MC13TeV_DY4JetsToLL_50toInf_2016")->second).second;
+    }
+  } 
   else
   {
     std::cout << "### There is a problem here! Bit: " << bit << std::endl;

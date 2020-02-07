@@ -93,7 +93,13 @@ void MVACutFlowPlots::Initialization(std::string trainmode, std::string dir)
   target_DIR = dir;
   system( ("mkdir " + target_DIR).c_str() );
 
-  fin = TFile::Open( ("OutDir/MVACutFlow" + TrainMode + ".root").c_str() );
+  //fin = TFile::Open( ("OutDir/MVACutFlow" + TrainMode + ".root").c_str() );
+  //fin = TFile::Open( ("OutDir_2016Wh/MVACutFlow" + TrainMode + ".root").c_str() );
+  //fin = TFile::Open( ("OutDir_2016Zh/MVACutFlow" + TrainMode + ".root").c_str() );
+  //fin = TFile::Open( ("OutDir_2017Wh/MVACutFlow" + TrainMode + ".root").c_str() );
+  //fin = TFile::Open( ("OutDir_2017Zh/MVACutFlow" + TrainMode + ".root").c_str() );
+  fin = TFile::Open( ("OutDir_2018Wh/MVACutFlow" + TrainMode + ".root").c_str() );
+  //fin = TFile::Open( ("OutDir_2018Zh/MVACutFlow" + TrainMode + ".root").c_str() );
 
   //fin = TFile::Open("OutDir/MVACutFlowTribMVA.root");
   //fin = TFile::Open("OutDir/MVACutFlowQuabMVA.root");
@@ -129,7 +135,7 @@ void MVACutFlowPlots::BasicCheckTemplate(
 
   TH1D * h_sumBKG;
 
-  TLegend* leg = new TLegend(0.55,0.65,0.75,0.85);
+  TLegend* leg = new TLegend(0.55,0.7,0.75,0.87);
   leg->SetBorderSize(0);
   leg->SetTextFont(42);
   leg->SetTextSize(0.03);
@@ -261,7 +267,7 @@ void MVACutFlowPlots::BasicCheckTemplate(
   h_sumBKG->Scale(1./h_sumBKG->Integral());
 
   double ymax=( (h_sumBKG->GetMaximum()>h_signal_hiMa->GetMaximum()) ? h_sumBKG->GetMaximum() : h_signal_hiMa->GetMaximum() );           
-  h_sumBKG->GetYaxis()->SetRangeUser(0.,1.2*ymax);
+  h_sumBKG->GetYaxis()->SetRangeUser(0.,1.4*ymax);
 
   h_signal_loMa->SetLineWidth(2);  h_signal_hiMa->SetLineColor(4);   h_signal_loMa->SetFillStyle(3002);   
   h_signal_hiMa->SetLineWidth(2); h_signal_hiMa->SetFillColor(4);
@@ -277,8 +283,10 @@ void MVACutFlowPlots::BasicCheckTemplate(
   h_sumBKG->SetFillStyle(3004);     
   h_sumBKG->Draw("ehist same");
 
-  //const std::string titre="CMS Preliminary 2015, "+ lumi_str + " fb^{-1}, #sqrt{s} = 13 TeV";
-  const std::string titre="CMS Preliminary 2017, 35.9 fb^{-1}, #sqrt{s} = 13 TeV";
+  //const std::string titre="CMS Preliminary 2016, "+ lumi_str + " fb^{-1}, #sqrt{s} = 13 TeV";
+  //const std::string titre="CMS Preliminary 2016, 35.9 fb^{-1}, #sqrt{s} = 13 TeV";
+  //const std::string titre="CMS Preliminary 2017, 41.5 fb^{-1}, #sqrt{s} = 13 TeV";
+  const std::string titre="CMS Preliminary 2018, 59.9 fb^{-1}, #sqrt{s} = 13 TeV";
   TLatex *title = new TLatex(0.09770115,0.9194915,titre.c_str());
   title->SetNDC();
   title->SetTextSize(0.045);

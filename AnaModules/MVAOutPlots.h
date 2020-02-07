@@ -42,11 +42,13 @@ void MVAOutPlots::Initialization(std::string trainmode, std::string dir)
   target_DIR = dir;
   system( ("mkdir " + target_DIR).c_str() );
 
-  //std::string din = "/afs/cern.ch/user/h/hua/workarea/Haa4b/TrainRes/20171116/"; //first version with negative weight and correct weight for BG
-  //std::string din = "/afs/cern.ch/user/h/hua/workarea/Haa4b/TrainRes/20171121/"; // drop QCD 50To80, for both Train and Application
-  //std::string din = "/afs/cern.ch/user/h/hua/workarea/Haa4b/TrainRes/20171130/"; // balanced weight in signal samples
-  //  std::string din = "/afs/cern.ch/user/h/hua/workarea/Haa4b/TrainRes/20180315/"; // train with WXJets and DYXJets, Ntuple 20180303
-  std::string din = "/afs/cern.ch/work/g/georgia/BSMAnalysis/CMSSW_9_2_14_patch1/src/UserCode/Haa4bTools_v2/AnaModules/";      
+  //std::string din = "/afs/cern.ch/work/g/georgia/BSMAnalysis/CMSSW_9_2_14_patch1/src/UserCode/Haa4bTools_v2/AnaModules/";      
+  //std::string din = "/afs/cern.ch/work/y/yuanc/Analysis/H2a4b/bdt/CMSSW_9_2_14_patch1/src/UserCode/Haa4bTools/AnaModules/OutDir_2016Wh/";
+  //std::string din = "/afs/cern.ch/work/y/yuanc/Analysis/H2a4b/bdt/CMSSW_9_2_14_patch1/src/UserCode/Haa4bTools/AnaModules/OutDir_2016Zh/";
+  //std::string din = "/afs/cern.ch/work/y/yuanc/Analysis/H2a4b/bdt/CMSSW_9_2_14_patch1/src/UserCode/Haa4bTools/AnaModules/OutDir_2017Wh/";
+  //std::string din = "/afs/cern.ch/work/y/yuanc/Analysis/H2a4b/bdt/CMSSW_9_2_14_patch1/src/UserCode/Haa4bTools/AnaModules/OutDir_2017Zh/";
+  std::string din = "/afs/cern.ch/work/y/yuanc/Analysis/H2a4b/bdt/CMSSW_9_2_14_patch1/src/UserCode/Haa4bTools/AnaModules/OutDir_2018Wh/";
+  //std::string din = "/afs/cern.ch/work/y/yuanc/Analysis/H2a4b/bdt/CMSSW_9_2_14_patch1/src/UserCode/Haa4bTools/AnaModules/OutDir_2018Zh/";
   std::cout << "Input Directory: " << din << std::endl;
   fin = TFile::Open( (din + "MVATrainTestOut" + TrainMode + ".root").c_str() );
 }
@@ -69,6 +71,7 @@ void MVAOutPlots::ROCPlots()
   gStyle->SetOptStat(0);
   TH1D *ROC = (TH1D*)fin->Get("dataset/Method_BDT/BDT/MVA_BDT_rejBvsS");
   TH1D *ROCtr = (TH1D*)fin->Get("dataset/Method_BDT/BDT/MVA_BDT_trainingRejBvsS");   
+  ROC->GetYaxis()->SetRangeUser(0, 1.2*ROC->GetMaximum());
   ROC->SetTitle( "ROC" );
   ROC->Draw();
   ROCtr->Draw("same"); ROCtr->SetLineColor(2);
@@ -117,7 +120,7 @@ void MVAOutPlots::BDTSBComparePlots( std::string histtag, std::string histtagtra
   sgBDT->Draw("p"); sgBDTtr->Draw("histsame");
   bgBDT->Draw("psame"); bgBDTtr->Draw("histsame");   
 
-  sgBDT->GetYaxis()->SetRangeUser(0.,1.5*bgBDT->GetMaximum());
+  sgBDT->GetYaxis()->SetRangeUser(0.,1.5*sgBDT->GetMaximum());
   sgBDT->GetXaxis()->SetTitle("MVA BDT");
 
   TLegend* leg = new TLegend(0.54,0.70,0.90,0.90);
