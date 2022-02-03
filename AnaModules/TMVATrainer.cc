@@ -21,17 +21,17 @@ void TMVATrainer::SetupMVAFactory( std::string catName )
   for (int i = 0; i < nSG; i++)
   {
     //TTree *thissgtree = (TTree *)(SGFileVec.at(i))->Get(catName.c_str());
-    //if ( thissgtree->GetEntries() != 0 )
-    //{
+    //    if ( thissgtree->GetEntries() != 0 )
+    // {
       //if ( (TTree *)(SGFileVec.at(i))->Get(catName.c_str())->GetEntries() <= 0 ) continue;
-      std::cout << SGfileURLWeightVec.at(i).first << std::endl;
-      mydataloader->AddSignalTree( (TTree *)(SGFileVec.at(i))->Get(catName.c_str()), SGfileURLWeightVec.at(i).second );
-      //myfactory->AddSignalTree( (TTree *)(SGFileVec.at(i))->Get(catName.c_str()), SGfileURLWeightVec.at(i).second );
-    //}
-    //else
-    //{
-      //std::cout << "The file " <<  SGfileURLWeightVec.at(i).first.c_str() << " is excluded due to 0 events" << std::endl;
-    //}
+    std::cout << SGfileURLWeightVec.at(i).first << std::endl;
+    mydataloader->AddSignalTree( (TTree *)(SGFileVec.at(i))->Get(catName.c_str()), SGfileURLWeightVec.at(i).second );
+	//myfactory->AddSignalTree( (TTree *)(SGFileVec.at(i))->Get(catName.c_str()), SGfileURLWeightVec.at(i).second );
+    //  }
+    // else
+    // {
+    //	std::cout << "The file " <<  SGfileURLWeightVec.at(i).first.c_str() << " is excluded due to 0 events" << std::endl;
+    // }
   }
 
   //load bg file
@@ -43,22 +43,40 @@ void TMVATrainer::SetupMVAFactory( std::string catName )
   }
   for (int i = 0; i < nBG; i++)
   {
-    //TTree *thisbgtree = (TTree *)(BGFileVec.at(i))->Get(catName.c_str());
-    //if ( thisbgtree->GetEntries() != 0 )
-    //{
-      std::cout << BGfileURLWeightVec.at(i).first << std::endl;
-      mydataloader->AddBackgroundTree( (TTree *)(BGFileVec.at(i))->Get(catName.c_str()), BGfileURLWeightVec.at(i).second );
-      //myfactory->AddBackgroundTree( (TTree *)(BGFileVec.at(i))->Get(catName.c_str()), BGfileURLWeightVec.at(i).second );
-    //}
-    //else
-    //{
-      //std::cout << "The file " <<  BGfileURLWeightVec.at(i).first.c_str() << " is excluded due to 0 events" << std::endl;
-    //}
+    TTree *thisbgtree = (TTree *)(BGFileVec.at(i))->Get(catName.c_str());
+    
+    if ( thisbgtree->GetEntries() != 0 )
+      {
+	float bgweight=1.0;
+	TLeaf *xpos = thisbgtree->GetLeaf("xsecWeight"); xpos->GetBranch()->GetEntry(1);
+	bgweight = xpos->GetValue();
+	
+	std::cout << BGfileURLWeightVec.at(i).first << " has weight: " << bgweight*BGfileURLWeightVec.at(i).second << std::endl;
+	mydataloader->AddBackgroundTree( (TTree *)(BGFileVec.at(i))->Get(catName.c_str()), bgweight*BGfileURLWeightVec.at(i).second );
+	//myfactory->AddBackgroundTree( (TTree *)(BGFileVec.at(i))->Get(catName.c_str()), BGfileURLWeightVec.at(i).second );
+      }
+    else
+      {
+	std::cout << "The file " <<  BGfileURLWeightVec.at(i).first.c_str() << " is excluded due to 0 events" << std::endl;
+      }
   }
 
   mydataloader->SetWeightExpression("weight");
 
-  if ( catName == "TribMVA" )
+  if ( catName == "H4bMVA" ) 
+    {
+      mydataloader->AddVariable( "WpT"    , 'F' );  
+      mydataloader->AddVariable( "Hmass"  , 'F' ); 
+      mydataloader->AddVariable( "HpT"    , 'F' );  
+      mydataloader->AddVariable( "bbdRAve", 'F' ); 
+      mydataloader->AddVariable( "HHt"   , 'F' ); 
+      mydataloader->AddVariable( "WHdR"   , 'F' );
+      mydataloader->AddVariable( "lepPt"   , 'F' );  
+      mydataloader->AddVariable( "pfMET"   , 'F' );
+      mydataloader->AddVariable( "MTw"   , 'F' );  
+      mydataloader->AddVariable( "ljDR"   , 'F' );
+    }
+  else if ( catName == "TribMVA" )
   {
     mydataloader->AddVariable( "WpT"    , 'F' );
     mydataloader->AddVariable( "Hmass"  , 'F' );
@@ -169,12 +187,16 @@ void TMVATrainer::CloseMVAFactory()
   delete myfactory;
   delete mydataloader;  
   int nSG = SGFileVec.size();
+
+  std::cout << "Closing " << nSG << " SIGNAL files. " << std::endl;
   for (int i = 0; i < nSG; i++)
   { 
     (SGFileVec.at(i))->Close();
   }
 
   int nBG = BGFileVec.size();
+
+  std::cout << "Closing " << nBG << " BACKGROUND files. " << std::endl; 
   for (int i = 0; i < nBG; i++)
   { 
     (BGFileVec.at(i))->Close();

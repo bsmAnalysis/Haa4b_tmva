@@ -1,0 +1,6 @@
+root://eosuser.cern.ch//eos/user/g/georgia/results_2016_2020_06_19/SUSYWHToAA_AATo4B_M-12_TuneCUETP8M1_PSweights_13TeV-madgraph_pythia8/crab_MC13TeV_Wh_amass12_2016_0/210730_182120/0000/analysis_1.root
+root://eosuser.cern.ch//eos/user/g/georgia/results_2016_2020_06_19/SUSYWHToAA_AATo4B_M-12_TuneCUETP8M1_PSweights_13TeV-madgraph_pythia8/crab_MC13TeV_Wh_amass12_2016_0/210730_182120/0000/analysis_2.root
+root://eosuser.cern.ch//eos/user/g/georgia/results_2016_2020_06_19/SUSYWHToAA_AATo4B_M-12_TuneCUETP8M1_PSweights_13TeV-madgraph_pythia8/crab_MC13TeV_Wh_amass12_2016_0/210730_182120/0000/analysis_3.root
+root://eosuser.cern.ch//eos/user/g/georgia/results_2016_2020_06_19/SUSYWHToAA_AATo4B_M-12_TuneCUETP8M1_PSweights_13TeV-madgraph_pythia8/crab_MC13TeV_Wh_amass12_2016_0/210730_182120/0000/analysis_4.root
+root://eosuser.cern.ch//eos/user/g/georgia/results_2016_2020_06_19/SUSYWHToAA_AATo4B_M-12_TuneCUETP8M1_PSweights_13TeV-madgraph_pythia8/crab_MC13TeV_Wh_amass12_2016_0/210730_182120/0000/analysis_5.root
+root://eosuser.cern.ch//eos/user/g/georgia/results_2016_2020_06_19/SUSYWHToAA_AATo4B_M-12_TuneCUETP8M1_PSweights_13TeV-madgraph_pythia8/crab_MC13TeV_Wh_amass12_2016_0/210730_182120/0000/analysis_6.root

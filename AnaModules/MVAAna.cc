@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
   std::string TrainMode = argv[2]; //TribMVA or QuabMVA
   
   std::string channel = "Wh";
-  unsigned short int yearBits = 4; // 1 for 2016, 2 for 2017 and 4 for 2018  
+  unsigned short int yearBits = 1; // 1 for 2016, 2 for 2017 and 4 for 2018  
   
   bool is2016 = yearBits & 0x01;
   bool is2017 = (yearBits >> 1) & 0x01;
@@ -44,23 +44,7 @@ int main(int argc, char* argv[])
   else if ( RunMode == "CV" )
   {
     std::vector<std::string> TestBDTparStringVec;
-    //TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=350:MinNodeSize=5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
-    //TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=350:MinNodeSize=5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
-    //TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=350:MinNodeSize=5%:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
-    //TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=350:MinNodeSize=5%:MaxDepth=5:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
-    //TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=350:MinNodeSize=5%:MaxDepth=6:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
-    //TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=350:MinNodeSize=5%:MaxDepth=7:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
-    //TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=350:MinNodeSize=5%:MaxDepth=8:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
-    //TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=350:MinNodeSize=5%:MaxDepth=9:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
-    //TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=350:MinNodeSize=5%:MaxDepth=15:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
-    //TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=350:MinNodeSize=1%:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
-    //TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=350:MinNodeSize=2.5%:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
-    //TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=350:MinNodeSize=5.0%:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
-    //TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=350:MinNodeSize=7.5%:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
-    //TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=350:MinNodeSize=10%:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
-    //TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=350:MinNodeSize=15%:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
-    //TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=350:MinNodeSize=20%:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
-    //TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=350:MinNodeSize=25%:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
+
     TestBDTparStringVec.push_back("!H:!V:NegWeightTreatment=InverseBoostNegWeights:NTrees=200:MinNodeSize=5.0%:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
 
     TMVATrainer myTMVATrainer;
@@ -81,75 +65,75 @@ int main(int argc, char* argv[])
     QCDSampleWeight mySGSampleWeight;
     if(is2016){
       if(channel == "Wh"){
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass12"  , 1.37*0.61, 567134.0 - 0.0,  LumiScale, 1, "FileList/WH_2016_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass15"  , 1.37*0.61, 996279.0 - 0.0,  LumiScale, 1, "FileList/WH_2016_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass20"  , 1.37*0.61, 999279.0 - 0.0,  LumiScale, 1, "FileList/WH_2016_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass25"  , 1.37*0.61, 1010277.0 - 0.0, LumiScale, 1, "FileList/WH_2016_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass30"  , 1.37*0.61, 998095.0 - 0.0,  LumiScale, 1, "FileList/WH_2016_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass40"  , 1.37*0.61, 1010418.0 - 0.0, LumiScale, 1, "FileList/WH_2016_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass50"  , 1.37*0.61, 995119.0 - 0.0,  LumiScale, 1, "FileList/WH_2016_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass60"  , 1.37*0.61, 1008303.0 - 0.0, LumiScale, 1, "FileList/WH_2016_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass12"  , 1.37*0.61*1.076, 1010516 - 0.0,  LumiScale, 1, "FileList/WH_2016_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass15"  , 1.37*0.61*1.076, 996279 - 0.0,  LumiScale, 1, "FileList/WH_2016_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass20"  , 1.37*0.61*1.076, 999279.0 - 0.0,  LumiScale, 1, "FileList/WH_2016_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass25"  , 1.37*0.61*1.076, 1010277.0 - 0.0, LumiScale, 1, "FileList/WH_2016_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass30"  , 1.37*0.61*1.076, 998095.0 - 0.0,  LumiScale, 1, "FileList/WH_2016_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass40"  , 1.37*0.61*1.076, 1010418.0 - 0.0, LumiScale, 1, "FileList/WH_2016_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass50"  , 1.37*0.61*1.076, 995119.0 - 0.0,  LumiScale, 1, "FileList/WH_2016_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass60"  , 1.37*0.61*1.076, 1008303.0 - 0.0, LumiScale, 1, "FileList/WH_2016_MVASGMCFileList.txt", TrainMode );
       }
       else if(channel == "Zh"){
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass12"  , 0.8549*0.7435, 965463.0 - 0.0, LumiScale, 1, "FileList/ZH_2016_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass15"  , 0.8549*0.7435, 990410.0 - 0.0, LumiScale, 1, "FileList/ZH_2016_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass20"  , 0.8549*0.7435, 965694.0 - 0.0, LumiScale, 1, "FileList/ZH_2016_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass25"  , 0.8549*0.7435, 985066.0 - 0.0, LumiScale, 1, "FileList/ZH_2016_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass30"  , 0.8549*0.7435, 994159.0 - 0.0, LumiScale, 1, "FileList/ZH_2016_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass40"  , 0.8549*0.7435, 986613.0 - 0.0, LumiScale, 1, "FileList/ZH_2016_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass50"  , 0.8549*0.7435, 993354.0 - 0.0, LumiScale, 1, "FileList/ZH_2016_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass60"  , 0.8549*0.7435, 974094.0 - 0.0, LumiScale, 1, "FileList/ZH_2016_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass12"  , 0.8549*0.7435*1.0474, 965463 - 0.0, LumiScale, 1, "FileList/ZH_2016_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass15"  , 0.8549*0.7435*1.0474, 990410 - 0.0, LumiScale, 1, "FileList/ZH_2016_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass20"  , 0.8549*0.7435*1.0474, 965694.0 - 0.0, LumiScale, 1, "FileList/ZH_2016_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass25"  , 0.8549*0.7435*1.0474, 985066.0 - 0.0, LumiScale, 1, "FileList/ZH_2016_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass30"  , 0.8549*0.7435*1.0474, 994159.0 - 0.0, LumiScale, 1, "FileList/ZH_2016_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass40"  , 0.8549*0.7435*1.0474, 986613.0 - 0.0, LumiScale, 1, "FileList/ZH_2016_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass50"  , 0.8549*0.7435*1.0474, 993354.0 - 0.0, LumiScale, 1, "FileList/ZH_2016_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass60"  , 0.8549*0.7435*1.0474, 974094.0 - 0.0, LumiScale, 1, "FileList/ZH_2016_MVASGMCFileList.txt", TrainMode );
       }
     }
     else if(is2017){
       if(channel == "Wh"){
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass12"  , 1.37*0.65, 954064.0 - 243.0, LumiScale, 1, "FileList/WH_2017_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass15"  , 1.37*0.65, 938279.0 - 194.0, LumiScale, 1, "FileList/WH_2017_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass20"  , 1.37*0.65, 958291.0 - 253.0, LumiScale, 1, "FileList/WH_2017_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass25"  , 1.37*0.65, 934752.0 - 245.0, LumiScale, 1, "FileList/WH_2017_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass30"  , 1.37*0.65, 934392.0 - 228.0, LumiScale, 1, "FileList/WH_2017_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass40"  , 1.37*0.65, 955312.0 - 232.0, LumiScale, 1, "FileList/WH_2017_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass50"  , 1.37*0.65, 938132.0 - 219.0, LumiScale, 1, "FileList/WH_2017_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass60"  , 1.37*0.65, 953671.0 - 238.0, LumiScale, 1, "FileList/WH_2017_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass12"  , 1.37*0.61*1.076, 954064.0 - 243.0, LumiScale, 1, "FileList/WH_2017_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass15"  , 1.37*0.61*1.076, 938279.0 - 194.0, LumiScale, 1, "FileList/WH_2017_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass20"  , 1.37*0.61*1.076, 958291.0 - 253.0, LumiScale, 1, "FileList/WH_2017_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass25"  , 1.37*0.61*1.076, 934752.0 - 245.0, LumiScale, 1, "FileList/WH_2017_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass30"  , 1.37*0.61*1.076, 934392.0 - 228.0, LumiScale, 1, "FileList/WH_2017_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass40"  , 1.37*0.61*1.076, 955312.0 - 232.0, LumiScale, 1, "FileList/WH_2017_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass50"  , 1.37*0.61*1.076, 938132.0 - 219.0, LumiScale, 1, "FileList/WH_2017_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass60"  , 1.37*0.61*1.076, 953671.0 - 238.0, LumiScale, 1, "FileList/WH_2017_MVASGMCFileList.txt", TrainMode );
       }
       else if(channel == "Zh"){
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass12"  , 0.8594*0.75, 494867.0 - 137.0, LumiScale, 1, "FileList/ZH_2017_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass15"  , 0.8594*0.75, 497352.0 - 146.0, LumiScale, 1, "FileList/ZH_2017_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass20"  , 0.8594*0.75, 496923.0 - 156.0, LumiScale, 1, "FileList/ZH_2017_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass25"  , 0.8594*0.75, 494046.0 - 113.0, LumiScale, 1, "FileList/ZH_2017_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass30"  , 0.8594*0.75, 494844.0 - 105.0, LumiScale, 1, "FileList/ZH_2017_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass40"  , 0.8594*0.75, 493834.0 - 130.0, LumiScale, 1, "FileList/ZH_2017_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass50"  , 0.8594*0.75, 496778.0 - 141.0, LumiScale, 1, "FileList/ZH_2017_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass60"  , 0.8594*0.75, 496260.0 - 155.0, LumiScale, 1, "FileList/ZH_2017_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass12"  , 0.8594*0.75*1.0474, 494867.0 - 137.0, LumiScale, 1, "FileList/ZH_2017_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass15"  , 0.8594*0.75*1.0474, 497352.0 - 146.0, LumiScale, 1, "FileList/ZH_2017_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass20"  , 0.8594*0.75*1.0474, 496923.0 - 156.0, LumiScale, 1, "FileList/ZH_2017_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass25"  , 0.8594*0.75*1.0474, 494046.0 - 113.0, LumiScale, 1, "FileList/ZH_2017_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass30"  , 0.8594*0.75*1.0474, 494844.0 - 105.0, LumiScale, 1, "FileList/ZH_2017_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass40"  , 0.8594*0.75*1.0474, 493834.0 - 130.0, LumiScale, 1, "FileList/ZH_2017_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass50"  , 0.8594*0.75*1.0474, 496778.0 - 141.0, LumiScale, 1, "FileList/ZH_2017_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass60"  , 0.8594*0.75*1.0474, 496260.0 - 155.0, LumiScale, 1, "FileList/ZH_2017_MVASGMCFileList.txt", TrainMode );
       }
     }
     else if(is2018){
       if(channel == "Wh"){
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass12"  , 1.37*0.61, 1020552.0 - 252.0, LumiScale, 1, "FileList/WH_2018_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass15"  , 1.37*0.61, 1022841.0 - 277.0, LumiScale, 1, "FileList/WH_2018_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass20"  , 1.37*0.61, 1020865.0 - 260.0, LumiScale, 1, "FileList/WH_2018_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass25"  , 1.37*0.61, 1021745.0 - 220.0, LumiScale, 1, "FileList/WH_2018_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass30"  , 1.37*0.61, 1011608.0 - 256.0, LumiScale, 1, "FileList/WH_2018_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass40"  , 1.37*0.61, 1019676.0 - 258.0, LumiScale, 1, "FileList/WH_2018_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass50"  , 1.37*0.61, 1015362.0 - 233.0, LumiScale, 1, "FileList/WH_2018_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass60"  , 1.37*0.61, 1019268.0 - 221.0, LumiScale, 1, "FileList/WH_2018_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass12"  , 1.37*0.61*1.076, 1020552.0 - 252.0, LumiScale, 1, "FileList/WH_2018_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass15"  , 1.37*0.61*1.076, 1022841.0 - 277.0, LumiScale, 1, "FileList/WH_2018_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass20"  , 1.37*0.61*1.076, 1020865.0 - 260.0, LumiScale, 1, "FileList/WH_2018_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass25"  , 1.37*0.61*1.076, 1021745.0 - 220.0, LumiScale, 1, "FileList/WH_2018_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass30"  , 1.37*0.61*1.076, 1011608.0 - 256.0, LumiScale, 1, "FileList/WH_2018_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass40"  , 1.37*0.61*1.076, 1019676.0 - 258.0, LumiScale, 1, "FileList/WH_2018_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass50"  , 1.37*0.61*1.076, 1015362.0 - 233.0, LumiScale, 1, "FileList/WH_2018_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Wh_amass60"  , 1.37*0.61*1.076, 1019268.0 - 221.0, LumiScale, 1, "FileList/WH_2018_MVASGMCFileList.txt", TrainMode );
       }
       else if(channel == "Zh"){
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass12"  , 0.8594*0.75, 496864.0 - 143.0, LumiScale, 1, "FileList/ZH_2018_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass15"  , 0.8594*0.75, 297591.0 - 90.0, LumiScale, 1, "FileList/ZH_2018_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass20"  , 0.8594*0.75, 494953.0 - 133.0, LumiScale, 1, "FileList/ZH_2018_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass25"  , 0.8594*0.75, 484526.0 - 63.0, LumiScale, 1, "FileList/ZH_2018_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass30"  , 0.8594*0.75, 132903.0 - 44.0, LumiScale, 1, "FileList/ZH_2018_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass40"  , 0.8594*0.75, 484354.0 - 40.0, LumiScale, 1, "FileList/ZH_2018_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass50"  , 0.8594*0.75, 472247.0 - 60.0, LumiScale, 1, "FileList/ZH_2018_MVASGMCFileList.txt", TrainMode );
-        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass60"  , 0.8594*0.75, 495637.0 - 45.0, LumiScale, 1, "FileList/ZH_2018_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass12"  , 0.8594*0.75*1.0474, 496864.0 - 143.0, LumiScale, 1, "FileList/ZH_2018_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass15"  , 0.8594*0.75*1.0474, 297591.0 - 90.0, LumiScale, 1, "FileList/ZH_2018_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass20"  , 0.8594*0.75*1.0474, 494953.0 - 133.0, LumiScale, 1, "FileList/ZH_2018_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass25"  , 0.8594*0.75*1.0474, 484526.0 - 63.0, LumiScale, 1, "FileList/ZH_2018_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass30"  , 0.8594*0.75*1.0474, 132903.0 - 44.0, LumiScale, 1, "FileList/ZH_2018_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass40"  , 0.8594*0.75*1.0474, 484354.0 - 40.0, LumiScale, 1, "FileList/ZH_2018_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass50"  , 0.8594*0.75*1.0474, 472247.0 - 60.0, LumiScale, 1, "FileList/ZH_2018_MVASGMCFileList.txt", TrainMode );
+        mySGSampleWeight.QCDSampleInfo_push_back( "_Zh_amass60"  , 0.8594*0.75*1.0474, 495637.0 - 45.0, LumiScale, 1, "FileList/ZH_2018_MVASGMCFileList.txt", TrainMode );
       }
     }
     std::cout << "Processing signal MC samples..." << std::endl;
     for(std::vector<QCDSampleInfo>::iterator iter_SampleInfos = mySGSampleWeight.QCDSampleInfos.begin(); iter_SampleInfos != mySGSampleWeight.QCDSampleInfos.end(); iter_SampleInfos++)
     { 
       //print out basic information 
-      float ls = (*iter_SampleInfos).weight; 
+      float ls = LumiScale; //(*iter_SampleInfos).weight; 
       std::cout <<"Sample Type: "<< (*iter_SampleInfos).QCDTag << "; LUMI Scale: " << ls << std::endl;
       //Loading chain info
       long long int nTot = (*iter_SampleInfos).chain->GetEntries();
@@ -238,19 +222,41 @@ int main(int argc, char* argv[])
       TString FilePath = "FileList/WH_2016_MVABGMCFileList.txt";
       if(channel.compare("Zh") == 0) FilePath = "FileList/ZH_2016_MVABGMCFileList.txt";
       //Single Top
-      myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_s_"           ,             3.362,811495.0 - 188505.0, LumiScale, 1, FilePath, TrainMode );
+      //      myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_s_"           ,             3.362, 811495.0 - 188505.0, LumiScale, 1, FilePath, TrainMode );
       myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_atW_"         ,              35.6,    6933094.0 - 0.0, LumiScale, 1, FilePath, TrainMode );
       myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_tW_"          ,              35.6,    6952830.0 - 0.0, LumiScale, 1, FilePath, TrainMode );
       myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_at_"          ,             80.95,   38811017.0 - 0.0, LumiScale, 1, FilePath, TrainMode );
       myBGSampleWeight.QCDSampleInfo_push_back( "_SingleT_t_"           ,            136.02,   67240808.0 - 0.0, LumiScale, 1, FilePath, TrainMode );
       //TTJets
-      myBGSampleWeight.QCDSampleInfo_push_back( "_TTJets_"              ,            831.76, 77081156.0 - 0.0, LumiScale, 1, FilePath, TrainMode );
-      //WJets
-      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_"                 ,           50690, 86731806.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode ); //be careful about kf, already NNLO
-      myBGSampleWeight.QCDSampleInfo_push_back( "_W1Jets_"                ,              9493, 45367044.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
-      myBGSampleWeight.QCDSampleInfo_push_back( "_W2Jets_"                ,              3120, 60197766.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
-      myBGSampleWeight.QCDSampleInfo_push_back( "_W3Jets_"                ,             942.3, 58398439.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
-      myBGSampleWeight.QCDSampleInfo_push_back( "_W4Jets_"                ,             524.2, 29995313.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_TTJets_"              ,            831.76, 76915549 - 0.0, LumiScale, 1, FilePath, TrainMode );
+      // //WJets
+      // myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_"                 ,           50690, 86731806.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode ); //be careful about kf, already NNLO
+      // myBGSampleWeight.QCDSampleInfo_push_back( "_W1Jets_"                ,              9493, 45367044.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      // myBGSampleWeight.QCDSampleInfo_push_back( "_W2Jets_"                ,              3120, 60197766.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      // myBGSampleWeight.QCDSampleInfo_push_back( "_W3Jets_"                ,             942.3, 58398439.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      // myBGSampleWeight.QCDSampleInfo_push_back( "_W4Jets_"                ,             524.2, 29995313.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+
+       //WJets
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_"                 ,           50690, 59028040.0 + 10020533., LumiScale, 1.21, FilePath, TrainMode ); //be careful about kf, already NNLO
+      //      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_ext2_"            ,           50690, 10020533 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT70to100_"       ,           1319, 10020533 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT100to200_"       ,           1345, 9945478 + 29503700.0, LumiScale, 1.21, FilePath, TrainMode );
+      //      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT100to200_ext1_"       ,           1345, 29503700.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT200to400_"       ,           359.7, 4963240.0 + 14106492.0 + 19914590.0, LumiScale, 1.21, FilePath, TrainMode );
+      //      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT200to400_ext1_"       ,           359.7, 14106492.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      //      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT200to400_ext2_"       ,           359.7, 19914590.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT400to600_"       ,           48.91, 1963464.0 + 5796237.0, LumiScale, 1.21, FilePath, TrainMode );
+      //      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT400to600_ext1_"       ,           48.91, 5796237.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT600to800_"       ,           12.05, 3779141.0 + 14908339.0, LumiScale, 1.21, FilePath, TrainMode );
+      //      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT600to800_ext1_"       ,           12.05, 14908339.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT800to1200_"       ,           5.501, 1544513.0 + 6286023.0, LumiScale, 1.21, FilePath, TrainMode );
+      //      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT800to1200_ext1_"       ,           5.501, 6286023.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT1200to2500_"       ,           1.329, 244532.0 + 6627909.0, LumiScale, 1.21, FilePath, TrainMode );
+      //      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT1200to2500_ext1_"       ,           1.329, 6627909.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT2500toInf_"       ,           0.03216, 253561.0 + 2384260.0, LumiScale, 1.21, FilePath, TrainMode );
+      //      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT2500toInf_ext1_"       ,           0.03216, 2384260.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+
+       
       //DY [10,50]
       myBGSampleWeight.QCDSampleInfo_push_back( "_DYJetsToLL_10to50_"    ,             18610, 62001124.0 - 4211038.0, LumiScale, 1.21, FilePath, TrainMode );
       myBGSampleWeight.QCDSampleInfo_push_back( "_DY1JetsToLL_10to50_"   ,               725,       39840774.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
@@ -310,11 +316,23 @@ int main(int argc, char* argv[])
       myBGSampleWeight.QCDSampleInfo_push_back( "_TTToHadronic_"        ,            377.96,129736822.0 - 525618.0, LumiScale, 1, FilePath, TrainMode );
       myBGSampleWeight.QCDSampleInfo_push_back( "_TTToSemiLeptonic_"    ,            365.34, 43555789.0 - 176656.0, LumiScale, 1, FilePath, TrainMode );
       //WJets
-      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_"                 ,           50690, 77665843.0 - 34663.0, LumiScale, 1.21, FilePath, TrainMode ); //be careful about kf, already NNLO
-      myBGSampleWeight.QCDSampleInfo_push_back( "_W1Jets_"                ,              9493, 54127369.0 - 20443.0, LumiScale, 1.21, FilePath, TrainMode );
-      myBGSampleWeight.QCDSampleInfo_push_back( "_W2Jets_"                ,              3120,   6573967.0 - 3525.0, LumiScale, 1.21, FilePath, TrainMode );
-      myBGSampleWeight.QCDSampleInfo_push_back( "_W3Jets_"                ,             942.3, 19685035.0 - 15342.0, LumiScale, 1.21, FilePath, TrainMode );
-      myBGSampleWeight.QCDSampleInfo_push_back( "_W4Jets_"                ,             524.2, 11088852.0 - 14833.0, LumiScale, 1.21, FilePath, TrainMode );
+      // myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_"                 ,           50690, 77665843.0 - 34663.0, LumiScale, 1.21, FilePath, TrainMode ); //be careful about kf, already NNLO
+      // myBGSampleWeight.QCDSampleInfo_push_back( "_W1Jets_"                ,              9493, 54127369.0 - 20443.0, LumiScale, 1.21, FilePath, TrainMode );
+      // myBGSampleWeight.QCDSampleInfo_push_back( "_W2Jets_"                ,              3120,   6573967.0 - 3525.0, LumiScale, 1.21, FilePath, TrainMode );
+      // myBGSampleWeight.QCDSampleInfo_push_back( "_W3Jets_"                ,             942.3, 19685035.0 - 15342.0, LumiScale, 1.21, FilePath, TrainMode );
+      // myBGSampleWeight.QCDSampleInfo_push_back( "_W4Jets_"                ,             524.2, 11088852.0 - 14833.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_"                 ,           50690, 33043732.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode ); //be careful about kf, already NNLO
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_ext1_"            ,           50690, 44587448 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT70to100_"       ,           1319, 22229710 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT100to200_"       ,           1345, 35804623 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT200to400_"       ,           359.7, 21192211.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT400to600_"       ,           48.91, 14250114.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT600to800_"       ,           12.05, 21582309.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT800to1200_"       ,           5.501, 20272990.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT1200to2500_"       ,           1.329, 19991892.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT2500toInf_"       ,           0.03216, 20629585.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+
+      
       //DY
       myBGSampleWeight.QCDSampleInfo_push_back( "_DYJetsToLL_10to50_"    ,             18610, 39837070.0 - 15903.0, LumiScale, 1.21, FilePath, TrainMode );
       myBGSampleWeight.QCDSampleInfo_push_back( "_DYJetsToLL_M50_"	 ,              4895, 97757863.0 - 43076.0, LumiScale, 1.18, FilePath, TrainMode );
@@ -366,11 +384,22 @@ int main(int argc, char* argv[])
       myBGSampleWeight.QCDSampleInfo_push_back( "_TTToHadronic_"        ,            377.96,133266791.0 - 541209.0, LumiScale, 1, FilePath, TrainMode );
       myBGSampleWeight.QCDSampleInfo_push_back( "_TTToSemiLeptonic_"    ,            365.34,101139378.0 - 410622.0, LumiScale, 1, FilePath, TrainMode );
       //WJets
-      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_"                 ,             50690, 70996650.0 - 30211.0, LumiScale, 1.21, FilePath, TrainMode ); //be careful about kf, already NNLO
-      myBGSampleWeight.QCDSampleInfo_push_back( "_W1Jets_"                ,              9493, 51065321.0 - 17455.0, LumiScale, 1.21, FilePath, TrainMode );
-      myBGSampleWeight.QCDSampleInfo_push_back( "_W2Jets_"                ,              3120,  23281764.0 - 8946.0, LumiScale, 1.21, FilePath, TrainMode );
-      myBGSampleWeight.QCDSampleInfo_push_back( "_W3Jets_"                ,             942.3,  14500689.0 - 7792.0, LumiScale, 1.21, FilePath, TrainMode );
-      myBGSampleWeight.QCDSampleInfo_push_back( "_W4Jets_"                ,             524.2, 10072540.0 - 10207.0, LumiScale, 1.21, FilePath, TrainMode );
+      // myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_"                 ,             50690, 70996650.0 - 30211.0, LumiScale, 1.21, FilePath, TrainMode ); //be careful about kf, already NNLO
+      // myBGSampleWeight.QCDSampleInfo_push_back( "_W1Jets_"                ,              9493, 51065321.0 - 17455.0, LumiScale, 1.21, FilePath, TrainMode );
+      // myBGSampleWeight.QCDSampleInfo_push_back( "_W2Jets_"                ,              3120,  23281764.0 - 8946.0, LumiScale, 1.21, FilePath, TrainMode );
+      // myBGSampleWeight.QCDSampleInfo_push_back( "_W3Jets_"                ,             942.3,  14500689.0 - 7792.0, LumiScale, 1.21, FilePath, TrainMode );
+      // myBGSampleWeight.QCDSampleInfo_push_back( "_W4Jets_"                ,             524.2, 10072540.0 - 10207.0, LumiScale, 1.21, FilePath, TrainMode );
+
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_"                 ,           50690, 70966439.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode ); //be careful about kf, already NNLO
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT70to100_"       ,           1319, 28060302.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT100to200_"       ,           1345, 29488310.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT200to400_"       ,           359.7, 25423155.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT400to600_"       ,           48.91, 5915969.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT600to800_"       ,           12.05, 19699782.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT800to1200_"       ,           5.501, 8362227.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT1200to2500_"       ,           1.329, 7571583.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      myBGSampleWeight.QCDSampleInfo_push_back( "_WJets_HT2500toInf_"       ,           0.03216, 3191612.0 - 0.0, LumiScale, 1.21, FilePath, TrainMode );
+      
       //DY
       myBGSampleWeight.QCDSampleInfo_push_back( "_DYJetsToLL_10to50_"    ,             18610, 39376427.0 - 15635.0, LumiScale, 1.21, FilePath, TrainMode );
       myBGSampleWeight.QCDSampleInfo_push_back( "_DYJetsToLL_M50_"	 ,              4895,100154500.0 - 40097.0, LumiScale, 1.18, FilePath, TrainMode );
@@ -450,14 +479,33 @@ int main(int argc, char* argv[])
 	       || (*iter_SampleInfos).QCDTag == "_TTToHadronic_"
 	       || (*iter_SampleInfos).QCDTag == "_TTTo2L2Nu_"
               ) ih = 1;
-      else if ( isWJets )
-      {
+      else if ( //isWJets )
+	       (*iter_SampleInfos).QCDTag == "_WJets_" 
+               || (*iter_SampleInfos).QCDTag == "_WJets_HT70to100_"
+	       || (*iter_SampleInfos).QCDTag == "_WJets_HT100to200_"
+	       || (*iter_SampleInfos).QCDTag == "_WJets_HT100to200_ext1_"
+	       || (*iter_SampleInfos).QCDTag == "_WJets_HT100to200_ext2_"
+	       || (*iter_SampleInfos).QCDTag == "_WJets_HT200to400_"
+	       || (*iter_SampleInfos).QCDTag == "_WJets_HT200to400_ext1_"
+	       || (*iter_SampleInfos).QCDTag == "_WJets_HT200to400_ext2_"
+	       || (*iter_SampleInfos).QCDTag == "_WJets_HT400to600_"
+	       || (*iter_SampleInfos).QCDTag == "_WJets_HT400to600_ext1_"
+	       || (*iter_SampleInfos).QCDTag == "_WJets_HT600to800_"
+	       || (*iter_SampleInfos).QCDTag == "_WJets_HT600to800_ext1_"
+	       || (*iter_SampleInfos).QCDTag == "_WJets_HT800to1200_"
+	       || (*iter_SampleInfos).QCDTag == "_WJets_HT800to1200_ext1_"
+	       || (*iter_SampleInfos).QCDTag == "_WJets_HT1200to2500_"
+	       || (*iter_SampleInfos).QCDTag == "_WJets_HT1200to2500_ext1_"
+	       || (*iter_SampleInfos).QCDTag == "_WJets_HT2500toInf_"
+	       || (*iter_SampleInfos).QCDTag == "_WJets_HT2500toInf_ext1_"
+		)
+	{
         ih = 2;
-        std::cout << "W0Jets: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, 0, yearBits) << std::endl;
-        std::cout << "W1Jets: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, 1, yearBits) << std::endl;
-        std::cout << "W2Jets: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, 2, yearBits) << std::endl;
-        std::cout << "W3Jets: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, 3, yearBits) << std::endl;
-        std::cout << "W4Jets: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, 4, yearBits) << std::endl;
+        // std::cout << "W0Jets: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, 0, yearBits) << std::endl;
+        // std::cout << "W1Jets: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, 1, yearBits) << std::endl;
+        // std::cout << "W2Jets: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, 2, yearBits) << std::endl;
+        // std::cout << "W3Jets: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, 3, yearBits) << std::endl;
+        // std::cout << "W4Jets: " << LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, 4, yearBits) << std::endl;
       }
       else if ( isDYJets )
       {
@@ -510,7 +558,7 @@ int main(int argc, char* argv[])
       }
       for (long long int ievt = 0; ievt < nTot; ievt++) 
       {
-        if ( isWJets ){ ls = LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, lheNJets, yearBits); }
+	// if ( isWJets ){ ls = LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(0, lheNJets, yearBits); }
         if ( isDYJets ){ (*iter_SampleInfos).QCDTag.find("_10to50_") != std::string::npos ? ls = LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(1, lheNJets, yearBits) : ls = LumiScale * myBGSampleWeight.xsecWeightCalcLHEJets(2, lheNJets, yearBits); }
 
         (*iter_SampleInfos).chain->GetEvent(ievt);

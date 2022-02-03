@@ -1,0 +1,2 @@
+root://eosuser.cern.ch//eos/user/g/georgia/results_2016_2020_06_19/ST_s-channel_4f_leptonDecays_13TeV-amcatnlo-pythia8_TuneCUETP8M1/crab_MC13TeV_SingleT_s_2016_0/210730_155418/0000/analysis_1.root
+root://eosuser.cern.ch//eos/user/g/georgia/results_2016_2020_06_19/ST_s-channel_4f_leptonDecays_13TeV-amcatnlo-pythia8_TuneCUETP8M1/crab_MC13TeV_SingleT_s_2016_0/210730_155418/0000/analysis_2.root

@@ -1,0 +1,3 @@
+root://eosuser.cern.ch//eos/user/g/georgia/results_2016_2020_06_19/WWTo4Q_13TeV-powheg/crab_MC13TeV_WW4q_2016_0/210730_154133/0000/analysis_1.root
+root://eosuser.cern.ch//eos/user/g/georgia/results_2016_2020_06_19/WWTo4Q_13TeV-powheg/crab_MC13TeV_WW4q_2016_0/210730_154133/0000/analysis_2.root
+root://eosuser.cern.ch//eos/user/g/georgia/results_2016_2020_06_19/WWTo4Q_13TeV-powheg/crab_MC13TeV_WW4q_2016_0/210730_154133/0000/analysis_3.root
