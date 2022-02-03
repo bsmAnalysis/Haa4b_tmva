@@ -1,11 +1,13 @@
 import glob, os, sys
 
-#d_hadd_source = "/afs/cern.ch/work/g/georgia/BSMAnalysis/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2018_08_17/"
-d_hadd_source = "/eos/cms/store/user/georgia/results_Ntpl_WH_mva_mc_2019_11_22/"
-#/eos/cms/store/user/georgia/bsm_analysis/ZH/"
-d_final_target = "/eos/cms/store/user/georgia/bsm_analysis/WH_2018/"   
+vh_tag = sys.argv[3]   
+year_tag = sys.argv[2]   
 
-#MGM = "root://cmseos.fnal.gov/"
+#d_hadd_source = "/afs/cern.ch/work/g/georgia/BSMAnalysis/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2018_08_17/"
+d_hadd_source = "/afs/cern.ch/work/g/georgia/BSMAnalysis/limits-combine-v8.1.0/CMSSW_10_2_13/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_"+vh_tag+"_"+year_tag+"_2020_02_05/MC/"
+
+d_final_target = "/afs/cern.ch/work/g/georgia/BSMAnalysis/CMSSW_9_2_14_patch1/src/UserCode/Haa4b_tmva/EOSTools/MVAFILES/"
+
 MGM = ""
 #MGM = "root://eoscms.cern.ch/"
 
@@ -45,48 +47,70 @@ sample_tag_list_Data = [
                        ]
 
 sample_tag_list_TT = [
-"mva_MC13TeV_TT",
-#"mva_MC13TeV_TTJets_powheg_",
-#"mva_MC13TeV_TTJets_slt_",
-#"mva_MC13TeV_TTJets_slat_",
-#"mva_MC13TeV_TTJets_dl_",
-#"mva_MC13TeV_TTJets_slt_ext1_",
-#"mva_MC13TeV_TTJets_slat_ext1_",
-#"mva_MC13TeV_TTJets_dl_ext1_",
-"mva_MC13TeV_SingleT_atW_",
-"mva_MC13TeV_SingleT_tW_",
-"mva_MC13TeV_SingleT_at_",
-"mva_MC13TeV_SingleT_t_",
+#"mva_MC13TeV_TTJets_",
+"mva_MC13TeV_TTTo2L2Nu_",
+"mva_MC13TeV_TTToSemiLeptonic_",
+"mva_MC13TeV_TTToHadronic_",
+#"mva_MC13TeV_SingleT_atW_",
+"mva_MC13TeV_SingleT_tW_top_",
+"mva_MC13TeV_SingleT_tW_antitop_",  
+#"mva_MC13TeV_SingleT_at_",
+"mva_MC13TeV_SingleT_t_top_",
+"mva_MC13TeV_SingleT_t_antitop_",   
 "mva_MC13TeV_SingleT_s_",
-"mva_MC13TeV_TGJets_"
-#"mva_MC13TeV_TTGJets_", 
-#"mva_MC13TeV_TTWJetslnu_", 
-#"mva_MC13TeV_TTZJets2l2nu_"
+"mva_MC13TeV_TGJets_",
+"mva_MC13TeV_TTGJets_", #ext1_v2_",
+#"mva_MC13TeV_TTGJets_v1_",  
+#"mva_MC13TeV_TTGJets_ext1_v1_",  
+#"mva_MC13TeV_TTGJets_v2_",   
+"mva_MC13TeV_TTWJetslnu_", 
+"mva_MC13TeV_TTZJets2l2nu_"
 ]
+
 sample_tag_list_W = [
-"mva_MC13TeV_WJets_",
-#"mva_MC13TeV_WJets_ext2_",
-"mva_MC13TeV_W1Jets_",
-"mva_MC13TeV_W2Jets_",
-#"mva_MC13TeV_W2Jets_ext1_",
-"mva_MC13TeV_W3Jets_",
-#"mva_MC13TeV_W3Jets_ext1_",
-"mva_MC13TeV_W4Jets_"
-#"mva_MC13TeV_W4Jets_ext1_",
-#"mva_MC13TeV_W4Jets_ext2_",
+"mva_MC13TeV_WJets_201",
+#"mva_MC13TeV_WJets_ext1_",
+"mva_MC13TeV_WJets_HT70to100_",
+"mva_MC13TeV_WJets_HT100to200_",
+#"mva_MC13TeV_WJets_HT100to200_ext1_", 
+#"mva_MC13TeV_WJets_HT100to200_ext2_", 
+"mva_MC13TeV_WJets_HT200to400_",
+#"mva_MC13TeV_WJets_HT200to400_ext1_",  
+#"mva_MC13TeV_WJets_HT200to400_ext2_",  
+"mva_MC13TeV_WJets_HT400to600_",
+#"mva_MC13TeV_WJets_HT400to600_ext1_",
+"mva_MC13TeV_WJets_HT600to800_",
+#"mva_MC13TeV_WJets_HT600to800_ext1_",
+"mva_MC13TeV_WJets_HT800to1200_",
+#"mva_MC13TeV_WJets_HT800to1200_ext1_", 
+"mva_MC13TeV_WJets_HT1200to2500_",
+#"mva_MC13TeV_WJets_HT1200to2500_ext1_", 
+"mva_MC13TeV_WJets_HT2500toInf_",
+#"mva_MC13TeV_WJets_HT2500toInf_ext1_" 
+
 ]
 
 sample_tag_list_DY = [
 "mva_MC13TeV_DYJetsToLL_10to50_",
-"mva_MC13TeV_DY1JetsToLL_10to50_",
-"mva_MC13TeV_DY2JetsToLL_10to50_",
-"mva_MC13TeV_DY3JetsToLL_10to50_",
-"mva_MC13TeV_DY4JetsToLL_10to50_",
-"mva_MC13TeV_DYJetsToLL_50toInf_",
-"mva_MC13TeV_DY1JetsToLL_50toInf_",
-"mva_MC13TeV_DY2JetsToLL_50toInf_",
-"mva_MC13TeV_DY3JetsToLL_50toInf_",
-"mva_MC13TeV_DY4JetsToLL_50toInf_"
+#"mva_MC13TeV_DY1JetsToLL_10to50_",
+#"mva_MC13TeV_DY2JetsToLL_10to50_",
+#"mva_MC13TeV_DY3JetsToLL_10to50_",
+#"mva_MC13TeV_DY4JetsToLL_10to50_",
+"mva_MC13TeV_DYJetsToLL_M50_201",
+"mva_MC13TeV_DYJetsToLL_M50_ext1_",
+"mva_MC13TeV_DY1JetsToLL_M50_201",
+"mva_MC13TeV_DY1JetsToLL_M50_ext1_",
+"mva_MC13TeV_DY2JetsToLL_M50_201",
+"mva_MC13TeV_DY2JetsToLL_M50_ext1_",
+"mva_MC13TeV_DY3JetsToLL_M50_201",
+"mva_MC13TeV_DY3JetsToLL_M50_ext1_",
+"mva_MC13TeV_DY4JetsToLL_M50_"    
+
+#"mva_MC13TeV_DYJetsToLL_50toInf_",
+#"mva_MC13TeV_DY1JetsToLL_50toInf_",
+#"mva_MC13TeV_DY2JetsToLL_50toInf_",
+#"mva_MC13TeV_DY3JetsToLL_50toInf_",
+#"mva_MC13TeV_DY4JetsToLL_50toInf_"
                        ]
 
 sample_tag_list_QCD = [
@@ -127,6 +151,15 @@ sample_tag_list_SG = [
 "mva_MC13TeV_Zh_amass40_",
 "mva_MC13TeV_Zh_amass50_",
 "mva_MC13TeV_Zh_amass60_",
+
+"mva_MC13TeV_Wh_amass12_", 
+"mva_MC13TeV_Wh_amass15_", 
+"mva_MC13TeV_Wh_amass20_", 
+"mva_MC13TeV_Wh_amass25_", 
+"mva_MC13TeV_Wh_amass30_", 
+"mva_MC13TeV_Wh_amass40_", 
+"mva_MC13TeV_Wh_amass50_",
+"mva_MC13TeV_Wh_amass60_" 
                       ]
 
 
@@ -152,14 +185,18 @@ elif(sample_tag == 'SG') :
 else:
   print "wrong run type!"
 
+
+#year_tag = sys.argv[2] 
+#vh_tag = sys.argv[3] 
+
 for tag in sample_tag_list :
   #hadd
-  cmd = 'hadd ' + tag[:-1] + '.root ' + d_hadd_source + tag + '*.root'   
+  cmd = 'hadd ' + tag[:-1] + '_'+year_tag+'.root ' + d_hadd_source + tag + '*.root'   
   #cmd = 'hadd ' + tag[:-1] + '.root `xrdfsls -u ' + d_hadd_source + ' | grep \'' + tag + '\'`'
 #  cmd = 'hadd ' + tag[:-1] + '.root `ls ' + d_hadd_source + ' | grep \'' + tag + '\'`'
   print(cmd)
   os.system(cmd)
-  cmd = 'cp ' + tag[:-1] + '.root ' + MGM + d_final_target   
+  cmd = 'mv ' + tag[:-1] + '_'+year_tag+'.root ' + MGM + d_final_target + '/' + vh_tag + '_'+year_tag+'_MVABGMCFileList/'   
 #  cmd = 'xrdcp ' + tag[:-1] + '.root ' + MGM + d_final_target
   print(cmd)
   os.system(cmd)     

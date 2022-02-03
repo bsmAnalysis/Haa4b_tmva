@@ -3,4 +3,4 @@
 #include "MVACutFlowHist.h"
 #include "QCDReWeighting.h"
 
-float LumiScale = 35866.932;
+float LumiScale = 36300.0; //35866.932;

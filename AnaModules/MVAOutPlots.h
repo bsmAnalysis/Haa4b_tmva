@@ -42,13 +42,8 @@ void MVAOutPlots::Initialization(std::string trainmode, std::string dir)
   target_DIR = dir;
   system( ("mkdir " + target_DIR).c_str() );
 
-  //std::string din = "/afs/cern.ch/work/g/georgia/BSMAnalysis/CMSSW_9_2_14_patch1/src/UserCode/Haa4bTools_v2/AnaModules/";      
-  //std::string din = "/afs/cern.ch/work/y/yuanc/Analysis/H2a4b/bdt/CMSSW_9_2_14_patch1/src/UserCode/Haa4bTools/AnaModules/OutDir_2016Wh/";
-  //std::string din = "/afs/cern.ch/work/y/yuanc/Analysis/H2a4b/bdt/CMSSW_9_2_14_patch1/src/UserCode/Haa4bTools/AnaModules/OutDir_2016Zh/";
-  //std::string din = "/afs/cern.ch/work/y/yuanc/Analysis/H2a4b/bdt/CMSSW_9_2_14_patch1/src/UserCode/Haa4bTools/AnaModules/OutDir_2017Wh/";
-  //std::string din = "/afs/cern.ch/work/y/yuanc/Analysis/H2a4b/bdt/CMSSW_9_2_14_patch1/src/UserCode/Haa4bTools/AnaModules/OutDir_2017Zh/";
-  std::string din = "/afs/cern.ch/work/y/yuanc/Analysis/H2a4b/bdt/CMSSW_9_2_14_patch1/src/UserCode/Haa4bTools/AnaModules/OutDir_2018Wh/";
-  //std::string din = "/afs/cern.ch/work/y/yuanc/Analysis/H2a4b/bdt/CMSSW_9_2_14_patch1/src/UserCode/Haa4bTools/AnaModules/OutDir_2018Zh/";
+  std::string din = "/afs/cern.ch/work/g/georgia/BSMAnalysis/CMSSW_9_2_14_patch1/src/UserCode/Haa4b_tmva/AnaModules/";      
+
   std::cout << "Input Directory: " << din << std::endl;
   fin = TFile::Open( (din + "MVATrainTestOut" + TrainMode + ".root").c_str() );
 }
@@ -110,10 +105,13 @@ void MVAOutPlots::BDTSBComparePlots( std::string histtag, std::string histtagtra
   sgBDT->SetMarkerStyle(20); bgBDT->SetMarkerStyle(21);
 
   sgBDTtr->SetLineColor(4); bgBDTtr->SetLineColor(1);
-  //  if (!(histtag.find("eff"))) {
-  sgBDTtr->SetFillColor(4); bgBDTtr->SetFillColor(1);     
-  sgBDTtr->SetFillStyle(3001); bgBDTtr->SetFillStyle(3001);
-  //}
+  if (!(histtag.find("eff")!=std::string::npos)) {
+    sgBDTtr->SetFillColor(4); bgBDTtr->SetFillColor(1);     
+    sgBDTtr->SetFillStyle(3001); bgBDTtr->SetFillStyle(3001);
+  } else {
+    sgBDT->SetMarkerSize(0.1); bgBDT->SetMarkerSize(0.1);      
+    sgBDTtr->SetLineStyle(2); bgBDTtr->SetLineStyle(2); 
+  }
   sgBDT->SetTitle( (histtag).c_str() );
   //  bgBDT->SetTitle( (TrainMode + "_" + histtag).c_str() );
   
@@ -151,6 +149,7 @@ void MVAOutPlots::CVPlots()
   float cv_err_trib[n] = {0.0013, 0.0013, 0.0013, 0.0013, 0.0013}, cv_err_quab[n] = {0.0038, 0.0038, 0.0038, 0.0038, 0.0038};
   if      ( TrainMode == "TribMVA" ){ std::copy(std::begin(cv_eval_trib), std::end(cv_eval_trib), std::begin(y)); std::copy(std::begin(cv_err_trib), std::end(cv_err_trib), std::begin(ey)); }
   else if ( TrainMode == "QuabMVA" ){ std::copy(std::begin(cv_eval_quab), std::end(cv_eval_quab), std::begin(y)); std::copy(std::begin(cv_err_quab), std::end(cv_err_quab), std::begin(ey)); }
+  else if ( TrainMode == "H4bMVA" ){ std::copy(std::begin(cv_eval_trib), std::end(cv_eval_trib), std::begin(y)); std::copy(std::begin(cv_err_trib), std::end(cv_err_trib), std::begin(ey)); }     
 
   TCanvas *c = new TCanvas("c","",200,10,700,500);
   gStyle->SetOptStat(0);
