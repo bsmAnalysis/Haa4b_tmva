@@ -20,19 +20,25 @@ void TMVATrainer::SetupMVAFactory( std::string catName )
   }
   for (int i = 0; i < nSG; i++)
   {
-    //TTree *thissgtree = (TTree *)(SGFileVec.at(i))->Get(catName.c_str());
+    TTree *thissgtree1 = (TTree *)(SGFileVec.at(i))->Get((catName+"_e").c_str());
+    TTree *thissgtree2 = (TTree *)(SGFileVec.at(i))->Get((catName+"_o").c_str());   
     //    if ( thissgtree->GetEntries() != 0 )
     // {
-      //if ( (TTree *)(SGFileVec.at(i))->Get(catName.c_str())->GetEntries() <= 0 ) continue;
-    std::cout << SGfileURLWeightVec.at(i).first << std::endl;
-    mydataloader->AddSignalTree( (TTree *)(SGFileVec.at(i))->Get(catName.c_str()), SGfileURLWeightVec.at(i).second );
-	//myfactory->AddSignalTree( (TTree *)(SGFileVec.at(i))->Get(catName.c_str()), SGfileURLWeightVec.at(i).second );
-    //  }
-    // else
-    // {
-    //	std::cout << "The file " <<  SGfileURLWeightVec.at(i).first.c_str() << " is excluded due to 0 events" << std::endl;
-    // }
+    std::cout << SGfileURLWeightVec.at(i).first << " has EVEN entries " << thissgtree1->GetEntries() << std::endl;      
+    std::cout << SGfileURLWeightVec.at(i).first << " has ODD entries " << thissgtree2->GetEntries() << std::endl; 
+
+    if ( thissgtree1->GetEntries() <= 0 ) continue;
+    if ( thissgtree2->GetEntries() <= 0 ) continue;  
+
+	//	std::cout << SGfileURLWeightVec.at(i).first << std::endl;
+    mydataloader->AddSignalTree(thissgtree1,SGfileURLWeightVec.at(i).second ,"Training");
+    mydataloader->AddSignalTree(thissgtree2,SGfileURLWeightVec.at(i).second ,"Test");
   }
+  //    else
+  //  {
+  //	std::cout << "The file " <<  SGfileURLWeightVec.at(i).first.c_str() << " is excluded due to 0 events" << std::endl;
+  //  }
+  //}
 
   //load bg file
   int nBG = BGfileURLWeightVec.size();
@@ -43,22 +49,33 @@ void TMVATrainer::SetupMVAFactory( std::string catName )
   }
   for (int i = 0; i < nBG; i++)
   {
-    TTree *thisbgtree = (TTree *)(BGFileVec.at(i))->Get(catName.c_str());
-    
-    if ( thisbgtree->GetEntries() != 0 )
-      {
-	float bgweight=1.0;
-	TLeaf *xpos = thisbgtree->GetLeaf("xsecWeight"); xpos->GetBranch()->GetEntry(1);
-	bgweight = xpos->GetValue();
+    TTree *thisbgtree1 = (TTree *)(BGFileVec.at(i))->Get((catName+"_e").c_str());
+    TTree *thisbgtree2 = (TTree *)(BGFileVec.at(i))->Get((catName+"_o").c_str());  
+    //  if ( thisbgtree->GetEntries() != 0 )
+    // {
+    if ( thisbgtree1->GetEntries() <= 0 ) continue;    
+    if ( thisbgtree2->GetEntries() <= 0 ) continue;
+
+    //    double bgweight1, bgweight2;
+
+    float bgweight1, bgweight2; bgweight1=bgweight2=1.0;
+    TLeaf *xpos = thisbgtree1->GetLeaf("xsecWeight"); xpos->GetBranch()->GetEntry(1);
+    bgweight1 = xpos->GetValue();
+    bgweight2 = bgweight1;
 	
-	std::cout << BGfileURLWeightVec.at(i).first << " has weight: " << bgweight*BGfileURLWeightVec.at(i).second << std::endl;
-	mydataloader->AddBackgroundTree( (TTree *)(BGFileVec.at(i))->Get(catName.c_str()), bgweight*BGfileURLWeightVec.at(i).second );
+	  //    thisbgtree1->SetBranchAddress( "xsecWeight", &bgweight1 );
+	  //    thisbgtree2->SetBranchAddress( "xsecWeight", &bgweight2 ); 
+    std::cout << BGfileURLWeightVec.at(i).first << " has weight: " << bgweight1*BGfileURLWeightVec.at(i).second << std::endl;
+	
+    mydataloader->AddBackgroundTree(thisbgtree1, bgweight1*BGfileURLWeightVec.at(i).second, "Training");
+    mydataloader->AddBackgroundTree(thisbgtree2, bgweight1*BGfileURLWeightVec.at(i).second, "Test");  
+	//	mydataloader->AddBackgroundTree( (TTree *)(BGFileVec.at(i))->Get(catName.c_str()), bgweight*BGfileURLWeightVec.at(i).second );
 	//myfactory->AddBackgroundTree( (TTree *)(BGFileVec.at(i))->Get(catName.c_str()), BGfileURLWeightVec.at(i).second );
-      }
-    else
-      {
-	std::cout << "The file " <<  BGfileURLWeightVec.at(i).first.c_str() << " is excluded due to 0 events" << std::endl;
-      }
+	// }
+	// else
+	// {
+	//	std::cout << "The file " <<  BGfileURLWeightVec.at(i).first.c_str() << " is excluded due to 0 events" << std::endl;
+	// }
   }
 
   mydataloader->SetWeightExpression("weight");
@@ -113,11 +130,9 @@ void TMVATrainer::SetupMVAFactory( std::string catName )
   //TCut mycutb = "WpT>0.5 && Hmass>0.5 && HpT>0.5 && HHt>0.5 && WHdR>0.001"; // for example: TCut mycutb = "abs(var1)<0.5";
   TCut mycuts = "";
   TCut mycutb = "";
-  //myfactory->PrepareTrainingAndTestTree( mycuts, mycutb,
-  //                                      "SplitMode=Random:NormMode=NumEvents:nTrain_Signal=0:nTest_Signal=0:nTrain_Background=0:nTest_Background=0:V" );
 
-  mydataloader->PrepareTrainingAndTestTree( mycuts, mycutb,
-                                          "SplitMode=Random:NormMode=NumEvents:nTrain_Signal=0:nTest_Signal=0:nTrain_Background=0:nTest_Background=0:V" );
+  mydataloader->PrepareTrainingAndTestTree( mycuts, mycutb,"!V");
+					    // "SplitMode=Random:NormMode=NumEvents:nTrain_Signal=0:nTest_Signal=0:nTrain_Background=0:nTest_Background=0:V" );
 
   return ;
 }

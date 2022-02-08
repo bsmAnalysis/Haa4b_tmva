@@ -4,7 +4,7 @@ vh_tag = sys.argv[3]
 year_tag = sys.argv[2]   
 
 #d_hadd_source = "/afs/cern.ch/work/g/georgia/BSMAnalysis/CMSSW_8_0_26_patch1/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_2018_08_17/"
-d_hadd_source = "/afs/cern.ch/work/g/georgia/BSMAnalysis/limits-combine-v8.1.0/CMSSW_10_2_13/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_"+vh_tag+"_"+year_tag+"_2020_06_19/MC/"
+d_hadd_source = "/afs/cern.ch/work/g/georgia/BSMAnalysis/limits-combine-v8.1.0/CMSSW_10_2_13/src/UserCode/bsmhiggs_fwk/test/haa4b/results_Ntpl_"+vh_tag+"_"+year_tag+"_2020_02_05/MC/"
 
 d_final_target = "/afs/cern.ch/work/g/georgia/BSMAnalysis/CMSSW_9_4_9/src/UserCode/Haa4b_tmva/EOSTools/MVAFILES/"
 
@@ -47,48 +47,50 @@ sample_tag_list_Data = [
                        ]
 
 sample_tag_list_TT = [
-"mva_MC13TeV_TTJets_powheg_",
-#"mva_MC13TeV_TTTo2L2Nu_",
-#"mva_MC13TeV_TTToSemiLeptonic_",
-#"mva_MC13TeV_TTToHadronic_",
-"mva_MC13TeV_SingleT_atW_",
-"mva_MC13TeV_SingleT_tW_",
-"mva_MC13TeV_SingleT_at_",
-"mva_MC13TeV_SingleT_t_",
+#"mva_MC13TeV_TTJets_",
+"mva_MC13TeV_TTTo2L2Nu_",
+"mva_MC13TeV_TTToSemiLeptonic_",
+"mva_MC13TeV_TTToHadronic_",
+"mva_MC13TeV_SingleT_tW_top_",
+"mva_MC13TeV_SingleT_tW_antitop_",  
+"mva_MC13TeV_SingleT_t_top_",
+"mva_MC13TeV_SingleT_t_antitop_",   
 "mva_MC13TeV_SingleT_s_",
-"mva_MC13TeV_TGJets_201",
-"mva_MC13TeV_TGJets_ext1_",
-"mva_MC13TeV_TTGJets_201",  
-"mva_MC13TeV_TTGJets_ext1_",  
-#"mva_MC13TeV_TTGJets_v2_",   
+"mva_MC13TeV_TGJets_",
+"mva_MC13TeV_TTGJets_ext1_v2_",
+"mva_MC13TeV_TTGJets_v1_",  
+"mva_MC13TeV_TTGJets_ext1_v1_",  
+"mva_MC13TeV_TTGJets_v2_",   
 "mva_MC13TeV_TTWJetslnu_", 
-"mva_MC13TeV_TTZJets2l2nu_",
+"mva_MC13TeV_TTZJets2l2nu_"
+]
+
+sample_tag_list_HIG = [
 "mva_MC13TeV_WplusH_HToBB_WToLNu_",
-"mva_MC13TeV_WminusH_HToBB_WToLNu_ext1_",
-"mva_MC13TeV_WminusH_HToBB_WToLNu_20",
-"mva_MC13TeV_ZH_HToBB_ZToLL_"
+"mva_MC13TeV_WminusH_HToBB_WToLNu_", 
+"mva_MC13TeV_ZH_HToBB_ZToLL_" 
 ]
 
 sample_tag_list_W = [
 "mva_MC13TeV_WJets_201",
-"mva_MC13TeV_WJets_ext2_",
+"mva_MC13TeV_WJets_ext1_",
 "mva_MC13TeV_WJets_HT70to100_",
-"mva_MC13TeV_WJets_HT100to200_20",
-"mva_MC13TeV_WJets_HT100to200_ext1_", 
-"mva_MC13TeV_WJets_HT100to200_ext2_", 
-"mva_MC13TeV_WJets_HT200to400_20",
-"mva_MC13TeV_WJets_HT200to400_ext1_",  
-"mva_MC13TeV_WJets_HT200to400_ext2_",  
-"mva_MC13TeV_WJets_HT400to600_20",
-"mva_MC13TeV_WJets_HT400to600_ext1_",
-"mva_MC13TeV_WJets_HT600to800_20",
-"mva_MC13TeV_WJets_HT600to800_ext1_",
-"mva_MC13TeV_WJets_HT800to1200_20",
-"mva_MC13TeV_WJets_HT800to1200_ext1_", 
-"mva_MC13TeV_WJets_HT1200to2500_20",
-"mva_MC13TeV_WJets_HT1200to2500_ext1_", 
-"mva_MC13TeV_WJets_HT2500toInf_20",
-"mva_MC13TeV_WJets_HT2500toInf_ext1_" 
+"mva_MC13TeV_WJets_HT100to200_",
+#"mva_MC13TeV_WJets_HT100to200_ext1_", 
+#"mva_MC13TeV_WJets_HT100to200_ext2_", 
+"mva_MC13TeV_WJets_HT200to400_",
+#"mva_MC13TeV_WJets_HT200to400_ext1_",  
+#"mva_MC13TeV_WJets_HT200to400_ext2_",  
+"mva_MC13TeV_WJets_HT400to600_",
+#"mva_MC13TeV_WJets_HT400to600_ext1_",
+"mva_MC13TeV_WJets_HT600to800_",
+#"mva_MC13TeV_WJets_HT600to800_ext1_",
+"mva_MC13TeV_WJets_HT800to1200_",
+#"mva_MC13TeV_WJets_HT800to1200_ext1_", 
+"mva_MC13TeV_WJets_HT1200to2500_",
+#"mva_MC13TeV_WJets_HT1200to2500_ext1_", 
+"mva_MC13TeV_WJets_HT2500toInf_",
+#"mva_MC13TeV_WJets_HT2500toInf_ext1_" 
 
 ]
 
@@ -98,13 +100,22 @@ sample_tag_list_DY = [
 #"mva_MC13TeV_DY2JetsToLL_10to50_",
 #"mva_MC13TeV_DY3JetsToLL_10to50_",
 #"mva_MC13TeV_DY4JetsToLL_10to50_",
-"mva_MC13TeV_DYJetsToLL_50toInf_ext1_",
-"mva_MC13TeV_DYJetsToLL_50toInf_ext2_",
-"mva_MC13TeV_DY1JetsToLL_50toInf_",
-"mva_MC13TeV_DY2JetsToLL_50toInf_",
-"mva_MC13TeV_DY3JetsToLL_50toInf_",
-"mva_MC13TeV_DY4JetsToLL_50toInf_"    
-]
+"mva_MC13TeV_DYJetsToLL_M50_201",
+"mva_MC13TeV_DYJetsToLL_M50_ext1_",
+"mva_MC13TeV_DY1JetsToLL_M50_201",
+"mva_MC13TeV_DY1JetsToLL_M50_ext1_",
+"mva_MC13TeV_DY2JetsToLL_M50_201",
+"mva_MC13TeV_DY2JetsToLL_M50_ext1_",
+"mva_MC13TeV_DY3JetsToLL_M50_201",
+"mva_MC13TeV_DY3JetsToLL_M50_ext1_",
+"mva_MC13TeV_DY4JetsToLL_M50_"    
+
+#"mva_MC13TeV_DYJetsToLL_50toInf_",
+#"mva_MC13TeV_DY1JetsToLL_50toInf_",
+#"mva_MC13TeV_DY2JetsToLL_50toInf_",
+#"mva_MC13TeV_DY3JetsToLL_50toInf_",
+#"mva_MC13TeV_DY4JetsToLL_50toInf_"
+                       ]
 
 sample_tag_list_QCD = [
 #"mva_MC13TeV_QCD_Pt20To30_EMEnr_",
@@ -115,24 +126,20 @@ sample_tag_list_QCD = [
 "mva_MC13TeV_QCD_Pt170To300_EMEnr_",
 "mva_MC13TeV_QCD_Pt300ToInf_EMEnr_",
 "mva_MC13TeV_QCD_Pt20ToInf_MuEnr_"
-]
+                      ]
 
 sample_tag_list_VV = [
 ##Di-boson
-"mva_MC13TeV_WW2l2nu_",
-"mva_MC13TeV_WWlnu2q_20",
 "mva_MC13TeV_WW4q_",
-"mva_MC13TeV_WWlnu2q_ext1_",
-"mva_MC13TeV_WZ_20",
-"mva_MC13TeV_WZ_ext1_",
-"mva_MC13TeV_ZZ_20",
-"mva_MC13TeV_ZZ_ext1_",
+"mva_MC13TeV_WW_", 
+"mva_MC13TeV_WZ_",
+"mva_MC13TeV_ZZ_",
 ##Tri-boson
 "mva_MC13TeV_WWW_4F_",
 "mva_MC13TeV_WWZ_",
 "mva_MC13TeV_WZZ_",
 "mva_MC13TeV_ZZZ_",
-]
+                      ]
 
 
 sample_tag_list_SG = [
@@ -175,9 +182,14 @@ elif(sample_tag == 'VV') :
   sample_tag_list = sample_tag_list_VV
 elif(sample_tag == 'SG') :
   sample_tag_list = sample_tag_list_SG
+elif(sample_tag == 'HIG') :
+  sample_tag_list = sample_tag_list_HIG
 else:
   print "wrong run type!"
 
+
+#year_tag = sys.argv[2] 
+#vh_tag = sys.argv[3] 
 
 for tag in sample_tag_list :
   #hadd
