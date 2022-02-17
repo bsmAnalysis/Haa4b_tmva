@@ -58,17 +58,14 @@ void TMVATrainer::SetupMVAFactory( std::string catName )
 
     //    double bgweight1, bgweight2;
 
-    float bgweight1, bgweight2; bgweight1=bgweight2=1.0;
+    float bgweight(1.0);
     TLeaf *xpos = thisbgtree1->GetLeaf("xsecWeight"); xpos->GetBranch()->GetEntry(1);
-    bgweight1 = xpos->GetValue();
-    bgweight2 = bgweight1;
+    bgweight = xpos->GetValue();
+
+    std::cout << BGfileURLWeightVec.at(i).first << " has weight: " << bgweight*BGfileURLWeightVec.at(i).second << std::endl;
 	
-	  //    thisbgtree1->SetBranchAddress( "xsecWeight", &bgweight1 );
-	  //    thisbgtree2->SetBranchAddress( "xsecWeight", &bgweight2 ); 
-    std::cout << BGfileURLWeightVec.at(i).first << " has weight: " << bgweight1*BGfileURLWeightVec.at(i).second << std::endl;
-	
-    mydataloader->AddBackgroundTree(thisbgtree1, bgweight1*BGfileURLWeightVec.at(i).second, "Training");
-    mydataloader->AddBackgroundTree(thisbgtree2, bgweight1*BGfileURLWeightVec.at(i).second, "Test");  
+    mydataloader->AddBackgroundTree(thisbgtree1, bgweight*BGfileURLWeightVec.at(i).second, "Training");
+    mydataloader->AddBackgroundTree(thisbgtree2, bgweight*BGfileURLWeightVec.at(i).second, "Test");  
 	//	mydataloader->AddBackgroundTree( (TTree *)(BGFileVec.at(i))->Get(catName.c_str()), bgweight*BGfileURLWeightVec.at(i).second );
 	//myfactory->AddBackgroundTree( (TTree *)(BGFileVec.at(i))->Get(catName.c_str()), BGfileURLWeightVec.at(i).second );
 	// }
@@ -226,11 +223,12 @@ void TMVATrainer::GenSGReWeight( std::string catName )
   float nMCSGSum = 0;
   for (int i = 0; i < nSG; i++)
   {
-    TFile f( SGfileURLWeightVec.at(i).first.c_str() );
-    TTree *t = (TTree*)f.Get( catName.c_str() );
-    GenSGReWeightArr[i] = t->GetEntries();
-    nMCSGSum += t->GetEntries();
-    f.Close();
+    //    TFile f( SGfileURLWeightVec.at(i).first.c_str() );
+    //  TTree *t1 = (TTree*)f.Get( (catName+"_e").c_str() );
+    // TTree *t2 = (TTree*)f.Get( (catName+"_o").c_str() ); 
+    // GenSGReWeightArr[i] = ( t1->GetEntries() + t2->GetEntries() );
+    nMCSGSum += GenSGReWeightArr[i]; //(t1->GetEntries() + t2->GetEntries());
+    //    f.Close();
   }
   std::cout << "nMCSGSum" << ", "<< nMCSGSum << std::endl;
 

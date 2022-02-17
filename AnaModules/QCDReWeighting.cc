@@ -10,8 +10,8 @@ void QCDSampleWeight::QCDSampleInfo_push_back( std::string tag, double xsec, dou
   oneInfo.lumi_in = lumi; 
   oneInfo.kf_in =kf;
 
-  oneInfo.weight = xsec*lumi*kf/nevents;
-  oneInfo.chain = new TChain(TrainMode.c_str());
+  oneInfo.weight = lumi; // xsec*lumi*kf/nevents;
+  oneInfo.chain = new TChain((TrainMode+"_e").c_str());
   
   if(!FillChain(oneInfo.chain, inputFileList, oneInfo.QCDTag))
   {
