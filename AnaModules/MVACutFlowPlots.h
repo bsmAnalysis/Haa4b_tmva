@@ -98,7 +98,7 @@ void MVACutFlowPlots::Initialization(std::string trainmode, std::string dir)
   //fin = TFile::Open( ("OutDir_2016Zh/MVACutFlow" + TrainMode + ".root").c_str() );
   //fin = TFile::Open( ("OutDir_2017Wh/MVACutFlow" + TrainMode + ".root").c_str() );
   //fin = TFile::Open( ("OutDir_2017Zh/MVACutFlow" + TrainMode + ".root").c_str() );
-  fin = TFile::Open( ("OutDir_2018Wh/MVACutFlow" + TrainMode + ".root").c_str() );
+  fin = TFile::Open( ("OutDir/MVACutFlow" + TrainMode + ".root").c_str() );
   //fin = TFile::Open( ("OutDir_2018Zh/MVACutFlow" + TrainMode + ".root").c_str() );
 
   //fin = TFile::Open("OutDir/MVACutFlowTribMVA.root");
@@ -275,6 +275,7 @@ void MVACutFlowPlots::BasicCheckTemplate(
 
   h_sumBKG->SetFillColor(1);         
 
+  //  h_signal_hiMa->Draw("ehist");
   h_sumBKG->Draw("ehist");
 
   //  h_signal_loMa->Draw("same ehist");
@@ -286,7 +287,8 @@ void MVACutFlowPlots::BasicCheckTemplate(
   //const std::string titre="CMS Preliminary 2016, "+ lumi_str + " fb^{-1}, #sqrt{s} = 13 TeV";
   //const std::string titre="CMS Preliminary 2016, 35.9 fb^{-1}, #sqrt{s} = 13 TeV";
   //const std::string titre="CMS Preliminary 2017, 41.5 fb^{-1}, #sqrt{s} = 13 TeV";
-  const std::string titre="CMS Preliminary 2018, 59.9 fb^{-1}, #sqrt{s} = 13 TeV";
+  //  const std::string titre="CMS Preliminary 2018, 59.9 fb^{-1}, #sqrt{s} = 13 TeV";
+  const std::string titre="CMS Preliminary, 138  fb^{-1}, #sqrt{s} = 13 TeV";    
   TLatex *title = new TLatex(0.09770115,0.9194915,titre.c_str());
   title->SetNDC();
   title->SetTextSize(0.045);

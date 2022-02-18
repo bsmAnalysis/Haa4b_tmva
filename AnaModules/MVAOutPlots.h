@@ -42,7 +42,7 @@ void MVAOutPlots::Initialization(std::string trainmode, std::string dir)
   target_DIR = dir;
   system( ("mkdir " + target_DIR).c_str() );
 
-  std::string din = "/afs/cern.ch/work/g/georgia/BSMAnalysis/CMSSW_9_2_14_patch1/src/UserCode/Haa4b_tmva/AnaModules/";      
+  std::string din = "/afs/cern.ch/work/g/georgia/BSMAnalysis/CMSSW_9_4_9/src/UserCode/Haa4b_tmva/AnaModules/";      
 
   std::cout << "Input Directory: " << din << std::endl;
   fin = TFile::Open( (din + "MVATrainTestOut" + TrainMode + ".root").c_str() );
